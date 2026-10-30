@@ -1022,6 +1022,8 @@ export function ModelExplorer({ initialCatalog }: ModelExplorerProps) {
     ...DEFAULT_CUSTOM_WEIGHTS,
   }));
   const [openOnly, setOpenOnly] = useState(false);
+  // null = 跟随视角：综合视角保持原版外观（不画膝点），编程/工程视角默认显示；手动点击后固定
+  const [kneeOverride, setKneeOverride] = useState<boolean | null>(null);
 
   const handleSelectModel = (id: string) => {
     setHoveredAlternativeId(null);
@@ -1125,10 +1127,12 @@ export function ModelExplorer({ initialCatalog }: ModelExplorerProps) {
     () => getKneeRecommendations(visibleModels, 5),
     [visibleModels],
   );
-  // 膝点：推荐列表本身就是膝点排序，取前两个交给散点图高亮
+  // 膝点：综合视角默认不画（与原版一致），编程/工程视角默认画，图上有开关可强制切换
+  const showKnee = kneeOverride ?? view !== "intelligence";
   const kneeIds = useMemo(
-    () => recommendedModels.slice(0, 2).map((model) => model.id),
-    [recommendedModels],
+    () =>
+      showKnee ? recommendedModels.slice(0, 2).map((model) => model.id) : [],
+    [recommendedModels, showKnee],
   );
   const creators = useMemo(
     () => creatorsFromModels(chartModels),
@@ -1354,7 +1358,7 @@ export function ModelExplorer({ initialCatalog }: ModelExplorerProps) {
                   model={model}
                   t={t}
                   isSelected={selected?.id === model.id}
-                  isKnee={index === 0}
+                  isKnee={index === 0 && showKnee}
                   onSelect={(id) => {
                     handleSelectModel(id);
                     setActiveCreators(new Set());
@@ -1383,6 +1387,19 @@ export function ModelExplorer({ initialCatalog }: ModelExplorerProps) {
               <div
                 className={`chart-card__actions ${isChartActionsWrapped ? "is-wrapped" : ""}`}
               >
+                {view === "intelligence" ? null : (
+                <button
+                  type="button"
+                  className={`chart-label-toggle ${showKnee ? "is-active" : ""}`}
+                  aria-pressed={showKnee}
+                  aria-label={t("chart.knee")}
+                  title={t("chart.knee")}
+                  onClick={() => setKneeOverride(!showKnee)}
+                >
+                  <span aria-hidden="true" />
+                  {t("chart.knee")}
+                </button>
+                )}
                 <button
                   type="button"
                   className={`chart-label-toggle ${showAllLabels ? "is-active" : ""}`}

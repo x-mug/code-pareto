@@ -694,18 +694,6 @@ function InteractiveScatterPlot({
                 borderWidth: 1.4,
                 opacity: 0.9,
               },
-              label: {
-                show: true,
-                formatter: kneeBadgeText,
-                position: "bottom",
-                distance: isMobileChart ? 2 : 3,
-                color: palette.accent,
-                fontSize: isMobileChart ? 8 : 9,
-                fontWeight: 700,
-                opacity: 0.9,
-                textBorderColor: palette.background,
-                textBorderWidth: 3,
-              },
               tooltip: { show: false },
             },
           ];
