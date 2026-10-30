@@ -2586,11 +2586,27 @@ a {
 .view-panel__label {
   flex: 0 0 auto;
   font-family: inherit;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  line-height: 1.6;
-  color: var(--ink-soft);
-  text-transform: uppercase;
+  font-size: 13px;
+  font-weight: 650;
+  letter-spacing: 0.01em;
+  line-height: 1.5;
+  color: var(--ink);
   padding-bottom: 1px;
+}
+
+/* ── 权重区字号整体上调一档 ── */
+.view-weights__title {
+  font-size: 12px;
+}
+
+.view-weights__mode {
+  font-size: 10px;
+}
+
+.view-panel .view-weights__label {
+  font-size: 11px;
+}
+
+.view-panel .view-weights__value {
+  font-size: 12px;
 }
