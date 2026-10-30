@@ -2580,3 +2580,17 @@ a {
     gap: 10px 14px;
   }
 }
+
+/* ── 视角标签：改用与「能力支柱权重」一致的微标签字体，避免小字号衬线 ── */
+
+.view-panel__label {
+  flex: 0 0 auto;
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  line-height: 1.6;
+  color: var(--ink-faint);
+  text-transform: uppercase;
+  padding-bottom: 1px;
+}
