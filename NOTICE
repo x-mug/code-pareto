@@ -1,0 +1,7 @@
+This product includes software developed as "Parallax"
+(https://github.com/cr-zhichen/parallax), Copyright (c) 2026 zgccrui, licensed under the MIT License.
+
+Modifications in this fork:
+- coding / engineering capability views with pillar re-weighting
+- custom pillar weights, open-weights filter, knee highlighting, model table
+- build-time data pipeline (Artificial Analysis public pages) and static export
