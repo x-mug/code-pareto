@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // 从 Artificial Analysis 公开页面抓取模型数据，生成 site/data.js
 // 用法: node scripts/sync.mjs
-import { writeFile } from "node:fs/promises";
+import { readFile, writeFile } from "node:fs/promises";
 
 const UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/131.0 Safari/537.36";
 const PAGES = {
@@ -187,7 +187,21 @@ async function main() {
     models: models.sort((a, b) => (b.subScores.coding ?? 0) - (a.subScores.coding ?? 0)),
   };
 
-  await writeFile(new URL("../data.js", import.meta.url), "window.AA_DATA = " + JSON.stringify(out, null, 2) + ";\n", "utf8");
+  const target = new URL("../data.js", import.meta.url);
+  const next = "window.AA_DATA = " + JSON.stringify(out, null, 2) + ";\n";
+  let prev = "";
+  try { prev = await readFile(target, "utf8"); } catch {}
+  if (prev) {
+    try {
+      const pj = JSON.parse(prev.replace(/^window\.AA_DATA = /, "").replace(/;\s*$/, ""));
+      // 只有模型数据或权重真变了才写文件，避免定时任务刷出无意义提交
+      if (JSON.stringify(pj.models) === JSON.stringify(out.models) && JSON.stringify(pj.evals) === JSON.stringify(out.evals)) {
+        console.log("模型数据无变化，保留原 data.js（不产生提交）");
+        return;
+      }
+    } catch {}
+  }
+  await writeFile(target, next, "utf8");
   console.log("写入 data.js: " + models.length + " 个模型");
 }
 

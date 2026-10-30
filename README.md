@@ -1,6 +1,8 @@
 # CodePareto · 编程与工程视角的模型版图
 
 > 把科研从评分里拿掉，只看成本和编程/工程能力的曲线，并自动标出性价比膝点。
+>
+> 在线版：<https://x-mug.github.io/code-pareto/>　数据每 12 小时由 GitHub Actions 自动同步。
 
 打开方式：双击 `index.html`（纯静态，无需服务器）。
 
