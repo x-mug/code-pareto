@@ -54,6 +54,7 @@ import {
   VIEW_ORDER,
   applyView,
   normalizeWeights,
+  weightsForView,
   viewIsSubset,
   type PillarWeights,
 } from "@/lib/view-logic";
@@ -710,11 +711,15 @@ function ViewSwitch({
 
 function ViewWeights({
   weights,
+  locked,
+  modeLabel,
   onChange,
   onReset,
   t,
 }: {
   weights: PillarWeights;
+  locked: boolean;
+  modeLabel: string;
   onChange: (pillar: PillarKey, share: number) => void;
   onReset: () => void;
   t: Translator;
@@ -722,9 +727,10 @@ function ViewWeights({
   const effective = normalizeWeights(weights);
 
   return (
-    <div className="view-weights">
+    <div className={"view-weights" + (locked ? " is-locked" : "")}>
       <div className="view-weights__heading">
         <span className="view-weights__title">{t("view.weights.title")}</span>
+        <span className="view-weights__mode">{modeLabel}</span>
         <button type="button" className="view-weights__reset" onClick={onReset}>
           {t("view.weights.reset")}
         </button>
@@ -746,6 +752,7 @@ function ViewWeights({
                 step={1}
                 value={share}
                 aria-label={label}
+                disabled={locked}
                 onChange={(event) =>
                   onChange(pillar, Number(event.target.value) / 100)
                 }
@@ -1038,7 +1045,10 @@ export function ModelExplorer({ initialCatalog }: ModelExplorerProps) {
   // 滑块只暴露归一化后的占比；改一支时按原比例重新分配其余支柱，保证拖动值不被再归一化拉偏。
   const handleWeightChange = (pillar: PillarKey, share: number) => {
     setCustomWeights((current) => {
-      const normalized = normalizeWeights(current);
+      // 从当前视角的预设权重起步；综合视角没有支柱权重，用默认自定义权重起步
+      const normalized = normalizeWeights(
+        weightsForView(view, current) ?? DEFAULT_CUSTOM_WEIGHTS,
+      );
       const others = PILLARS.filter((key) => key !== pillar);
       const restShare = others.reduce((sum, key) => sum + normalized[key], 0);
       const remaining = Math.max(0, 1 - share);
@@ -1061,6 +1071,7 @@ export function ModelExplorer({ initialCatalog }: ModelExplorerProps) {
 
   const handleResetWeights = () => {
     setCustomWeights({ ...DEFAULT_CUSTOM_WEIGHTS });
+    setView("custom");
   };
 
   useEffect(() => {
@@ -1129,6 +1140,13 @@ export function ModelExplorer({ initialCatalog }: ModelExplorerProps) {
   );
   // 膝点：综合视角默认不画（与原版一致），编程/工程视角默认画，图上有开关可强制切换
   const showKnee = kneeOverride ?? view !== "intelligence";
+  // 权重面板展示当前生效的配比：自定义用自定义值，预设视角用预设值，综合视角用默认值占位（禁用）
+  const displayWeights =
+    view === "custom"
+      ? customWeights
+      : view === "intelligence"
+        ? DEFAULT_CUSTOM_WEIGHTS
+        : (weightsForView(view, customWeights) ?? DEFAULT_CUSTOM_WEIGHTS);
   const kneeIds = useMemo(
     () =>
       showKnee ? recommendedModels.slice(0, 2).map((model) => model.id) : [],
@@ -1182,7 +1200,7 @@ export function ModelExplorer({ initialCatalog }: ModelExplorerProps) {
         <a className="brand" href="#top" aria-label={t("brand.home")}>
           <span>
             <strong>Parallax</strong>
-            <small>AI MODEL LANDSCAPE</small>
+            <small>CODING &amp; ENGINEERING LANDSCAPE</small>
           </span>
         </a>
         <div className="site-header__actions">
@@ -1193,7 +1211,7 @@ export function ModelExplorer({ initialCatalog }: ModelExplorerProps) {
           </div>
           <a
             className="github-link"
-            href="https://github.com/cr-zhichen/parallax"
+            href="https://github.com/x-mug/code-pareto"
             target="_blank"
             rel="noreferrer"
             aria-label={t("github.repository")}
@@ -1256,30 +1274,43 @@ export function ModelExplorer({ initialCatalog }: ModelExplorerProps) {
           />
         </div>
 
-        <ViewSwitch
-          view={view}
-          onViewChange={setView}
-          openOnly={openOnly}
-          onToggleOpenOnly={() => setOpenOnly((current) => !current)}
-          t={t}
-        />
-        <p className="view-switch__hint">
-          {/* view-logic 里的 i18n key 表是 string，收窄后交给 t() */}
-          {t(VIEW_HINT_I18N_KEYS[view] as TranslationKey)}
-          {viewIsSubset(view) ? (
-            <span className="view-switch__subset">
-              {t("view.subsetNotice", { count: chartModels.length })}
-            </span>
-          ) : null}
-        </p>
-        {view === "custom" ? (
+        <section className="view-panel" aria-label={t("view.label")}>
+          <div className="view-panel__head">
+            <span className="view-panel__label">{t("view.label")}</span>
+            <ViewSwitch
+              view={view}
+              onViewChange={setView}
+              openOnly={openOnly}
+              onToggleOpenOnly={() => setOpenOnly((current) => !current)}
+              t={t}
+            />
+          </div>
+          <p className="view-switch__hint">
+            {/* view-logic 里的 i18n key 表是 string，收窄后交给 t() */}
+            {t(VIEW_HINT_I18N_KEYS[view] as TranslationKey)}
+            {viewIsSubset(view) ? (
+              <span className="view-switch__subset">
+                {t("view.subsetNotice", { count: chartModels.length })}
+              </span>
+            ) : null}
+          </p>
           <ViewWeights
-            weights={customWeights}
+            weights={displayWeights}
+            locked={view === "intelligence"}
+            modeLabel={
+              view === "intelligence"
+                ? t("view.weights.fixed")
+                : view === "custom"
+                  ? t("view.chip.custom")
+                  : t("view.weights.following", {
+                      view: t(VIEW_I18N_KEYS[view] as TranslationKey),
+                    })
+            }
             onChange={handleWeightChange}
             onReset={handleResetWeights}
             t={t}
           />
-        ) : null}
+        </section>
 
         <div className="creator-legend" aria-label={t("creatorFilter.label")}>
           <button

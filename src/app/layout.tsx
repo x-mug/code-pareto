@@ -62,8 +62,8 @@ const localeBootstrapScript = `
 `;
 
 export const metadata: Metadata = {
-  title: "Parallax · AI 模型版图",
-  description: "从能力、成本和替代关系探索 AI 模型版图。",
+  title: "Parallax · 编程与工程模型版图",
+  description: "只关心编程与工程能力的模型版图：成本 × 能力、帕累托前沿与膝点。",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
