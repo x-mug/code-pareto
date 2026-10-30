@@ -1,0 +1,6 @@
+node_modules/
+.devtools/
+.npm-cache/
+*.log
+shot.png
+.DS_Store

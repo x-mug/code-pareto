@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>CodePareto · 编程与工程视角的模型版图</title>
+<meta name="description" content="只用 Artificial Analysis 的编程与工程维度，找到成本-能力曲线的膝点。" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div class="glow glow-a"></div>
+<div class="glow glow-b"></div>
+
+<header class="site-header">
+  <div class="brand">
+    <span class="brand-mark"></span>
+    <div>
+      <strong>CodePareto</strong>
+      <small>编程 × 工程 · 模型版图</small>
+    </div>
+  </div>
+  <div class="header-meta">
+    <span id="syncTime">数据加载中…</span>
+    <a class="ghost-link" href="https://artificialanalysis.ai/indexes/engineering" target="_blank" rel="noreferrer">数据来源 Artificial Analysis ↗</a>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <p class="eyebrow">CODING &amp; ENGINEERING ONLY</p>
+    <h1>把科研从评分里拿掉，<br /><span>膝点就浮出来了。</span></h1>
+    <p class="hero-copy">
+      Artificial Analysis 的 Intelligence Index v5 里，纯编程只占 15%，其余是科研、知识与通用推理。
+      这里只保留编程与工程相关的能力支柱，重新加权后画出成本-能力曲线，并自动标出性价比膝点。
+    </p>
+    <div class="stat-row">
+      <div><strong id="statModels">–</strong><span>被评模型</span></div>
+      <div><strong id="statPillars">–</strong><span>帕累托前沿点</span></div>
+      <div><strong id="statKnee">–</strong><span>当前膝点</span></div>
+    </div>
+  </section>
+
+  <section class="controls">
+    <div class="control-block">
+      <span class="control-label">视角</span>
+      <div class="chips" id="presetChips" role="tablist"></div>
+    </div>
+    <div class="control-block" id="weightsPanel">
+      <span class="control-label">自定义权重</span>
+      <div class="sliders" id="weightSliders"></div>
+    </div>
+    <div class="control-block">
+      <span class="control-label">筛选</span>
+      <div class="filters">
+        <label class="toggle"><input type="checkbox" id="openOnly" /><span>仅开源权重</span></label>
+        <label class="toggle"><input type="checkbox" id="reasoningOnly" /><span>仅推理模式</span></label>
+      </div>
+    </div>
+    <div class="control-block grow">
+      <span class="control-label">厂商 <button class="mini" id="providerAll">全选</button></span>
+      <div class="providers" id="providerChips"></div>
+    </div>
+  </section>
+
+  <section class="board">
+    <div class="chart-card">
+      <div class="chart-head">
+        <div>
+          <h2 id="chartTitle">编程能力 vs 每任务成本</h2>
+          <p id="chartSubtitle">Artificial Analysis Agentic Coding 子分数 · 每任务成本（对数轴）</p>
+        </div>
+        <div class="legend-static">
+          <span><i class="dot frontier"></i>帕累托前沿</span>
+          <span><i class="dot knee"></i>膝点</span>
+        </div>
+      </div>
+      <div class="chart-wrap">
+        <svg id="chart" viewBox="0 0 1080 660" role="img" aria-label="成本与能力散点图"></svg>
+        <div class="tooltip" id="tooltip" hidden></div>
+      </div>
+      <p class="chart-note" id="chartNote"></p>
+    </div>
+
+    <aside class="insights">
+      <h2>读数</h2>
+      <div class="insight-cards" id="insightCards"></div>
+      <div class="frontier-list">
+        <h3>帕累托前沿 <small>按成本升序</small></h3>
+        <ol id="frontierList"></ol>
+      </div>
+    </aside>
+  </section>
+
+  <section class="table-card">
+    <div class="table-head">
+      <h2>完整名单</h2>
+      <p>点击表头排序 · 得分与成本都按当前视角的权重实时计算</p>
+    </div>
+    <div class="table-wrap">
+      <table id="modelTable">
+        <thead>
+          <tr>
+            <th data-sort="rank" class="num">#</th>
+            <th data-sort="name">模型</th>
+            <th data-sort="score" class="num">本视角得分</th>
+            <th data-sort="cost" class="num">每任务成本</th>
+            <th data-sort="value" class="num">每美元得分</th>
+            <th data-sort="aaIndex" class="num">AA 综合 v5</th>
+            <th data-sort="rankDelta" class="num">排名变化</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="method">
+    <h2>口径与算法</h2>
+    <div class="method-grid">
+      <div>
+        <h3>得分怎么来的</h3>
+        <p>
+          能力支柱直接取 Artificial Analysis Engineering Index 页面公开的子分数（0–100）：
+          Agentic Coding = FrontierCode 2.0 与 Terminal-Bench 4.0 等权；Agentic Knowledge Work = AA-Briefcase；
+          Science、Reasoning、Knowledge 同理。默认「纯编程」只取 Agentic Coding 一支。
+        </p>
+      </div>
+      <div>
+        <h3>成本怎么算的</h3>
+        <p>
+          用 AA 公开的评测 token 消耗 × 官方价格（含缓存命中/写入与推理 token），除以任务数，
+          再按当前权重做加权平均，复刻 AA 的 “cost per task” 口径。与 AA 自己公布的综合每任务成本误差在 1–3%。
+        </p>
+      </div>
+      <div>
+        <h3>膝点怎么找的</h3>
+        <p>
+          先取帕累托前沿（同成本下没有更强的模型），再在「对数成本 × 得分」归一化平面上，
+          找离首尾连线最远的那个点 —— 也就是再往上加钱、能力提升开始变缓的拐点（Kneedle 思路）。
+        </p>
+      </div>
+      <div>
+        <h3>要留意</h3>
+        <p>
+          样本是 AA 完整跑完 9 项评测的 28 个模型，覆盖面不等于全市场；
+          成本按官方标价估算，实际账单受缓存率与折扣影响；K2 Horizon 当前标价接近 0，属促销/免费档位。
+        </p>
+      </div>
+    </div>
+    <p class="disclaimer">
+      本页只是可视化与再加权，不产出新数据。评分、成本原始值均来自 Artificial Analysis，版权归其所有。
+    </p>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <span>CodePareto · 本地静态页，数据 <code>site/data.js</code> 由 <code>scripts/sync.mjs</code> 生成</span>
+  <span id="footerTime"></span>
+</footer>
+
+<script src="data.js"></script>
+<script src="core.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
