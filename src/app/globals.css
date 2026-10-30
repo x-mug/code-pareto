@@ -2588,9 +2588,9 @@ a {
   font-family: inherit;
   font-size: 10px;
   font-weight: 700;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.08em;
   line-height: 1.6;
-  color: var(--ink-faint);
+  color: var(--ink-soft);
   text-transform: uppercase;
   padding-bottom: 1px;
 }
