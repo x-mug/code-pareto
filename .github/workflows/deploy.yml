@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - main
+  schedule:
+    # 每 12 小时用最新 AA 数据重建一次站点
+    - cron: "23 */12 * * *"
   workflow_dispatch:
 
 permissions:

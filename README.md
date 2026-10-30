@@ -1,5 +1,7 @@
 # Parallax · CodePareto 分支
 
+**在线站点：<https://x-mug.github.io/code-pareto/>**（数据每 12 小时自动重建）
+
 本项目是 [cr-zhichen/parallax](https://github.com/cr-zhichen/parallax)（MIT）的 fork：
 **界面、交互、五语 i18n、主题、ECharts 图表行为与原版保持一致**，并叠加了"只关心编程/工程能力"的视角。
 
