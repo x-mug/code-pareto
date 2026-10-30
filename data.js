@@ -1,5 +1,5 @@
 window.AA_DATA = {
-  "generatedAt": "2026-10-30T11:21:09.199Z",
+  "generatedAt": "2026-10-30T11:23:29.364Z",
   "catalogSyncedAt": "2026-10-30T08:00:00.000Z",
   "sources": [
     {
