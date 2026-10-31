@@ -2669,3 +2669,34 @@ a {
     width: 100%;
   }
 }
+
+/* ── 模型搜索：下沉到图表区上方，滚动时贴顶悬浮 ─────────────────── */
+
+.search-bar {
+  position: sticky;
+  top: 8px;
+  z-index: 20;
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 0 10px;
+}
+
+.search-bar .model-search {
+  width: min(380px, 100%);
+  padding: 6px 10px 0;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--surface) 94%, transparent);
+  backdrop-filter: blur(8px);
+  box-shadow: var(--shadow);
+}
+
+.search-bar .model-search:focus-within {
+  border-color: var(--line-strong);
+}
+
+@media (max-width: 720px) {
+  .search-bar .model-search {
+    width: 100%;
+  }
+}

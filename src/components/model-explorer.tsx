@@ -1471,16 +1471,6 @@ export function ModelExplorer({ initialCatalog }: ModelExplorerProps) {
             <h2 id="explorer-title">{t("explorer.title")}</h2>
             <p>{t("explorer.description")}</p>
           </div>
-          <ModelSearch
-            models={visibleModels}
-            theme={resolvedTheme}
-            locale={locale}
-            t={t}
-            onSelect={(id) => {
-              handleSelectModel(id);
-              setActiveCreators(new Set());
-            }}
-          />
         </div>
 
         <section className="view-panel" aria-label={t("view.label")}>
@@ -1622,6 +1612,19 @@ export function ModelExplorer({ initialCatalog }: ModelExplorerProps) {
           }
           t={t}
         />
+
+        <div className="search-bar">
+          <ModelSearch
+            models={visibleModels}
+            theme={resolvedTheme}
+            locale={locale}
+            t={t}
+            onSelect={(id) => {
+              handleSelectModel(id);
+              setActiveCreators(new Set());
+            }}
+          />
+        </div>
 
         <div className="analysis-grid">
           <section className="chart-card" aria-label={t("chart.areaLabel")}>
