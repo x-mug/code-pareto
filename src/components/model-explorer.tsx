@@ -58,6 +58,11 @@ import {
   viewIsSubset,
   type PillarWeights,
 } from "@/lib/view-logic";
+import {
+  decodeUrlState,
+  mergeUrlState,
+  weightsEqual,
+} from "@/lib/url-state";
 
 function ChartLoading() {
   const { t } = useLocale();
@@ -84,6 +89,15 @@ type ResolvedTheme = "light" | "dark";
 type XAxisScale = "log" | "linear";
 
 const THEME_STORAGE_KEY = "parallax-theme";
+
+/** 地址栏同步的防抖间隔，拖滑块时只写最后一次 */
+const URL_SYNC_DELAY_MS = 200;
+
+/** 直接调原生 replaceState，Next 的路由补丁会把改地址栏当成一次导航 */
+function replaceUrlWithoutRouter(url: string) {
+  const history = window.history;
+  History.prototype.replaceState.call(history, history.state, "", url);
+}
 
 function getStoredThemePreference(): ThemePreference {
   if (typeof window === "undefined") return "system";
@@ -1007,12 +1021,19 @@ function getLocalizedSourceNotice(
 
 export function ModelExplorer({ initialCatalog }: ModelExplorerProps) {
   const catalog = initialCatalog;
-  const initialSelected = pickDefaultModel(initialCatalog.models);
   const { preference, resolvedTheme, setPreference } = useThemePreference();
   const { locale, setLocale, t } = useLocale();
   const chartMetaRef = useRef<HTMLDivElement>(null);
+  const defaultSelectedId = useMemo(
+    () => pickDefaultModel(catalog.models)?.id ?? null,
+    [catalog.models],
+  );
+  const modelIds = useMemo(
+    () => catalog.models.map((model) => model.id),
+    [catalog.models],
+  );
   const [selectedId, setSelectedId] = useState<string | null>(
-    initialSelected?.id ?? null,
+    defaultSelectedId,
   );
   const [activeCreators, setActiveCreators] = useState<Set<string>>(
     () => new Set(),
@@ -1031,6 +1052,8 @@ export function ModelExplorer({ initialCatalog }: ModelExplorerProps) {
   const [openOnly, setOpenOnly] = useState(false);
   // null = 跟随视角：综合视角保持原版外观（不画膝点），编程/工程视角默认显示；手动点击后固定
   const [kneeOverride, setKneeOverride] = useState<boolean | null>(null);
+  // 链接只在水合后读一次，读完才允许把状态写回地址栏
+  const [urlHydrated, setUrlHydrated] = useState(false);
 
   const handleSelectModel = (id: string) => {
     setHoveredAlternativeId(null);
@@ -1073,6 +1096,51 @@ export function ModelExplorer({ initialCatalog }: ModelExplorerProps) {
     setCustomWeights({ ...DEFAULT_CUSTOM_WEIGHTS });
     setView("custom");
   };
+
+  // 链接里的视图状态只在挂载后读取，静态导出的首屏与现在完全一致
+  useEffect(() => {
+    // 地址栏是外部数据源，挂载后再一次性把链接状态灌进 React state
+    const applyUrlState = () => {
+      const next = decodeUrlState(window.location.search, modelIds);
+      setView(next.view);
+      setOpenOnly(next.openOnly);
+      setCustomWeights((current) =>
+        weightsEqual(current, next.customWeights) ? current : next.customWeights,
+      );
+      setSelectedId((current) =>
+        next.selectedId === null ? current : next.selectedId,
+      );
+      setUrlHydrated(true);
+    };
+    applyUrlState();
+  }, [modelIds]);
+
+  // 状态变了就改地址栏，防抖避免拖滑块时刷爆历史，也不新增历史条目
+  useEffect(() => {
+    if (!urlHydrated) return;
+    const nextState = {
+      view,
+      customWeights,
+      openOnly,
+      // 与默认选中一致时不写 m，链接保持干净
+      selectedId: selectedId === defaultSelectedId ? null : selectedId,
+    };
+
+    const timer = window.setTimeout(() => {
+      try {
+        const nextSearch = mergeUrlState(window.location.search, nextState);
+        if (nextSearch === window.location.search) return;
+        // 带上路径和 hash，空查询串才不会解析回旧的参数
+        replaceUrlWithoutRouter(
+          `${window.location.pathname}${nextSearch}${window.location.hash}`,
+        );
+      } catch {
+        // 地址栏同步失败不影响页面本身
+      }
+    }, URL_SYNC_DELAY_MS);
+
+    return () => window.clearTimeout(timer);
+  }, [customWeights, defaultSelectedId, openOnly, selectedId, urlHydrated, view]);
 
   useEffect(() => {
     const meta = chartMetaRef.current;
