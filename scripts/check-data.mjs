@@ -17,9 +17,9 @@ const PILLARS = ["coding", "akw", "science", "reasoning", "knowledge"];
 
 /** 当前 AA 页面快照的预期值：实际值低于下限即失败，高于预期只提示上游已更新 */
 const EXPECTED = {
-  models: 718,
+  models: 719,
   creators: 60,
-  comparable: 81,
+  comparable: 82,
   dimensions: 28,
   pillarCosts: 26,
   openWeights: 13,
