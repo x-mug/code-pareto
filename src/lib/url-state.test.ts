@@ -25,6 +25,7 @@ function expected(overrides: Partial<UrlViewState> = {}): UrlViewState {
     customWeights: { ...DEFAULT_CUSTOM_WEIGHTS },
     openOnly: DEFAULT_URL_VIEW_STATE.openOnly,
     selectedId: null,
+    axis: DEFAULT_URL_VIEW_STATE.axis,
     ...overrides,
   };
 }
@@ -39,7 +40,29 @@ describe("encodeUrlState", () => {
     expect(encodeUrlState(DEFAULT_URL_VIEW_STATE)).toBe("");
   });
 
-  it("完整状态按固定顺序写四个参数", () => {
+  it("完整状态按固定顺序写全部参数", () => {
+    const encoded = encodeUrlState(
+      expected({
+        view: "custom",
+        openOnly: true,
+        selectedId: "model-b",
+        axis: "speed",
+        customWeights: weights({
+          coding: 0.5,
+          akw: 0.25,
+          science: 0.125,
+          reasoning: 0.0625,
+          knowledge: 0.0625,
+        }),
+      }),
+    );
+
+    expect(encoded).toBe(
+      "view=custom&open=1&m=model-b&w=coding:50,akw:25,science:12.5,reasoning:6.25,knowledge:6.25&axis=speed",
+    );
+  });
+
+  it("价格轴是默认值，不写 axis 参数", () => {
     const encoded = encodeUrlState(
       expected({
         view: "custom",
@@ -154,6 +177,10 @@ describe("decodeUrlState", () => {
     expect(decodeUrlState("?w=coding:60,akw:40", MODEL_IDS)).toEqual(
       expected({ customWeights: normalizeWeights({ coding: 0.6, akw: 0.4 }) }),
     );
+    expect(decodeUrlState("?axis=speed", MODEL_IDS)).toEqual(
+      expected({ axis: "speed" }),
+    );
+    expect(decodeUrlState("?axis=cost", MODEL_IDS)).toEqual(expected());
   });
 
   it("非法 view 回落到综合视角", () => {
@@ -288,6 +315,7 @@ describe("decodeUrlState", () => {
       const state = decodeUrlState(search, MODEL_IDS);
       expect(VIEW_ORDER).toContain(state.view);
       expect(state.selectedId).toBeNull();
+      expect(state.axis).toBe("cost");
       const sum = PILLARS.reduce((total, pillar) => total + state.customWeights[pillar], 0);
       expect(sum).toBeCloseTo(1, 6);
     }
@@ -323,6 +351,7 @@ describe("mergeUrlState", () => {
       view: "custom",
       openOnly: true,
       selectedId: "model-b",
+      axis: "speed",
       customWeights: weights({ coding: 0.5, akw: 0.25, science: 0.25 }),
     });
     const once = mergeUrlState("?utm=1&view=coding&m=model-a", state);
@@ -334,7 +363,12 @@ describe("mergeUrlState", () => {
   it("状态回到默认时清掉自己的参数", () => {
     const withParams = mergeUrlState(
       "",
-      expected({ view: "coding", openOnly: true, selectedId: "model-a" }),
+      expected({
+        view: "coding",
+        openOnly: true,
+        selectedId: "model-a",
+        axis: "speed",
+      }),
     );
 
     expect(mergeUrlState(withParams, expected())).toBe("");
@@ -362,8 +396,67 @@ describe("weightsEqual", () => {
   });
 });
 
+describe("axis 参数", () => {
+  it("默认价格轴不占链接，读出来还是价格轴", () => {
+    expect(encodeUrlState(expected({ axis: "cost" }))).toBe("");
+    expect(decodeUrlState("", MODEL_IDS).axis).toBe("cost");
+  });
+
+  it("速度轴往返得到同一个链接", () => {
+    expect(encodeUrlState(expected({ axis: "speed" }))).toBe("axis=speed");
+    expect(decodeUrlState("?axis=speed", MODEL_IDS)).toEqual(
+      expected({ axis: "speed" }),
+    );
+    expect(encodeUrlState(decodeUrlState("?axis=speed", MODEL_IDS))).toBe(
+      "axis=speed",
+    );
+  });
+
+  it("与其它参数同时出现时排在最后", () => {
+    expect(
+      encodeUrlState(expected({ view: "coding", openOnly: true, axis: "speed" })),
+    ).toBe("view=coding&open=1&axis=speed");
+    expect(mergeUrlState("?utm_source=x", expected({ axis: "speed" }))).toBe(
+      "?utm_source=x&axis=speed",
+    );
+  });
+
+  it("非法值一律回落到价格轴", () => {
+    const invalid = [
+      "COST",
+      "SPEED",
+      "Speed",
+      "linear",
+      "log",
+      "1",
+      "cost,speed",
+      "speed ",
+      "",
+    ];
+
+    for (const raw of invalid) {
+      expect(decodeUrlState(`?axis=${encodeURIComponent(raw)}`, MODEL_IDS).axis).toBe(
+        "cost",
+      );
+    }
+    expect(decodeUrlState("?axis", MODEL_IDS).axis).toBe("cost");
+  });
+
+  it("切回价格轴时清掉 axis 参数", () => {
+    const speedSearch = mergeUrlState("?utm=1", expected({ axis: "speed" }));
+
+    expect(speedSearch).toBe("?utm=1&axis=speed");
+    expect(mergeUrlState(speedSearch, expected())).toBe("?utm=1");
+  });
+
+  it("重复 axis 参数取第一个", () => {
+    expect(decodeUrlState("?axis=speed&axis=cost", MODEL_IDS).axis).toBe("speed");
+    expect(decodeUrlState("?axis=cost&axis=speed", MODEL_IDS).axis).toBe("cost");
+  });
+});
+
 describe("参数契约", () => {
-  it("参数名固定为 view/open/m/w", () => {
-    expect([...URL_STATE_KEYS]).toEqual(["view", "open", "m", "w"]);
+  it("参数名固定为 view/open/m/w/axis", () => {
+    expect([...URL_STATE_KEYS]).toEqual(["view", "open", "m", "w", "axis"]);
   });
 });

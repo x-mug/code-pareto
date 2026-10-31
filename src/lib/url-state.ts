@@ -1,4 +1,5 @@
 import type { PillarKey, ViewKey } from "@/lib/models";
+import type { ChartAxisKey } from "@/lib/speed-logic";
 import {
   DEFAULT_CUSTOM_WEIGHTS,
   PILLARS,
@@ -8,9 +9,10 @@ import {
 } from "@/lib/view-logic";
 
 /** 链接参数名，顺序就是写进地址栏的顺序 */
-export const URL_STATE_KEYS = ["view", "open", "m", "w"] as const;
+export const URL_STATE_KEYS = ["view", "open", "m", "w", "axis"] as const;
 
-const [VIEW_PARAM, OPEN_PARAM, MODEL_PARAM, WEIGHTS_PARAM] = URL_STATE_KEYS;
+const [VIEW_PARAM, OPEN_PARAM, MODEL_PARAM, WEIGHTS_PARAM, AXIS_PARAM] =
+  URL_STATE_KEYS;
 const OPEN_VALUE = "1";
 
 const OWN_PARAMS = new Set<string>(URL_STATE_KEYS);
@@ -28,6 +30,8 @@ export interface UrlViewState {
   openOnly: boolean;
   /** null 表示链接没指定模型，页面继续用自己的默认选中 */
   selectedId: string | null;
+  /** 图表横轴语义：cost 按每任务成本，speed 按输出速度 */
+  axis: ChartAxisKey;
 }
 
 export const DEFAULT_URL_VIEW_STATE: UrlViewState = {
@@ -35,6 +39,7 @@ export const DEFAULT_URL_VIEW_STATE: UrlViewState = {
   customWeights: DEFAULT_CUSTOM_WEIGHTS,
   openOnly: false,
   selectedId: null,
+  axis: "cost",
 };
 
 /** 每次返回独立对象，调用方改不坏默认值 */
@@ -44,6 +49,7 @@ function defaultUrlViewState(): UrlViewState {
     customWeights: { ...DEFAULT_CUSTOM_WEIGHTS },
     openOnly: DEFAULT_URL_VIEW_STATE.openOnly,
     selectedId: null,
+    axis: DEFAULT_URL_VIEW_STATE.axis,
   };
 }
 
@@ -112,6 +118,11 @@ function parseView(raw: string | null): ViewKey {
   return VIEW_ORDER.find((view) => view === raw) ?? DEFAULT_URL_VIEW_STATE.view;
 }
 
+/** 只认 cost 和 speed，其它值一律回到默认的价格轴 */
+function parseAxis(raw: string | null): ChartAxisKey {
+  return raw === "speed" ? "speed" : DEFAULT_URL_VIEW_STATE.axis;
+}
+
 function parseSelectedId(
   raw: string | null,
   knownModelIds: Iterable<string>,
@@ -139,6 +150,9 @@ function urlStateEntries(state: UrlViewState): Array<[string, string]> {
   if (!weightsEqual(state.customWeights, DEFAULT_CUSTOM_WEIGHTS)) {
     const encoded = encodeWeights(state.customWeights);
     if (encoded) entries.push([WEIGHTS_PARAM, encoded]);
+  }
+  if (state.axis !== DEFAULT_URL_VIEW_STATE.axis) {
+    entries.push([AXIS_PARAM, state.axis]);
   }
 
   return entries;
@@ -212,6 +226,7 @@ export function decodeUrlState(
       customWeights: decodeWeights(params.get(WEIGHTS_PARAM)),
       openOnly: params.get(OPEN_PARAM) === OPEN_VALUE,
       selectedId: parseSelectedId(params.get(MODEL_PARAM), knownModelIds),
+      axis: parseAxis(params.get(AXIS_PARAM)),
     };
   } catch {
     return defaultUrlViewState();
