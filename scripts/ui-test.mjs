@@ -45,6 +45,8 @@ const VIEW_LABELS = [
   "自定义",
 ];
 const OPEN_WEIGHTS_LABEL = "仅开源权重";
+// 对照轴页签文案，与 src/lib/i18n.ts 的 zh-CN 块一致
+const AXIS_LABELS = { cost: "能力 / 价格", speed: "能力 / 速度" };
 
 function normalizeWeights(input) {
   const out = {};
@@ -175,6 +177,70 @@ if (models.length === 0) {
   process.exit(1);
 }
 
+// —— 速度轴：复刻 src/lib/speed-logic.ts 的最简版本 ——
+// 能力有限且输出速度有限为正的模型才能上速度图
+function hasOutputSpeed(model) {
+  return (
+    typeof model.intelligence === "number" &&
+    Number.isFinite(model.intelligence) &&
+    typeof model.outputSpeed === "number" &&
+    Number.isFinite(model.outputSpeed) &&
+    model.outputSpeed > 0
+  );
+}
+
+// 速度前沿：按输出速度降序，只留分数持续抬升的点
+function speedFrontierOf(list) {
+  const sorted = list
+    .filter(hasOutputSpeed)
+    .sort((a, b) => b.outputSpeed - a.outputSpeed || b.intelligence - a.intelligence);
+  let bestScore = Number.NEGATIVE_INFINITY;
+  return sorted.filter((model) => {
+    if (model.intelligence <= bestScore) return false;
+    bestScore = model.intelligence;
+    return true;
+  });
+}
+
+// 速度膝点：归一化后按 kneeScore 排序，退化区间按 0 处理
+function speedKneeIds(list, limit) {
+  const frontier = speedFrontierOf(list);
+  if (frontier.length === 0) return [];
+  if (frontier.length === 1) return [frontier[0].id];
+
+  const fastest = frontier[0];
+  const slowest = frontier[frontier.length - 1];
+  const logFastestSpeed = Math.log10(fastest.outputSpeed);
+  const logSpeedRange = logFastestSpeed - Math.log10(slowest.outputSpeed);
+  const scoreRange = slowest.intelligence - fastest.intelligence;
+  const safeRatio = (numerator, denominator) => {
+    if (!Number.isFinite(numerator) || !Number.isFinite(denominator)) return 0;
+    if (Math.abs(denominator) < 1e-12) return 0;
+    const value = numerator / denominator;
+    return Number.isFinite(value) ? value : 0;
+  };
+
+  return frontier
+    .map((model) => {
+      const normalizedSpeed = safeRatio(logFastestSpeed - Math.log10(model.outputSpeed), logSpeedRange);
+      const normalizedScore = safeRatio(model.intelligence - fastest.intelligence, scoreRange);
+      return {
+        model,
+        kneeScore: normalizedScore - normalizedSpeed,
+        idealDistance: Math.hypot(normalizedSpeed, 1 - normalizedScore),
+      };
+    })
+    .sort((a, b) => {
+      const kneeDelta = b.kneeScore - a.kneeScore;
+      if (Math.abs(kneeDelta) > 1e-12) return kneeDelta;
+      const idealDelta = a.idealDistance - b.idealDistance;
+      if (Math.abs(idealDelta) > 1e-12) return idealDelta;
+      return b.model.outputSpeed - a.model.outputSpeed;
+    })
+    .slice(0, Math.max(0, Math.floor(limit)))
+    .map((entry) => entry.model.id);
+}
+
 const chartableAll = applyView(models, "intelligence", DEFAULT_CUSTOM_WEIGHTS).filter(isChartable);
 const expected = {
   total: models.length,
@@ -216,6 +282,15 @@ const dragTargetAfterMath = dragTarget
   ? applyView([dragTarget], "custom", DRAG_WEIGHTS).filter(isChartable)[0] ?? null
   : null;
 
+// 速度轴期望：可上图数、顶部膝点推荐数、这些膝点里有多少能落进价格轴表格
+const speedKneeTopIds = speedKneeIds(models, 5);
+const costChartableIds = new Set(chartableAll.map((model) => model.id));
+const speedExpected = {
+  rows: models.filter(hasOutputSpeed).length,
+  recommendations: speedKneeTopIds.length,
+  kneeTableRows: speedKneeTopIds.slice(0, 2).filter((id) => costChartableIds.has(id)).length,
+};
+
 console.log("catalog: " + expected.total + " 个模型（syncedAt " + catalog.syncedAt + "）");
 console.log(
   "推导期望: 综合 " +
@@ -232,6 +307,16 @@ console.log(
     expected.openCustomDrag +
     " / 厂商 " +
     expected.creators,
+);
+console.log(
+  "速度轴推导: 可上图 " +
+    speedExpected.rows +
+    "（价格轴 " +
+    expected.intelligence +
+    "） / 膝点推荐 " +
+    speedExpected.recommendations +
+    " / 表格膝点行 " +
+    speedExpected.kneeTableRows,
 );
 if (!dragTarget) {
   console.log("警告: catalog 里找不到编程与工程指标差异明显的模型，拖拽数值推导会被跳过。");
@@ -477,7 +562,6 @@ const tableCountBadge = () => document.querySelector(".model-table__count")?.tex
 const rowsDetail = (expectedValue) =>
   "实际 " + rowCount() + "，推导 " + expectedValue + "；若 out/ 早于 catalog.json 请先 npm run build";
 const rowName = (row) => row.querySelector(".model-table__model strong")?.textContent.trim() ?? "";
-const rowNumbers = (row) => Array.from(row.querySelectorAll(".model-table__num")).map((cell) => cell.textContent.trim());
 const parseMoney = (text) => Number.parseFloat(String(text).replace(/[^0-9.]/g, ""));
 const subsetNotice = () => document.querySelector(".view-switch__subset");
 
@@ -675,13 +759,34 @@ try {
   check("综合视角膝点重新隐藏", kneeBadges().length === 0, "实际 " + kneeBadges().length);
 
   console.log("\n=== 表格列头排序 ===");
-  const sortHeaders = q(".model-table__sort");
-  check("表头 7 列且可点击排序", sortHeaders.length === 7, "实际 " + sortHeaders.length);
-  const costHeader = sortHeaders[3];
-  check("第 4 列是每任务成本", (costHeader?.textContent ?? "").includes("成本"), costHeader?.textContent ?? "无");
-  const costColumn = () => rows().map((row) => parseMoney(rowNumbers(row)[1]));
-  const sortState = () => costHeader?.closest("th")?.getAttribute("aria-sort") ?? "";
-  if (costHeader) click(costHeader);
+  // 列定义来自 src/components/model-table.tsx 的 columns 表：rank/name/score/cost/speed/value/aaIndex/rankDelta 共 8 列
+  const EXPECTED_TABLE_COLUMNS = [
+    "#",
+    "模型",
+    "本视角得分",
+    "每任务成本",
+    "输出速度",
+    "每美元得分",
+    "AA 综合 v5",
+    "排名变化",
+  ];
+  const tableHeaders = () => q(".model-table__sort");
+  const headerLabels = () => tableHeaders().map((header) => header.textContent.replace(/[↑↓]/g, "").trim());
+  check(
+    "表格列头与 8 列定义一致",
+    JSON.stringify(headerLabels()) === JSON.stringify(EXPECTED_TABLE_COLUMNS),
+    "实际 " + headerLabels().join(" / "),
+  );
+  // 成本列按表头文字定位，避免加列后序号错位
+  const costColumnIndex = headerLabels().indexOf("每任务成本");
+  check("成本列可按表头定位", costColumnIndex >= 0, "index=" + costColumnIndex);
+  const costColumn = () => rows().map((row) => parseMoney(row.children[costColumnIndex].textContent));
+  const sortState = () => tableHeaders()[costColumnIndex]?.closest("th")?.getAttribute("aria-sort") ?? "";
+  const clickCostHeader = () => {
+    const header = tableHeaders()[costColumnIndex];
+    if (header) click(header);
+  };
+  clickCostHeader();
   await waitFor(() => sortState() === "descending", 5000);
   const descendingCosts = costColumn();
   check(
@@ -689,7 +794,7 @@ try {
     sortState() === "descending" && descendingCosts.every((value, index) => index === 0 || descendingCosts[index - 1] >= value),
     "aria-sort=" + sortState() + "，首/末 " + descendingCosts[0] + " / " + descendingCosts[descendingCosts.length - 1],
   );
-  if (costHeader) click(costHeader);
+  clickCostHeader();
   await waitFor(() => sortState() === "ascending", 5000);
   const ascendingCosts = costColumn();
   check(
@@ -855,6 +960,121 @@ try {
     "URL 场景页面无 console.error / jsdomError",
     urlScenarioErrors.length === 0,
     urlScenarioErrors.slice(0, 5).join(" || "),
+  );
+
+  console.log("\n=== 对照轴 ===");
+  const axisChips = () => q(".axis-switch .legend-chip");
+  const axisChip = (label) => axisChips().find((chip) => chip.textContent.trim() === label);
+  const isActiveAxis = (label) => axisChip(label)?.classList.contains("is-active") === true;
+  const axisSubset = () => document.querySelector(".axis-switch__subset");
+  const kneeTogglePressed = () => q('.chart-card__actions .chart-label-toggle[aria-pressed="true"]').length;
+  const axisChipsSummary = () =>
+    axisChips().map((chip) => (chip.classList.contains("is-active") ? "*" : "") + chip.textContent.trim()).join(" / ");
+  // 两轴可比数相等时无需子集提示，那条断言直接跳过
+  const speedIsSubset = speedExpected.rows < expected.intelligence;
+
+  check(
+    "对照轴默认激活能力/价格",
+    axisChips().length === 2 && isActiveAxis(AXIS_LABELS.cost) && !isActiveAxis(AXIS_LABELS.speed),
+    axisChipsSummary(),
+  );
+  check("表头文字包含输出速度", headerLabels().includes("输出速度"), headerLabels().join(" / "));
+
+  const speedAxisChip = axisChip(AXIS_LABELS.speed);
+  check("找到能力/速度 chip", speedAxisChip !== undefined);
+  if (speedAxisChip) click(speedAxisChip);
+  await waitFor(() => isActiveAxis(AXIS_LABELS.speed) && rowCount() === expected.intelligence, 8000);
+  check(
+    "点击能力/速度后切换对照轴",
+    isActiveAxis(AXIS_LABELS.speed) && !isActiveAxis(AXIS_LABELS.cost),
+    axisChipsSummary(),
+  );
+  check(
+    "速度轴下图表仍在",
+    document.querySelector(".chart-card") !== null && document.querySelectorAll(".model-chart svg").length > 0,
+    "svg " + document.querySelectorAll(".model-chart svg").length + " 个",
+  );
+  check(
+    "速度轴下表格行数不变",
+    rowCount() === expected.intelligence,
+    rowsDetail(expected.intelligence) + "（速度轴可比 " + speedExpected.rows + "）",
+  );
+  check(
+    "速度轴下推荐卡数量=推导值",
+    speedExpected.recommendations > 0 && q(".recommendation-card").length === speedExpected.recommendations,
+    "实际 " + q(".recommendation-card").length + "，推导 " + speedExpected.recommendations,
+  );
+  check("速度轴下膝点徽章出现", kneeBadges().length >= 1, "实际 " + kneeBadges().length);
+  check("速度轴下图内膝点开关激活", kneeTogglePressed() >= 1, "激活 " + kneeTogglePressed() + " 个");
+  check(
+    "速度轴下表格膝点行=推导交集数",
+    q(".model-table__row.is-knee").length === speedExpected.kneeTableRows,
+    "实际 " + q(".model-table__row.is-knee").length + "，推导 " + speedExpected.kneeTableRows,
+  );
+  if (speedIsSubset) {
+    check(
+      "速度轴下子集提示含推导数字",
+      axisSubset() !== null && axisSubset().textContent.includes(String(speedExpected.rows)),
+      axisSubset()?.textContent.trim() ?? "无提示",
+    );
+  } else {
+    console.log("  SKIP 速度轴子集提示（两轴可比数相等，无需提示）");
+  }
+
+  const priceAxisChip = axisChip(AXIS_LABELS.cost);
+  if (priceAxisChip) click(priceAxisChip);
+  await waitFor(() => isActiveAxis(AXIS_LABELS.cost), 8000);
+  check(
+    "点回能力/价格后恢复激活",
+    isActiveAxis(AXIS_LABELS.cost) && !isActiveAxis(AXIS_LABELS.speed),
+    axisChipsSummary(),
+  );
+  check("点回价格轴后子集提示消失", axisSubset() === null);
+  check(
+    "点回价格轴后膝点恢复隐藏",
+    kneeBadges().length === 0 && kneeTogglePressed() === 0,
+    "徽章 " + kneeBadges().length + "，激活开关 " + kneeTogglePressed(),
+  );
+
+  // URL 直达：?axis=speed 必须一进来就是速度轴
+  const pageAxisLabel = (page) =>
+    page.q(".axis-switch .legend-chip").find((chip) => chip.classList.contains("is-active"))?.textContent.trim() ?? "无";
+  const speedAxisPage = await openPage("?axis=speed");
+  await waitFor(() => speedAxisPage.ready() && pageAxisLabel(speedAxisPage) === AXIS_LABELS.speed, 30000);
+  check(
+    "?axis=speed 直达速度轴",
+    pageAxisLabel(speedAxisPage) === AXIS_LABELS.speed,
+    "激活的是 " + pageAxisLabel(speedAxisPage),
+  );
+  check(
+    "?axis=speed 表格行数=价格轴可比数",
+    speedAxisPage.rowCount() === expected.intelligence,
+    "实际 " + speedAxisPage.rowCount() + "，推导 " + expected.intelligence,
+  );
+  if (speedIsSubset) {
+    const speedPageSubset = speedAxisPage.document.querySelector(".axis-switch__subset");
+    check(
+      "?axis=speed 子集提示含推导数字",
+      speedPageSubset !== null && speedPageSubset.textContent.includes(String(speedExpected.rows)),
+      speedPageSubset?.textContent.trim() ?? "无提示",
+    );
+  }
+
+  const noAxisPage = await openPage("");
+  await waitFor(() => noAxisPage.ready(), 30000);
+  // 越过 200ms 防抖窗口，确认默认价格轴不会往地址栏写东西
+  await sleep(400);
+  check(
+    "无参数加载仍是能力/价格轴且地址栏为空",
+    pageAxisLabel(noAxisPage) === AXIS_LABELS.cost && noAxisPage.window.location.search === "",
+    "激活 " + pageAxisLabel(noAxisPage) + "，location.search = " + JSON.stringify(noAxisPage.window.location.search),
+  );
+
+  const axisScenarioErrors = [speedAxisPage, noAxisPage].flatMap((page) => page.errors);
+  check(
+    "对照轴场景页面无 console.error / jsdomError",
+    axisScenarioErrors.length === 0,
+    axisScenarioErrors.slice(0, 5).join(" || "),
   );
 
   console.log("\n=== 运行期错误 ===");
