@@ -4,15 +4,17 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "node scripts/build-site.mjs",
+    "build:next": "next build",
     "start": "next start",
     "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "check": "pnpm lint && pnpm test && pnpm build",
+    "ui:test": "node scripts/ui-test.mjs",
     "data:build": "node scripts/build-data.mjs",
     "data:check": "node scripts/check-data.mjs",
     "parity:check": "node scripts/parity-check.mjs",
-    "typecheck": "tsc --noEmit"
+    "check": "npm run lint && npm run typecheck && npm run test && npm run data:check && npm run build && npm run ui:test"
   },
   "dependencies": {
     "@chenglou/pretext": "0.0.8",
@@ -29,8 +31,11 @@
     "@types/react-dom": "19.2.4",
     "eslint": "9.39.5",
     "eslint-config-next": "16.2.12",
+    "jsdom": "^30.1.3",
     "typescript": "5.9.3",
     "vitest": "4.1.10"
   },
-  "packageManager": "pnpm@11.5.2"
+  "engines": {
+    "node": ">=24"
+  }
 }
