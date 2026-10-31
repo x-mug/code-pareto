@@ -21,6 +21,7 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -32,6 +33,7 @@ jobs:
         with:
           node-version: 24
 
+      # 不加 --omit=dev，lint / typecheck / test / ui:test 要靠 devDependencies 才能跑
       - name: Install dependencies
         run: |
           if [ -f package-lock.json ]; then
@@ -41,13 +43,27 @@ jobs:
           fi
 
       - name: Generate catalog data
-        run: node scripts/build-data.mjs
+        run: npm run data:build
 
+      - name: Validate catalog data
+        run: npm run data:check
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Unit tests
+        run: npm run test
+
+      # build 脚本已内置静态导出所需的 basePath，这里不重复传
       - name: Build static site
-        env:
-          NEXT_PUBLIC_BASE_PATH: /code-pareto
-          NEXT_TELEMETRY_DISABLED: "1"
-        run: node node_modules/next/dist/bin/next build
+        run: npm run build
+
+      # ui:test 自己起本地静态服务加载 out/，不需要额外 server 步骤
+      - name: UI tests
+        run: npm run ui:test
 
       - name: Commit refreshed catalog when it changes
         run: |
@@ -83,6 +99,7 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
