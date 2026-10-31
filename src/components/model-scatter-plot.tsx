@@ -69,16 +69,19 @@ type ChartOption = ComposeOption<
   | TooltipComponentOption
 >;
 
-type ChartableModel = ModelPoint & {
+type PlottableModel = ModelPoint & {
   intelligence: number;
-  costPerTask: number;
 };
 
+// 把模型映射到横轴数值，返回 null 表示该模型不上图。
+type ModelXReader = (model: ModelPoint) => number | null;
+
 interface ScatterDatum {
-  costPerTask: number;
   modelId: string;
   name: string;
   value: [number, number];
+  // 横轴原始值，未经对数变换。
+  xValue: number;
 }
 
 interface ChartEventParams {
@@ -108,6 +111,16 @@ interface ModelScatterPlotProps {
   kneeIds?: string[];
   scoreLabelKey?: string;
   costLabelKey?: string;
+  // 横轴取值，未传时取每任务成本。
+  xValue?: ModelXReader;
+  // 横轴数值越大越好时置 true，成本轴为 false。
+  xHigherIsBetter?: boolean;
+  // 覆盖横轴名称，未传时按 costLabelKey 取文案。
+  xAxisLabel?: string;
+  // 覆盖横轴数值格式，未传时用美元金额格式。
+  xValueFormatter?: (value: number) => string;
+  // 覆盖帕累托前沿，未传时用内部按成本算出的前沿。
+  frontier?: ModelPoint[];
   activeCreators: ReadonlySet<string>;
   showAllLabels: boolean;
   xAxisScale: "log" | "linear";
@@ -117,9 +130,10 @@ interface ModelScatterPlotProps {
   onClearSelection: () => void;
 }
 
-interface InteractiveScatterPlotProps extends Omit<ModelScatterPlotProps, "models"> {
-  chartModels: ChartableModel[];
-  frontier: ChartableModel[];
+interface InteractiveScatterPlotProps
+  extends Omit<ModelScatterPlotProps, "models" | "frontier"> {
+  chartModels: PlottableModel[];
+  frontier: ModelPoint[];
   reasoningGroups: ReasoningVariantGroup[];
 }
 
@@ -274,6 +288,34 @@ function formatCost(value: number): string {
   if (value < 0.1) return `$${value.toFixed(3)}`;
   if (value < 1) return `$${value.toFixed(2)}`;
   return `$${value.toFixed(value % 1 === 0 ? 0 : 1)}`;
+}
+
+function defaultXValue(model: ModelPoint): number | null {
+  // 默认横轴就是每任务成本，判定口径与 isChartableModel 一致。
+  return isChartableModel(model) ? model.costPerTask : null;
+}
+
+function readXValue(
+  model: ModelPoint,
+  xValue: ModelXReader | undefined,
+): number | null {
+  return (xValue ?? defaultXValue)(model);
+}
+
+// 能力有限且横轴数值有限的模型才能上图，对数轴还要求横轴严格为正。
+function isPlottableModel(
+  model: ModelPoint,
+  readModelX: ModelXReader,
+): model is PlottableModel {
+  if (
+    typeof model.intelligence !== "number" ||
+    !Number.isFinite(model.intelligence)
+  ) {
+    return false;
+  }
+
+  const value = readModelX(model);
+  return typeof value === "number" && Number.isFinite(value) && value > 0;
 }
 
 function escapeTooltipText(value: string): string {
@@ -473,6 +515,10 @@ function InteractiveScatterPlot({
   kneeIds = NO_KNEE_IDS,
   scoreLabelKey = DEFAULT_SCORE_LABEL_KEY,
   costLabelKey = DEFAULT_COST_LABEL_KEY,
+  xValue,
+  xHigherIsBetter = false,
+  xAxisLabel,
+  xValueFormatter,
   activeCreators,
   showAllLabels,
   xAxisScale,
@@ -507,8 +553,14 @@ function InteractiveScatterPlot({
     [],
   );
 
+  const xValueOf = useCallback(
+    (model: ModelPoint): number | null => readXValue(model, xValue),
+    [xValue],
+  );
   const chartSelected =
-    selected && isChartableModel(selected) ? selected : null;
+    selected && isPlottableModel(selected, xValueOf) ? selected : null;
+  // 选中模型的横轴原始值，模型不可上图时为 null。
+  const selectedXValue = chartSelected ? xValueOf(chartSelected) : null;
   const chartHovered =
     hoveredModelId === null
       ? null
@@ -562,7 +614,8 @@ function InteractiveScatterPlot({
         locale,
         isMobileChart ? "chart.yAxisMobile" : "chart.yAxisDesktop",
       );
-    const costAxisName =
+    const xAxisName =
+      xAxisLabel ??
       costLabel ??
       translate(
         locale,
@@ -571,79 +624,97 @@ function InteractiveScatterPlot({
       );
     const scoreTooltipLabel =
       scoreLabel ?? translate(locale, "chart.tooltipAbility");
-    const costTooltipLabel = costLabel ?? translate(locale, "chart.tooltipCost");
+    const xTooltipLabel =
+      xAxisLabel ?? costLabel ?? translate(locale, "chart.tooltipCost");
+    const formatXValue = xValueFormatter ?? formatCost;
 
-    const costs = chartModels.map((model) => model.costPerTask);
+    const xValues = chartModels.flatMap((model) => {
+      const value = xValueOf(model);
+      return value === null ? [] : [value];
+    });
     const scores = chartModels.map((model) => model.intelligence);
-    const minCost = Math.max(Math.min(...costs) * 0.72, 0.0001);
-    const maxCost = Math.max(...costs) * 1.28;
+    // 横轴两端各留一段余量，对数轴下同样按乘法留白。
+    const minXValue =
+      xValues.length === 0
+        ? 0.0001
+        : Math.max(Math.min(...xValues) * 0.72, 0.0001);
+    const maxXValue =
+      xValues.length === 0 ? 0.0001 : Math.max(...xValues) * 1.28;
     // ECharts dataZoom maps its percentage window linearly over the raw axis
     // extent. A transformed value axis keeps slider distance, chart distance,
     // wheel zoom and dragging in the same coordinate space for both modes.
-    const minX = toChartCost(minCost, xAxisScale);
-    const maxX = toChartCost(maxCost, xAxisScale);
+    const minX = toChartCost(minXValue, xAxisScale);
+    const maxX = toChartCost(maxXValue, xAxisScale);
     const minY = Math.max(
       0,
       Math.floor((Math.min(...scores) - 3) / 5) * 5,
     );
     const maxY = Math.ceil((Math.max(...scores) + 3) / 5) * 5;
+    const selectedChartX =
+      selectedXValue === null ? null : toChartCost(selectedXValue, xAxisScale);
 
-    const scatterData = chartModels.map((model) => {
-      const creatorStyle = getCreatorStyle(model.creator, theme);
-      const isSelected = model.id === chartSelected?.id;
-      const isHovered = model.id === chartHovered?.id;
-      const isMuted =
-        activeCreators.size > 0 &&
-        !activeCreators.has(model.creator) &&
-        !isHovered;
-      const showLabel = visibleLabelIds.has(model.id) && !isMuted;
+    const scatterData = chartModels
+      .map((model) => {
+        const modelXValue = xValueOf(model);
+        // 横轴取值缺失的模型不上图。
+        if (modelXValue === null) return null;
 
-      return {
-        costPerTask: model.costPerTask,
-        modelId: model.id,
-        name: model.name,
-        value: [
-          toChartCost(model.costPerTask, xAxisScale),
-          model.intelligence,
-        ],
-        symbol: toEChartsSymbol(creatorStyle.shape),
-        symbolSize: pointSymbolSize(isMobileChart, isSelected || isHovered),
-        cursor: "pointer",
-        itemStyle: {
-          color: creatorStyle.color,
-          opacity: isMuted ? 0.1 : 1,
-          borderColor: palette.pointBorder,
-          borderWidth: isSelected || isHovered ? 3 : 2,
-          shadowBlur: isSelected ? 14 : isHovered ? 10 : 0,
-          shadowColor: `${creatorStyle.color}66`,
-        },
-        label: {
-          show: showLabel,
-          formatter: model.name,
-          position: model.id.length % 2 === 0 ? "top" : "right",
-          distance: isMobileChart ? 6 : 8,
-          color: creatorStyle.color,
-          fontSize: isMobileChart
-            ? isSelected
-              ? 10
-              : 9
-            : isSelected
-              ? 11
-              : 10,
-          fontWeight: isSelected || isHovered ? 800 : 650,
-          textBorderColor: palette.background,
-          textBorderWidth: 4,
-        },
-        emphasis: {
-          scale: 1.25,
+        const creatorStyle = getCreatorStyle(model.creator, theme);
+        const isSelected = model.id === chartSelected?.id;
+        const isHovered = model.id === chartHovered?.id;
+        const isMuted =
+          activeCreators.size > 0 &&
+          !activeCreators.has(model.creator) &&
+          !isHovered;
+        const showLabel = visibleLabelIds.has(model.id) && !isMuted;
+
+        return {
+          modelId: model.id,
+          name: model.name,
+          value: [
+            toChartCost(modelXValue, xAxisScale),
+            model.intelligence,
+          ],
+          xValue: modelXValue,
+          symbol: toEChartsSymbol(creatorStyle.shape),
+          symbolSize: pointSymbolSize(isMobileChart, isSelected || isHovered),
+          cursor: "pointer",
           itemStyle: {
-            opacity: 1,
-            shadowBlur: 10,
-            shadowColor: palette.selectionShadow,
+            color: creatorStyle.color,
+            opacity: isMuted ? 0.1 : 1,
+            borderColor: palette.pointBorder,
+            borderWidth: isSelected || isHovered ? 3 : 2,
+            shadowBlur: isSelected ? 14 : isHovered ? 10 : 0,
+            shadowColor: `${creatorStyle.color}66`,
           },
-        },
-      };
-    });
+          label: {
+            show: showLabel,
+            formatter: model.name,
+            position: model.id.length % 2 === 0 ? "top" : "right",
+            distance: isMobileChart ? 6 : 8,
+            color: creatorStyle.color,
+            fontSize: isMobileChart
+              ? isSelected
+                ? 10
+                : 9
+              : isSelected
+                ? 11
+                : 10,
+            fontWeight: isSelected || isHovered ? 800 : 650,
+            textBorderColor: palette.background,
+            textBorderWidth: 4,
+          },
+          emphasis: {
+            scale: 1.25,
+            itemStyle: {
+              opacity: 1,
+              shadowBlur: 10,
+              shadowColor: palette.selectionShadow,
+            },
+          },
+        };
+      })
+      .filter((datum) => datum !== null);
 
     const kneeModels = chartModels.filter((model) => {
       if (!kneeIdSet.has(model.id)) return false;
@@ -660,20 +731,25 @@ function InteractiveScatterPlot({
       translate(locale, "recommendations.score");
     const kneeSectionLabel =
       translateKnownLabel(locale, "chart.knee") ?? kneeBadgeText;
-    const kneeRingData = kneeModels.map((model) => {
+    const kneeRingData = kneeModels.flatMap((model) => {
+      const modelXValue = xValueOf(model);
+      if (modelXValue === null) return [];
+
       const isSelected = model.id === chartSelected?.id;
       const isHovered = model.id === chartHovered?.id;
-      return {
-        modelId: model.id,
-        name: model.name,
-        value: [
-          toChartCost(model.costPerTask, xAxisScale),
-          model.intelligence,
-        ],
-        symbolSize:
-          pointSymbolSize(isMobileChart, isSelected || isHovered) +
-          (isMobileChart ? 9 : 13),
-      };
+      return [
+        {
+          modelId: model.id,
+          name: model.name,
+          value: [
+            toChartCost(modelXValue, xAxisScale),
+            model.intelligence,
+          ],
+          symbolSize:
+            pointSymbolSize(isMobileChart, isSelected || isHovered) +
+            (isMobileChart ? 9 : 13),
+        },
+      ];
     });
     const kneeSeries: ScatterSeriesOption[] =
       kneeRingData.length === 0
@@ -709,10 +785,13 @@ function InteractiveScatterPlot({
         id: `reasoning-${group.key}`,
         name: `${group.baseName} ${translate(locale, "chart.reasoningSeries")}`,
         type: "line",
-        data: group.models.map((model) => [
-          toChartCost(model.costPerTask, xAxisScale),
-          model.intelligence,
-        ]),
+        data: group.models.flatMap((model) => {
+          const modelXValue = xValueOf(model);
+          // 横轴取值缺失的模型不参与连线。
+          return modelXValue === null
+            ? []
+            : [[toChartCost(modelXValue, xAxisScale), model.intelligence]];
+        }),
         showSymbol: false,
         silent: true,
         z: 2,
@@ -735,10 +814,15 @@ function InteractiveScatterPlot({
         id: "pareto-frontier",
         name: translate(locale, "chart.frontier"),
         type: "line",
-        data: frontier.map((model) => [
-          toChartCost(model.costPerTask, xAxisScale),
-          model.intelligence,
-        ]),
+        data: frontier.flatMap((model) => {
+          if (!isPlottableModel(model, xValueOf)) return [];
+
+          const modelXValue = xValueOf(model);
+          // 横轴取值缺失的模型不参与前沿线。
+          return modelXValue === null
+            ? []
+            : [[toChartCost(modelXValue, xAxisScale), model.intelligence]];
+        }),
         showSymbol: false,
         silent: true,
         z: 3,
@@ -757,52 +841,78 @@ function InteractiveScatterPlot({
         z: 5,
         clip: true,
         animationDurationUpdate: 180,
-        markArea: chartSelected
-          ? {
-              silent: true,
-              z: 1,
-              label: { show: false },
-              data: [
-                [
-                  {
-                    coord: [minX, chartSelected.intelligence],
-                    itemStyle: {
-                      color: palette.positiveArea,
-                      borderColor: palette.positiveBorder,
-                      borderWidth: 1,
-                    },
-                  },
-                  {
-                    coord: [
-                      toChartCost(chartSelected.costPerTask, xAxisScale),
-                      maxY,
+        markArea:
+          chartSelected && selectedChartX !== null
+            ? {
+                silent: true,
+                z: 1,
+                label: { show: false },
+                data: xHigherIsBetter
+                  ? [
+                      [
+                        {
+                          coord: [
+                            selectedChartX,
+                            chartSelected.intelligence,
+                          ],
+                          itemStyle: {
+                            color: palette.positiveArea,
+                            borderColor: palette.positiveBorder,
+                            borderWidth: 1,
+                          },
+                        },
+                        { coord: [maxX, maxY] },
+                      ],
+                      [
+                        {
+                          coord: [minX, minY],
+                          itemStyle: {
+                            color: palette.accentArea,
+                            borderColor: palette.accentBorder,
+                            borderWidth: 1,
+                          },
+                        },
+                        {
+                          coord: [
+                            selectedChartX,
+                            chartSelected.intelligence,
+                          ],
+                        },
+                      ],
+                    ]
+                  : [
+                      [
+                        {
+                          coord: [minX, chartSelected.intelligence],
+                          itemStyle: {
+                            color: palette.positiveArea,
+                            borderColor: palette.positiveBorder,
+                            borderWidth: 1,
+                          },
+                        },
+                        { coord: [selectedChartX, maxY] },
+                      ],
+                      [
+                        {
+                          coord: [selectedChartX, minY],
+                          itemStyle: {
+                            color: palette.accentArea,
+                            borderColor: palette.accentBorder,
+                            borderWidth: 1,
+                          },
+                        },
+                        {
+                          coord: [maxX, chartSelected.intelligence],
+                        },
+                      ],
                     ],
-                  },
-                ],
-                [
-                  {
-                    coord: [
-                      toChartCost(chartSelected.costPerTask, xAxisScale),
-                      minY,
-                    ],
-                    itemStyle: {
-                      color: palette.accentArea,
-                      borderColor: palette.accentBorder,
-                      borderWidth: 1,
-                    },
-                  },
-                  {
-                    coord: [maxX, chartSelected.intelligence],
-                  },
-                ],
-              ],
-            }
-          : undefined,
+              }
+            : undefined,
       },
       ...kneeSeries,
     ];
 
-    if (chartSelected) {
+    if (chartSelected && selectedChartX !== null) {
       const guideStyle = {
         color: palette.accent,
         width: 1.5,
@@ -815,14 +925,8 @@ function InteractiveScatterPlot({
           id: "selected-x-guide",
           type: "line",
           data: [
-            [
-              toChartCost(chartSelected.costPerTask, xAxisScale),
-              minY,
-            ],
-            [
-              toChartCost(chartSelected.costPerTask, xAxisScale),
-              chartSelected.intelligence,
-            ],
+            [selectedChartX, minY],
+            [selectedChartX, chartSelected.intelligence],
           ],
           showSymbol: false,
           silent: true,
@@ -835,10 +939,7 @@ function InteractiveScatterPlot({
           type: "line",
           data: [
             [minX, chartSelected.intelligence],
-            [
-              toChartCost(chartSelected.costPerTask, xAxisScale),
-              chartSelected.intelligence,
-            ],
+            [selectedChartX, chartSelected.intelligence],
           ],
           showSymbol: false,
           silent: true,
@@ -923,7 +1024,7 @@ function InteractiveScatterPlot({
             return escapeTooltipText(item?.name ?? "");
           }
 
-          const metrics = `${scoreTooltipLabel} ${item.data.value[1].toFixed(1)}   ${costTooltipLabel} ${formatCost(item.data.costPerTask)}`;
+          const metrics = `${scoreTooltipLabel} ${item.data.value[1].toFixed(1)}   ${xTooltipLabel} ${formatXValue(item.data.xValue)}`;
           const contentWidth = getChartTooltipContentWidth(isMobileChart);
           const modelNameLines = layoutChartTooltipLines(
             item.data.name,
@@ -948,7 +1049,7 @@ function InteractiveScatterPlot({
         type: "value",
         min: minX,
         max: maxX,
-        name: costAxisName,
+        name: xAxisName,
         nameLocation: "middle",
         nameGap: isMobileChart ? 34 : 44,
         splitNumber: isMobileChart ? 4 : 5,
@@ -966,7 +1067,7 @@ function InteractiveScatterPlot({
           hideOverlap: true,
           margin: isMobileChart ? 6 : 8,
           formatter: (value: number) =>
-            formatCost(fromChartCost(value, xAxisScale)),
+            formatXValue(fromChartCost(value, xAxisScale)),
         },
         splitLine: {
           show: true,
@@ -1022,7 +1123,7 @@ function InteractiveScatterPlot({
           bottom: isMobileChart ? 10 : 12,
           height: isMobileChart ? 26 : 14,
           labelFormatter: (value: number) =>
-            formatCost(fromChartCost(value, xAxisScale)),
+            formatXValue(fromChartCost(value, xAxisScale)),
           ...sliderStyle,
           defaultLocationEdgeGap: isMobileChart ? 8 : 15,
           handleSize: isMobileChart ? 30 : "70%",
@@ -1087,9 +1188,14 @@ function InteractiveScatterPlot({
     reasoningGroups,
     locale,
     scoreLabelKey,
+    selectedXValue,
     theme,
     visibleLabelIds,
+    xAxisLabel,
     xAxisScale,
+    xHigherIsBetter,
+    xValueFormatter,
+    xValueOf,
   ]);
 
   const handleChartReady = useCallback((chart: EChartsType) => {
@@ -1294,13 +1400,21 @@ function InteractiveScatterPlot({
 }
 
 export function ModelScatterPlot(props: ModelScatterPlotProps) {
-  const chartModels = useMemo(
-    () => props.models.filter(isChartableModel),
-    [props.models],
+  const xValueOf = useCallback(
+    (model: ModelPoint): number | null => readXValue(model, props.xValue),
+    [props.xValue],
   );
+  const chartModels = useMemo(
+    () =>
+      props.models.filter((model): model is PlottableModel =>
+        isPlottableModel(model, xValueOf),
+      ),
+    [props.models, xValueOf],
+  );
+  // 外部传了前沿就直接用，没传仍按成本内部算。
   const frontier = useMemo(
-    () => getParetoFrontier(props.models),
-    [props.models],
+    () => props.frontier ?? getParetoFrontier(props.models),
+    [props.frontier, props.models],
   );
   const reasoningGroups = useMemo(
     () => getReasoningVariantGroups(chartModels),
