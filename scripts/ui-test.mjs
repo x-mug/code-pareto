@@ -598,6 +598,23 @@ try {
     chartDrawn,
     "实际 svg " + document.querySelectorAll(".model-chart svg").length + " 个",
   );
+  const searchBar = document.querySelector(".search-bar");
+  const searchInput = searchBar?.querySelector(".model-search input");
+  check("模型搜索框存在", searchInput !== null && searchInput !== undefined);
+  check(
+    "搜索框不再挂在区块标题行里",
+    document.querySelector(".explorer__heading .model-search") === null,
+  );
+  // 搜索要能一直够得着：排在对照轴之后、图表之前
+  const axisBeforeSearch =
+    searchBar !== null &&
+    document.querySelector(".axis-switch") !== null &&
+    Boolean(searchBar.compareDocumentPosition(document.querySelector(".axis-switch")) & dom.window.Node.DOCUMENT_POSITION_PRECEDING);
+  const searchBeforeGrid =
+    searchBar !== null &&
+    document.querySelector(".analysis-grid") !== null &&
+    Boolean(searchBar.compareDocumentPosition(document.querySelector(".analysis-grid")) & dom.window.Node.DOCUMENT_POSITION_FOLLOWING);
+  check("搜索条排在对照轴之后、图表之前", axisBeforeSearch && searchBeforeGrid);
   check("视角 chip 数量 >= 5", viewChips().length >= 5, "实际 " + viewChips().length);
   const chipLabels = viewChips().map((chip) => chip.textContent.trim());
   check(
