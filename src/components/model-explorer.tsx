@@ -16,6 +16,7 @@ import {
   useState,
   useSyncExternalStore,
   type KeyboardEvent,
+  type ReactNode,
 } from "react";
 
 import { ModelTable } from "@/components/model-table";
@@ -759,16 +760,20 @@ function AxisSwitch({
   axis,
   onAxisChange,
   subsetNotice,
+  search,
   t,
 }: {
   axis: ChartAxisKey;
   onAxisChange: (axis: ChartAxisKey) => void;
   subsetNotice: string | null;
+  /** 搜索框放在同一排的右端 */
+  search: ReactNode;
   t: Translator;
 }) {
   return (
     <>
-      <div className="axis-switch" role="group" aria-label={t("axis.label")}>
+      <div className="axis-switch__row">
+        <div className="axis-switch" role="group" aria-label={t("axis.label")}>
         <span className="axis-switch__label">{t("axis.label")}</span>
         <button
           type="button"
@@ -786,6 +791,8 @@ function AxisSwitch({
         >
           {t("axis.chip.speed")}
         </button>
+        </div>
+        {search}
       </div>
       <p className="axis-switch__hint">
         {t(axis === "speed" ? "axis.hint.speed" : "axis.hint.cost")}
@@ -1610,21 +1617,22 @@ export function ModelExplorer({ initialCatalog }: ModelExplorerProps) {
               ? t("axis.subsetNotice", { count: speedChartableCount })
               : null
           }
+          search={
+            <div className="search-bar">
+              <ModelSearch
+                models={visibleModels}
+                theme={resolvedTheme}
+                locale={locale}
+                t={t}
+                onSelect={(id) => {
+                  handleSelectModel(id);
+                  setActiveCreators(new Set());
+                }}
+              />
+            </div>
+          }
           t={t}
         />
-
-        <div className="search-bar">
-          <ModelSearch
-            models={visibleModels}
-            theme={resolvedTheme}
-            locale={locale}
-            t={t}
-            onSelect={(id) => {
-              handleSelectModel(id);
-              setActiveCreators(new Set());
-            }}
-          />
-        </div>
 
         <div className="analysis-grid">
           <section className="chart-card" aria-label={t("chart.areaLabel")}>
