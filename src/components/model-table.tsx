@@ -10,6 +10,7 @@ type SortKey =
   | "name"
   | "score"
   | "cost"
+  | "speed"
   | "value"
   | "aaIndex"
   | "rankDelta";
@@ -33,6 +34,7 @@ interface ModelTableRow {
   rank: number | null;
   score: number | null;
   cost: number | null;
+  speed: number | null;
   value: number | null;
   aaIndex: number | null;
   rankDelta: number | null;
@@ -52,6 +54,12 @@ function formatCost(value: number | null): string {
 function formatNumber(value: number | null): string {
   if (value === null) return "—";
   return value.toFixed(value >= 100 ? 0 : 1);
+}
+
+/** 输出速度保留 1 位小数，表格内不显示单位后缀 */
+function formatSpeed(value: number | null): string {
+  if (value === null) return "—";
+  return value.toFixed(1);
 }
 
 function formatPerDollar(value: number | null): string {
@@ -117,6 +125,7 @@ export function ModelTable({
         ? model.intelligence
         : null;
       const cost = isFiniteNumber(model.costPerTask) ? model.costPerTask : null;
+      const speed = isFiniteNumber(model.outputSpeed) ? model.outputSpeed : null;
 
       return {
         id: model.id,
@@ -125,6 +134,7 @@ export function ModelTable({
         rank,
         score,
         cost,
+        speed,
         value: score !== null && cost !== null && cost > 0 ? score / cost : null,
         aaIndex: isFiniteNumber(official?.intelligence)
           ? official.intelligence
@@ -168,6 +178,7 @@ export function ModelTable({
     { key: "name", label: t("table.model"), numeric: false },
     { key: "score", label: t("table.score"), numeric: true },
     { key: "cost", label: t("table.cost"), numeric: true },
+    { key: "speed", label: t("table.speed"), numeric: true },
     { key: "value", label: t("table.value"), numeric: true },
     { key: "aaIndex", label: t("table.aaIndex"), numeric: true },
     { key: "rankDelta", label: t("table.rankDelta"), numeric: true },
@@ -256,6 +267,9 @@ export function ModelTable({
                     </td>
                     <td className="model-table__num">{formatNumber(row.score)}</td>
                     <td className="model-table__num">{formatCost(row.cost)}</td>
+                    <td className="model-table__num">
+                      {formatSpeed(row.speed)}
+                    </td>
                     <td className="model-table__num">
                       {formatPerDollar(row.value)}
                     </td>

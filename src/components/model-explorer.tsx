@@ -32,6 +32,14 @@ import {
   type KneeRecommendation,
 } from "@/lib/model-logic";
 import {
+  countSpeedChartable,
+  getSpeedKneeRecommendations,
+  getSpeedParetoFrontier,
+  speedChartableModels,
+  type ChartAxisKey,
+  type SpeedKneeRecommendation,
+} from "@/lib/speed-logic";
+import {
   isChartableModel,
   type ModelCatalog,
   type ModelPoint,
@@ -382,6 +390,21 @@ function formatNumber(value: number | null, suffix = ""): string {
   return `${value.toFixed(value >= 100 ? 0 : 1)}${suffix}`;
 }
 
+/** 输出速度独立展示时带单位，缺数据显示破折号 */
+function formatSpeed(value: number | null): string {
+  return value === null ? "—" : `${value.toFixed(1)} t/s`;
+}
+
+/** 速度轴的横轴刻度只留 1 位小数，单位由轴名承载 */
+function formatSpeedAxisValue(value: number): string {
+  return value.toFixed(1);
+}
+
+/** 速度轴的横轴取值：模型的输出速度（tokens/秒） */
+function speedXValue(model: ModelPoint): number | null {
+  return model.outputSpeed;
+}
+
 function formatSyncedAt(value: string, locale: Locale): string {
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) return "—";
@@ -640,12 +663,15 @@ function AlternativeRow({
 
 function RecommendationCard({
   model,
+  axis,
   t,
   isSelected,
   isKnee,
   onSelect,
 }: {
-  model: KneeRecommendation;
+  // 速度轴的推荐来自 speed-logic，成本可能为 null，与成本轴推荐共用同一张卡片
+  model: KneeRecommendation | SpeedKneeRecommendation;
+  axis: ChartAxisKey;
   t: Translator;
   isSelected: boolean;
   isKnee: boolean;
@@ -674,9 +700,15 @@ function RecommendationCard({
         <span>
           {t("metric.intelligence")} {formatNumber(model.intelligence)}
         </span>
-        <span>
-          {t("metric.cost")} {formatCost(model.costPerTask)}
-        </span>
+        {axis === "speed" ? (
+          <span>
+            {t("metric.outputSpeed")} {formatSpeed(model.outputSpeed)}
+          </span>
+        ) : (
+          <span>
+            {t("metric.cost")} {formatCost(model.costPerTask)}
+          </span>
+        )}
       </span>
     </button>
   );
@@ -720,6 +752,48 @@ function ViewSwitch({
         {t("view.openWeights")}
       </button>
     </div>
+  );
+}
+
+function AxisSwitch({
+  axis,
+  onAxisChange,
+  subsetNotice,
+  t,
+}: {
+  axis: ChartAxisKey;
+  onAxisChange: (axis: ChartAxisKey) => void;
+  subsetNotice: string | null;
+  t: Translator;
+}) {
+  return (
+    <>
+      <div className="axis-switch" role="group" aria-label={t("axis.label")}>
+        <span className="axis-switch__label">{t("axis.label")}</span>
+        <button
+          type="button"
+          className={`legend-chip ${axis === "cost" ? "is-active" : ""}`}
+          aria-pressed={axis === "cost"}
+          onClick={() => onAxisChange("cost")}
+        >
+          {t("axis.chip.cost")}
+        </button>
+        <button
+          type="button"
+          className={`legend-chip ${axis === "speed" ? "is-active" : ""}`}
+          aria-pressed={axis === "speed"}
+          onClick={() => onAxisChange("speed")}
+        >
+          {t("axis.chip.speed")}
+        </button>
+      </div>
+      <p className="axis-switch__hint">
+        {t(axis === "speed" ? "axis.hint.speed" : "axis.hint.cost")}
+        {subsetNotice ? (
+          <span className="axis-switch__subset">{subsetNotice}</span>
+        ) : null}
+      </p>
+    </>
   );
 }
 
@@ -781,6 +855,9 @@ function ViewWeights({
 
 const KNEE_COST_FORMULA = String.raw`
 x = \frac{\log_{10}(C) - \log_{10}(C_0)}{\log_{10}(C_1) - \log_{10}(C_0)}`;
+// 速度轴横轴换成输出速度 X，下标 0 是最快端，归一化后 x 越大代表越慢
+const KNEE_SPEED_FORMULA = String.raw`
+x = \frac{\log_{10}(X_0) - \log_{10}(X)}{\log_{10}(X_0) - \log_{10}(X_1)}`;
 const KNEE_INTELLIGENCE_FORMULA = String.raw`
 y = \frac{I - I_0}{I_1 - I_0}`;
 const KNEE_SCORE_FORMULA = String.raw`\mathrm{kneeScore} = y - x`;
@@ -897,9 +974,44 @@ function KaTeXFormula({ expression }: { expression: string }) {
   );
 }
 
-function KneeFormulaHint({ t, locale }: { t: Translator; locale: Locale }) {
+function KneeFormulaHint({
+  t,
+  locale,
+  axis,
+}: {
+  t: Translator;
+  locale: Locale;
+  axis: ChartAxisKey;
+}) {
   const viewportWidth = useViewportWidth();
   const tooltipContentWidth = getFormulaTooltipContentWidth(viewportWidth);
+  const isSpeedAxis = axis === "speed";
+  // 速度轴只换横轴那一套说明，标题、归一化能力、膝点评分与并列处理标题沿用原键
+  const introText = t(
+    isSpeedAxis
+      ? "recommendations.formulaTextSpeed"
+      : "recommendations.formulaText",
+  );
+  const variablesText = t(
+    isSpeedAxis
+      ? "recommendations.formulaVariablesSpeed"
+      : "recommendations.formulaVariables",
+  );
+  const xAxisLabelText = t(
+    isSpeedAxis
+      ? "recommendations.formulaSpeedLabel"
+      : "recommendations.formulaCostLabel",
+  );
+  const meaningText = t(
+    isSpeedAxis
+      ? "recommendations.formulaMeaningSpeed"
+      : "recommendations.formulaMeaning",
+  );
+  const selectionText = t(
+    isSpeedAxis
+      ? "recommendations.formulaSelectionSpeed"
+      : "recommendations.formulaSelection",
+  );
 
   return (
     <span
@@ -911,7 +1023,7 @@ function KneeFormulaHint({ t, locale }: { t: Translator; locale: Locale }) {
       <span className="recommendations__formula-tooltip" role="tooltip">
         <strong>{t("recommendations.formulaTitle")}</strong>
         <PretextParagraph
-          text={t("recommendations.formulaText")}
+          text={introText}
           className="recommendations__formula-intro"
           font="650 12px Inter"
           lineHeight={18.6}
@@ -919,7 +1031,7 @@ function KneeFormulaHint({ t, locale }: { t: Translator; locale: Locale }) {
           locale={locale}
         />
         <PretextParagraph
-          text={t("recommendations.formulaVariables")}
+          text={variablesText}
           className="recommendations__formula-variables"
           font="500 10px Inter"
           lineHeight={15}
@@ -929,14 +1041,16 @@ function KneeFormulaHint({ t, locale }: { t: Translator; locale: Locale }) {
         <span className="recommendations__formula-list">
           <span className="recommendations__formula-row">
             <PretextParagraph
-              text={t("recommendations.formulaCostLabel")}
+              text={xAxisLabelText}
               className="recommendations__formula-row-label"
               font="700 10px Inter"
               lineHeight={13}
               maxWidth={78}
               locale={locale}
             />
-            <KaTeXFormula expression={KNEE_COST_FORMULA} />
+            <KaTeXFormula
+              expression={isSpeedAxis ? KNEE_SPEED_FORMULA : KNEE_COST_FORMULA}
+            />
           </span>
           <span className="recommendations__formula-row">
             <PretextParagraph
@@ -962,7 +1076,7 @@ function KneeFormulaHint({ t, locale }: { t: Translator; locale: Locale }) {
           </span>
         </span>
         <PretextParagraph
-          text={t("recommendations.formulaMeaning")}
+          text={meaningText}
           className="recommendations__formula-meaning"
           font="600 11px Inter"
           lineHeight={17.05}
@@ -981,7 +1095,7 @@ function KneeFormulaHint({ t, locale }: { t: Translator; locale: Locale }) {
           <KaTeXFormula expression={KNEE_DISTANCE_FORMULA} />
         </span>
         <PretextParagraph
-          text={t("recommendations.formulaSelection")}
+          text={selectionText}
           className="recommendations__formula-selection"
           font="500 11px Inter"
           lineHeight={16.5}
@@ -1040,6 +1154,8 @@ export function ModelExplorer({ initialCatalog }: ModelExplorerProps) {
   );
   const [showAllLabels, setShowAllLabels] = useState(false);
   const [xAxisScale, setXAxisScale] = useState<XAxisScale>("log");
+  // 对照轴默认价格，切到速度时图表、推荐与决策面板一起换口径
+  const [axis, setAxis] = useState<ChartAxisKey>("cost");
   const [hoveredAlternativeId, setHoveredAlternativeId] = useState<string | null>(
     null,
   );
@@ -1104,6 +1220,7 @@ export function ModelExplorer({ initialCatalog }: ModelExplorerProps) {
       const next = decodeUrlState(window.location.search, modelIds);
       setView(next.view);
       setOpenOnly(next.openOnly);
+      setAxis(next.axis);
       setCustomWeights((current) =>
         weightsEqual(current, next.customWeights) ? current : next.customWeights,
       );
@@ -1120,6 +1237,7 @@ export function ModelExplorer({ initialCatalog }: ModelExplorerProps) {
     if (!urlHydrated) return;
     const nextState = {
       view,
+      axis,
       customWeights,
       openOnly,
       // 与默认选中一致时不写 m，链接保持干净
@@ -1140,7 +1258,7 @@ export function ModelExplorer({ initialCatalog }: ModelExplorerProps) {
     }, URL_SYNC_DELAY_MS);
 
     return () => window.clearTimeout(timer);
-  }, [customWeights, defaultSelectedId, openOnly, selectedId, urlHydrated, view]);
+  }, [axis, customWeights, defaultSelectedId, openOnly, selectedId, urlHydrated, view]);
 
   useEffect(() => {
     const meta = chartMetaRef.current;
@@ -1202,12 +1320,29 @@ export function ModelExplorer({ initialCatalog }: ModelExplorerProps) {
     () => chartableModels(visibleModels),
     [visibleModels],
   );
-  const recommendedModels = useMemo(
-    () => getKneeRecommendations(visibleModels, 5),
+  // 速度轴只画有输出速度的模型；表格、厂商图例与 hero 统计仍按价格轴口径
+  const speedChartableCount = useMemo(
+    () => countSpeedChartable(visibleModels),
     [visibleModels],
   );
-  // 膝点：综合视角默认不画（与原版一致），编程/工程视角默认画，图上有开关可强制切换
-  const showKnee = kneeOverride ?? view !== "intelligence";
+  const plotModels = useMemo(
+    () => (axis === "speed" ? speedChartableModels(visibleModels) : chartModels),
+    [axis, chartModels, visibleModels],
+  );
+  const speedFrontier = useMemo(
+    () => (axis === "speed" ? getSpeedParetoFrontier(visibleModels) : undefined),
+    [axis, visibleModels],
+  );
+  const recommendedModels = useMemo(
+    () =>
+      axis === "speed"
+        ? getSpeedKneeRecommendations(visibleModels, 5)
+        : getKneeRecommendations(visibleModels, 5),
+    [axis, visibleModels],
+  );
+  // 膝点：综合视角默认不画（与原版一致），编程/工程视角默认画，图上有开关可强制切换；速度轴默认画
+  const showKnee =
+    kneeOverride ?? (axis === "speed" || view !== "intelligence");
   // 权重面板展示当前生效的配比：自定义用自定义值，预设视角用预设值，综合视角用默认值占位（禁用）
   const displayWeights =
     view === "custom"
@@ -1250,7 +1385,13 @@ export function ModelExplorer({ initialCatalog }: ModelExplorerProps) {
   );
   const sourceNotice = getLocalizedSourceNotice(catalog, t);
   const xAxisScaleLabel = t(
-    xAxisScale === "log" ? "chart.xScale.logCost" : "chart.xScale.linearCost",
+    axis === "speed"
+      ? xAxisScale === "log"
+        ? "chart.xScale.logSpeed"
+        : "chart.xScale.linearSpeed"
+      : xAxisScale === "log"
+        ? "chart.xScale.logCost"
+        : "chart.xScale.linearCost",
   );
 
   if (catalogChartModels.length === 0) {
@@ -1445,16 +1586,19 @@ export function ModelExplorer({ initialCatalog }: ModelExplorerProps) {
                   </h3>
                 </div>
                 <p className="recommendations__subtitle">
-                  {t("recommendations.subtitle")}
+                  {axis === "speed"
+                    ? t("recommendations.subtitleSpeed")
+                    : t("recommendations.subtitle")}
                 </p>
               </div>
-              <KneeFormulaHint t={t} locale={locale} />
+              <KneeFormulaHint t={t} locale={locale} axis={axis} />
             </div>
             <div className="recommendations__list">
               {recommendedModels.map((model, index) => (
                 <RecommendationCard
                   key={model.id}
                   model={model}
+                  axis={axis}
                   t={t}
                   isSelected={selected?.id === model.id}
                   isKnee={index === 0 && showKnee}
@@ -1467,6 +1611,17 @@ export function ModelExplorer({ initialCatalog }: ModelExplorerProps) {
             </div>
           </section>
         ) : null}
+
+        <AxisSwitch
+          axis={axis}
+          onAxisChange={setAxis}
+          subsetNotice={
+            axis === "speed" && speedChartableCount < chartModels.length
+              ? t("axis.subsetNotice", { count: speedChartableCount })
+              : null
+          }
+          t={t}
+        />
 
         <div className="analysis-grid">
           <section className="chart-card" aria-label={t("chart.areaLabel")}>
@@ -1486,7 +1641,7 @@ export function ModelExplorer({ initialCatalog }: ModelExplorerProps) {
               <div
                 className={`chart-card__actions ${isChartActionsWrapped ? "is-wrapped" : ""}`}
               >
-                {view === "intelligence" ? null : (
+                {view === "intelligence" && axis === "cost" ? null : (
                 <button
                   type="button"
                   className={`chart-label-toggle ${showKnee ? "is-active" : ""}`}
@@ -1530,7 +1685,7 @@ export function ModelExplorer({ initialCatalog }: ModelExplorerProps) {
               </div>
             </div>
             <ModelScatterPlot
-              models={chartModels}
+              models={plotModels}
               selected={viewSelected}
               hoveredModelId={hoveredAlternativeId}
               alternativeIds={alternativeIds}
@@ -1548,6 +1703,11 @@ export function ModelExplorer({ initialCatalog }: ModelExplorerProps) {
               costLabelKey={
                 view === "intelligence" ? undefined : "chart.axis.taskCost"
               }
+              xValue={axis === "speed" ? speedXValue : undefined}
+              xHigherIsBetter={axis === "speed" ? true : undefined}
+              xAxisLabel={axis === "speed" ? t("chart.axis.speed") : undefined}
+              xValueFormatter={axis === "speed" ? formatSpeedAxisValue : undefined}
+              frontier={speedFrontier}
             />
           </section>
 
