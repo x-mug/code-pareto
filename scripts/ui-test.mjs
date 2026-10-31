@@ -768,10 +768,16 @@ try {
     rowsDetail(expected.intelligence),
   );
   check("综合视角无子集提示", subsetNotice() === null);
+  const officialNote = document.querySelector(".view-weights__note");
   check(
-    "综合视角权重面板锁定",
-    weightSliders().length === PILLARS.length && weightSliders().every((slider) => slider.disabled),
-    "可拖动 " + weightSliders().filter((slider) => !slider.disabled).length + " 支",
+    "综合视角不显示支柱权重滑杆",
+    weightSliders().length === 0,
+    "实际 " + weightSliders().length + " 支",
+  );
+  check(
+    "综合视角改为官方口径说明，不再冒充支柱配比",
+    (officialNote?.textContent ?? "").trim().length > 0,
+    officialNote ? "有说明" : "缺说明",
   );
   check("综合视角膝点重新隐藏", kneeBadges().length === 0, "实际 " + kneeBadges().length);
 

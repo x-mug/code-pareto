@@ -808,6 +808,7 @@ function ViewWeights({
   weights,
   locked,
   modeLabel,
+  note,
   onChange,
   onReset,
   t,
@@ -815,6 +816,8 @@ function ViewWeights({
   weights: PillarWeights;
   locked: boolean;
   modeLabel: string;
+  /** 有值时说明该视角不按支柱加权，此时不渲染滑杆 */
+  note: string | null;
   onChange: (pillar: PillarKey, share: number) => void;
   onReset: () => void;
   t: Translator;
@@ -826,10 +829,13 @@ function ViewWeights({
       <div className="view-weights__heading">
         <span className="view-weights__title">{t("view.weights.title")}</span>
         <span className="view-weights__mode">{modeLabel}</span>
-        <button type="button" className="view-weights__reset" onClick={onReset}>
-          {t("view.weights.reset")}
-        </button>
+        {note === null ? (
+          <button type="button" className="view-weights__reset" onClick={onReset}>
+            {t("view.weights.reset")}
+          </button>
+        ) : null}
       </div>
+      {note === null ? (
       <div className="view-weights__grid">
         {PILLARS.map((pillar) => {
           const share = Math.round(effective[pillar] * 100);
@@ -856,6 +862,9 @@ function ViewWeights({
           );
         })}
       </div>
+      ) : (
+        <p className="view-weights__note">{note}</p>
+      )}
     </div>
   );
 }
@@ -1503,6 +1512,9 @@ export function ModelExplorer({ initialCatalog }: ModelExplorerProps) {
           <ViewWeights
             weights={displayWeights}
             locked={view === "intelligence"}
+            note={
+              view === "intelligence" ? t("view.weights.officialNote") : null
+            }
             modeLabel={
               view === "intelligence"
                 ? t("view.weights.fixed")

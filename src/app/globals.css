@@ -2716,3 +2716,15 @@ a {
 }
 
 
+
+/* ── 综合视角不按支柱加权，面板改为官方口径说明 ─────────────────── */
+
+.view-weights__note {
+  margin: 10px 0 2px;
+  max-width: 760px;
+  color: var(--ink-faint);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1.6;
+}
