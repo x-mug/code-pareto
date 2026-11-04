@@ -15,8 +15,8 @@
       "inputPrice": 0.6,
       "outputPrice": 1.8,
       "blendedPrice": 0.8999999999999999,
-      "outputSpeed": 65.39,
-      "latency": 3.24
+      "outputSpeed": 65.67,
+      "latency": 3.33
     },
     {
       "id": "0097ebf5-124f-42f6-9463-33b00e711f03",
@@ -33,8 +33,8 @@
       "inputPrice": 1.5,
       "outputPrice": 9,
       "blendedPrice": 3.375,
-      "outputSpeed": 190.73,
-      "latency": 16.25
+      "outputSpeed": 184.97,
+      "latency": 16.4
     },
     {
       "id": "00f1248e-78e3-4230-8dc8-5e13ba8645e2",
@@ -48,11 +48,11 @@
       "coding": null,
       "agentic": null,
       "costPerTask": null,
-      "inputPrice": 0.4125,
-      "outputPrice": 1.02,
-      "blendedPrice": 0.564375,
-      "outputSpeed": 52.28,
-      "latency": 39.35
+      "inputPrice": 0.435,
+      "outputPrice": 0.87,
+      "blendedPrice": 0.54375,
+      "outputSpeed": 51.96,
+      "latency": 39.55
     },
     {
       "id": "0121d27b-5b8a-4901-8684-80589cc6d40d",
@@ -87,8 +87,8 @@
       "inputPrice": 2,
       "outputPrice": 10,
       "blendedPrice": 4,
-      "outputSpeed": 136.1,
-      "latency": 1.59
+      "outputSpeed": 133.31,
+      "latency": 1.53
     },
     {
       "id": "016d330a-2141-4afa-b2fc-62b314423dc1",
@@ -124,7 +124,7 @@
       "outputPrice": 4.8,
       "blendedPrice": 1.5,
       "outputSpeed": 131.16,
-      "latency": 2.06
+      "latency": 2.1
     },
     {
       "id": "018c60e8-e908-431a-ba57-c840b1df3987",
@@ -159,7 +159,7 @@
       "inputPrice": 1.75,
       "outputPrice": 14,
       "blendedPrice": 4.8125,
-      "outputSpeed": 107.43,
+      "outputSpeed": 103.82,
       "latency": 166.12
     },
     {
@@ -178,7 +178,7 @@
       "outputPrice": 3.2,
       "blendedPrice": 1.1,
       "outputSpeed": 140.03,
-      "latency": 2.31
+      "latency": 2.27
     },
     {
       "id": "025ec6b6-df4a-449f-9a03-24e4388d6863",
@@ -195,8 +195,8 @@
       "inputPrice": 0.1,
       "outputPrice": 0.3,
       "blendedPrice": 0.15000000000000002,
-      "outputSpeed": 114.32,
-      "latency": 2.2
+      "outputSpeed": 111.52,
+      "latency": 2.23
     },
     {
       "id": "033ade17-d9ec-44e0-b792-b5f1fcd5ab4c",
@@ -213,8 +213,8 @@
       "inputPrice": 1.5,
       "outputPrice": 9,
       "blendedPrice": 3.375,
-      "outputSpeed": 178.15,
-      "latency": 0.78
+      "outputSpeed": 174.5,
+      "latency": 0.79
     },
     {
       "id": "033e4aa9-a556-4224-87b0-341ed1070257",
@@ -278,15 +278,15 @@
       "creatorId": "f0aa413f-e8ae-4fcd-9c48-0e049f4f3128",
       "releaseDate": "2026-09-28",
       "reasoning": false,
-      "intelligence": 30.3,
+      "intelligence": 30.8,
       "coding": null,
       "agentic": null,
       "costPerTask": 0.7807,
       "inputPrice": 2,
       "outputPrice": 10,
       "blendedPrice": 4,
-      "outputSpeed": 101.38,
-      "latency": 1.3
+      "outputSpeed": 96.51,
+      "latency": 1.35
     },
     {
       "id": "04586102-6a28-48f8-a82e-85775d7ed779",
@@ -375,8 +375,8 @@
       "inputPrice": 1.25,
       "outputPrice": 10,
       "blendedPrice": 3.4375,
-      "outputSpeed": 128,
-      "latency": 12.9
+      "outputSpeed": 127.61,
+      "latency": 10.73
     },
     {
       "id": "04ee6719-0327-463b-a1a1-70a6a78254f9",
@@ -393,8 +393,8 @@
       "inputPrice": 1.25,
       "outputPrice": 4.25,
       "blendedPrice": 2,
-      "outputSpeed": 251.2,
-      "latency": 20.31
+      "outputSpeed": 238.25,
+      "latency": 20.86
     },
     {
       "id": "050c61cd-cddc-463a-a30a-a82aaa37be59",
@@ -411,8 +411,8 @@
       "inputPrice": 0.2,
       "outputPrice": 1.2,
       "blendedPrice": 0.45,
-      "outputSpeed": 102.7,
-      "latency": 1.56
+      "outputSpeed": 100.43,
+      "latency": 1.6
     },
     {
       "id": "05776db7-f5c0-40f7-b824-079160f8cfa8",
@@ -422,14 +422,14 @@
       "creatorId": "f0aa413f-e8ae-4fcd-9c48-0e049f4f3128",
       "releaseDate": "2026-09-01",
       "reasoning": false,
-      "intelligence": 38.5,
+      "intelligence": 38.7,
       "coding": null,
       "agentic": null,
       "costPerTask": 4.4711,
       "inputPrice": 10,
       "outputPrice": 50,
       "blendedPrice": 20,
-      "outputSpeed": 55.53,
+      "outputSpeed": 54.22,
       "latency": 2.56
     },
     {
@@ -465,8 +465,8 @@
       "inputPrice": 0.05,
       "outputPrice": 0.4,
       "blendedPrice": 0.1375,
-      "outputSpeed": 209.9,
-      "latency": 0.8
+      "outputSpeed": 187.06,
+      "latency": 0.81
     },
     {
       "id": "073b5329-c4b3-4f1f-8f97-4753aadf4398",
@@ -501,8 +501,8 @@
       "inputPrice": 1.1,
       "outputPrice": 4.4,
       "blendedPrice": 1.9250000000000003,
-      "outputSpeed": 253.52,
-      "latency": 22.06
+      "outputSpeed": 249.4,
+      "latency": 20.11
     },
     {
       "id": "078f4dc8-5350-40a2-a5ea-e8359f795b70",
@@ -573,8 +573,8 @@
       "inputPrice": 4,
       "outputPrice": 20,
       "blendedPrice": 8,
-      "outputSpeed": 119,
-      "latency": 2.06
+      "outputSpeed": 112.99,
+      "latency": 1.97
     },
     {
       "id": "092a3b0e-c5c8-45dc-bf1b-53673c8ff352",
@@ -584,15 +584,15 @@
       "creatorId": "e67e56e3-15cd-43db-b679-da4660a69f41",
       "releaseDate": "2026-09-29",
       "reasoning": false,
-      "intelligence": 52.3,
+      "intelligence": 52.5,
       "coding": null,
       "agentic": null,
       "costPerTask": 0.764,
       "inputPrice": 2,
       "outputPrice": 10,
       "blendedPrice": 4,
-      "outputSpeed": 75.8,
-      "latency": 139.92
+      "outputSpeed": 72.6,
+      "latency": 135.11
     },
     {
       "id": "093883ed-f5fc-443b-8e18-afbfb166699e",
@@ -609,8 +609,8 @@
       "inputPrice": 0.375,
       "outputPrice": 1.4,
       "blendedPrice": 0.63125,
-      "outputSpeed": 69.2,
-      "latency": 1.1
+      "outputSpeed": 65.76,
+      "latency": 1.08
     },
     {
       "id": "093b9df2-ebee-4309-943f-5a7e88360adf",
@@ -627,8 +627,8 @@
       "inputPrice": 0.3,
       "outputPrice": 2.5,
       "blendedPrice": 0.85,
-      "outputSpeed": 423.32,
-      "latency": 6.42
+      "outputSpeed": 402.25,
+      "latency": 6.82
     },
     {
       "id": "094ea3e3-ce41-419e-8bd1-723389663158",
@@ -645,8 +645,8 @@
       "inputPrice": 1,
       "outputPrice": 2.7,
       "blendedPrice": 1.425,
-      "outputSpeed": 141.2,
-      "latency": 15.08,
+      "outputSpeed": 135.08,
+      "latency": 15.73,
       "dimensions": {
         "pillars": {
           "coding": 22.67,
@@ -752,7 +752,7 @@
       "inputPrice": 0.25,
       "outputPrice": 0.97,
       "blendedPrice": 0.43,
-      "outputSpeed": 94.94,
+      "outputSpeed": 95.37,
       "latency": 1.84
     },
     {
@@ -770,8 +770,8 @@
       "inputPrice": 1,
       "outputPrice": 2,
       "blendedPrice": 1.25,
-      "outputSpeed": 79.98,
-      "latency": 26.3
+      "outputSpeed": 75.52,
+      "latency": 27.69
     },
     {
       "id": "0c64b008-20c3-408d-bd68-15136df8cd2c",
@@ -799,15 +799,15 @@
       "creatorId": "e67e56e3-15cd-43db-b679-da4660a69f41",
       "releaseDate": "2026-10-26",
       "reasoning": false,
-      "intelligence": 30.4,
+      "intelligence": 30.5,
       "coding": null,
       "agentic": null,
       "costPerTask": 0.2259,
       "inputPrice": 1,
       "outputPrice": 5,
       "blendedPrice": 2,
-      "outputSpeed": 89.33,
-      "latency": 0.94
+      "outputSpeed": 86.91,
+      "latency": 0.98
     },
     {
       "id": "0d3eaafd-54ed-4f78-bdd7-05a2db883986",
@@ -817,14 +817,14 @@
       "creatorId": "faddc6d9-2c14-445f-9b28-56726f59c793",
       "releaseDate": "2026-10-28",
       "reasoning": false,
-      "intelligence": 57.7,
+      "intelligence": 58.3,
       "coding": null,
       "agentic": null,
       "costPerTask": 6.5858,
       "inputPrice": 4,
       "outputPrice": 20,
       "blendedPrice": 8,
-      "outputSpeed": 92.49,
+      "outputSpeed": 90.47,
       "latency": 26.79
     },
     {
@@ -860,8 +860,8 @@
       "inputPrice": 1,
       "outputPrice": 4.05,
       "blendedPrice": 1.7625,
-      "outputSpeed": 204.36,
-      "latency": 11.55,
+      "outputSpeed": 197.32,
+      "latency": 11.97,
       "dimensions": {
         "pillars": {
           "coding": 2.47,
@@ -895,8 +895,8 @@
       "inputPrice": 0.95,
       "outputPrice": 4,
       "blendedPrice": 1.7125,
-      "outputSpeed": 40.71,
-      "latency": 112.15
+      "outputSpeed": 41.05,
+      "latency": 111.25
     },
     {
       "id": "0e34f05c-387e-4968-be15-ccec4a55d8c1",
@@ -913,8 +913,8 @@
       "inputPrice": 2,
       "outputPrice": 4,
       "blendedPrice": 2.5,
-      "outputSpeed": 177.19,
-      "latency": 14.25
+      "outputSpeed": 172.79,
+      "latency": 14.59
     },
     {
       "id": "0e49fe2d-dd3c-4ae5-b56f-a1c89e14b89e",
@@ -967,8 +967,8 @@
       "inputPrice": 0.6,
       "outputPrice": 3.6,
       "blendedPrice": 1.35,
-      "outputSpeed": 58.49,
-      "latency": 56.65
+      "outputSpeed": 58.87,
+      "latency": 56.28
     },
     {
       "id": "0faadeeb-320c-45cf-9c76-5f8768f342e6",
@@ -1003,7 +1003,7 @@
       "inputPrice": 0.95,
       "outputPrice": 4,
       "blendedPrice": 1.7125,
-      "outputSpeed": 38.69,
+      "outputSpeed": 39.15,
       "latency": 2.93
     },
     {
@@ -1075,8 +1075,8 @@
       "inputPrice": 0.14,
       "outputPrice": 0.28,
       "blendedPrice": 0.17500000000000002,
-      "outputSpeed": 36.16,
-      "latency": 58.04
+      "outputSpeed": 33.53,
+      "latency": 62.36
     },
     {
       "id": "1299b9a8-af50-4742-a58b-24ff7eb48f9f",
@@ -1111,8 +1111,8 @@
       "inputPrice": 0.3,
       "outputPrice": 1.2,
       "blendedPrice": 0.5249999999999999,
-      "outputSpeed": 50.07,
-      "latency": 41.65
+      "outputSpeed": 49.1,
+      "latency": 42.44
     },
     {
       "id": "12f6a061-0ab3-4c76-b225-49abee253651",
@@ -1129,8 +1129,8 @@
       "inputPrice": 0.15,
       "outputPrice": 0.6,
       "blendedPrice": 0.26249999999999996,
-      "outputSpeed": 163.23,
-      "latency": 0.86
+      "outputSpeed": 158.6,
+      "latency": 0.9
     },
     {
       "id": "1305c921-7aaa-4d6d-99b5-99b3acf15e19",
@@ -1147,8 +1147,8 @@
       "inputPrice": 5,
       "outputPrice": 25,
       "blendedPrice": 10,
-      "outputSpeed": 52.77,
-      "latency": 33.22
+      "outputSpeed": 52.4,
+      "latency": 34.73
     },
     {
       "id": "13358187-4584-479c-ab43-5bcdf8f297a4",
@@ -1183,8 +1183,8 @@
       "inputPrice": 2,
       "outputPrice": 10,
       "blendedPrice": 4,
-      "outputSpeed": 65.98,
-      "latency": 1.36
+      "outputSpeed": 64,
+      "latency": 1.29
     },
     {
       "id": "1479f50b-d37f-4b55-bb8b-4212a15042eb",
@@ -1255,8 +1255,8 @@
       "inputPrice": 0.3,
       "outputPrice": 1.2,
       "blendedPrice": 0.5249999999999999,
-      "outputSpeed": 97.53,
-      "latency": 22.46
+      "outputSpeed": 96.72,
+      "latency": 22.66
     },
     {
       "id": "16149b9c-a1e9-4669-a5cb-ff3c00d78f89",
@@ -1274,7 +1274,7 @@
       "outputPrice": 0.3,
       "blendedPrice": 0.1275,
       "outputSpeed": 209.03,
-      "latency": 10.34
+      "latency": 10.37
     },
     {
       "id": "169e47f5-3d4d-4ad4-8f8b-ab46f0c73f67",
@@ -1291,8 +1291,8 @@
       "inputPrice": 0.3,
       "outputPrice": 2.4,
       "blendedPrice": 0.825,
-      "outputSpeed": 74.7,
-      "latency": 32.36
+      "outputSpeed": 75.24,
+      "latency": 32.16
     },
     {
       "id": "16c5b637-8bce-4252-81f2-1b87a36a4e4c",
@@ -1309,8 +1309,8 @@
       "inputPrice": 2,
       "outputPrice": 8,
       "blendedPrice": 3.5,
-      "outputSpeed": 171.36,
-      "latency": 7
+      "outputSpeed": 157.97,
+      "latency": 7.54
     },
     {
       "id": "16f2578b-1b28-4be3-b371-700c2677bcd6",
@@ -1381,8 +1381,8 @@
       "inputPrice": 0.15,
       "outputPrice": 0.5,
       "blendedPrice": 0.2375,
-      "outputSpeed": 74.42,
-      "latency": 28.42
+      "outputSpeed": 71.29,
+      "latency": 29.6
     },
     {
       "id": "19813eb2-460a-475c-af65-810bb8660fec",
@@ -1392,15 +1392,15 @@
       "creatorId": "e67e56e3-15cd-43db-b679-da4660a69f41",
       "releaseDate": "2026-09-22",
       "reasoning": false,
-      "intelligence": 23.3,
+      "intelligence": 23.5,
       "coding": null,
       "agentic": null,
       "costPerTask": 0.1041,
       "inputPrice": 0.1,
       "outputPrice": 0.5,
       "blendedPrice": 0.2,
-      "outputSpeed": 127.39,
-      "latency": 34.28
+      "outputSpeed": 126.87,
+      "latency": 31.87
     },
     {
       "id": "198b717f-42c8-4ab7-a699-ae9373d669d3",
@@ -1418,7 +1418,7 @@
       "outputPrice": 1.68,
       "blendedPrice": 0.855,
       "outputSpeed": 121.84,
-      "latency": 19.54
+      "latency": 19.43
     },
     {
       "id": "1a8ba535-df18-459b-ad40-3199191296d7",
@@ -1453,8 +1453,8 @@
       "inputPrice": 0.1,
       "outputPrice": 0.3,
       "blendedPrice": 0.15000000000000002,
-      "outputSpeed": 130.63,
-      "latency": 18.6
+      "outputSpeed": 123.49,
+      "latency": 19.44
     },
     {
       "id": "1b05e346-e86a-4a20-8feb-7da8c65a99aa",
@@ -1543,7 +1543,7 @@
       "inputPrice": 0.1,
       "outputPrice": 0.4,
       "blendedPrice": 0.17500000000000002,
-      "outputSpeed": 311.72,
+      "outputSpeed": 308.35,
       "latency": 0.29
     },
     {
@@ -1561,8 +1561,8 @@
       "inputPrice": 0.7,
       "outputPrice": 0.7,
       "blendedPrice": 0.7,
-      "outputSpeed": 36.9,
-      "latency": 2.21
+      "outputSpeed": 37.19,
+      "latency": 2.2
     },
     {
       "id": "1e9907e0-ffac-4595-b006-962e4f1da7cf",
@@ -1615,8 +1615,8 @@
       "inputPrice": 5,
       "outputPrice": 30,
       "blendedPrice": 11.25,
-      "outputSpeed": 90.76,
-      "latency": 54.56
+      "outputSpeed": 82.53,
+      "latency": 51.75
     },
     {
       "id": "1f05af98-1ec6-4506-a0b8-57a8c9b63878",
@@ -1651,8 +1651,8 @@
       "inputPrice": 10,
       "outputPrice": 50,
       "blendedPrice": 20,
-      "outputSpeed": 64.36,
-      "latency": 202.66
+      "outputSpeed": 59.62,
+      "latency": 196.11
     },
     {
       "id": "1f6478c9-3e22-4586-adbe-841782859677",
@@ -1716,15 +1716,15 @@
       "creatorId": "f0aa413f-e8ae-4fcd-9c48-0e049f4f3128",
       "releaseDate": "2026-10-07",
       "reasoning": false,
-      "intelligence": 29.6,
+      "intelligence": 29.9,
       "coding": null,
       "agentic": null,
       "costPerTask": 0.1586,
       "inputPrice": 0.1,
       "outputPrice": 0.5,
       "blendedPrice": 0.2,
-      "outputSpeed": 183.84,
-      "latency": 31.95
+      "outputSpeed": 176.76,
+      "latency": 30
     },
     {
       "id": "208c16f0-8c5b-4524-ac8a-ac74c02e80a9",
@@ -1734,15 +1734,15 @@
       "creatorId": "a1e3ddcf-d3e4-44a5-9e8f-029a69850875",
       "releaseDate": "2026-09-21",
       "reasoning": false,
-      "intelligence": 30.9,
+      "intelligence": 31.1,
       "coding": null,
       "agentic": null,
       "costPerTask": 2.9222,
       "inputPrice": 2,
       "outputPrice": 6,
       "blendedPrice": 3,
-      "outputSpeed": 62.71,
-      "latency": 6.79
+      "outputSpeed": 60.46,
+      "latency": 7.33
     },
     {
       "id": "20928ba9-3a3f-415f-9519-b84ff64ecf34",
@@ -1759,8 +1759,8 @@
       "inputPrice": 5,
       "outputPrice": 25,
       "blendedPrice": 10,
-      "outputSpeed": 52.11,
-      "latency": 2.2
+      "outputSpeed": 50.77,
+      "latency": 2.3
     },
     {
       "id": "20da3b31-fc0a-4359-abec-d59367bf1d9f",
@@ -1777,7 +1777,7 @@
       "inputPrice": 0.17,
       "outputPrice": 0.25,
       "blendedPrice": 0.19,
-      "outputSpeed": 101.26,
+      "outputSpeed": 106.43,
       "latency": 0.51
     },
     {
@@ -1813,8 +1813,8 @@
       "inputPrice": 0.3,
       "outputPrice": 2.5,
       "blendedPrice": 0.85,
-      "outputSpeed": 208.81,
-      "latency": 14.49
+      "outputSpeed": 204.7,
+      "latency": 17.01
     },
     {
       "id": "222fb320-6e55-4672-846a-b6d5a24a45f4",
@@ -1850,7 +1850,7 @@
       "outputPrice": 3.2,
       "blendedPrice": 1.1,
       "outputSpeed": 129.59,
-      "latency": 17.74
+      "latency": 17.73
     },
     {
       "id": "22d09131-343b-4adf-8760-533e20a2155f",
@@ -1867,8 +1867,8 @@
       "inputPrice": 0.133,
       "outputPrice": 0.266,
       "blendedPrice": 0.16625,
-      "outputSpeed": 58.45,
-      "latency": 35.74
+      "outputSpeed": 56.47,
+      "latency": 37.04
     },
     {
       "id": "23149f9b-c904-43e2-9ec4-afa2bf843941",
@@ -1921,8 +1921,8 @@
       "inputPrice": 0.05,
       "outputPrice": 0.2,
       "blendedPrice": 0.08750000000000001,
-      "outputSpeed": 257.36,
-      "latency": 0.55
+      "outputSpeed": 256.98,
+      "latency": 0.7
     },
     {
       "id": "23c86e4a-c769-43c0-a056-79e3cd15834f",
@@ -1939,8 +1939,8 @@
       "inputPrice": 2,
       "outputPrice": 10,
       "blendedPrice": 4,
-      "outputSpeed": 79.44,
-      "latency": 161.9
+      "outputSpeed": 78.87,
+      "latency": 172.37
     },
     {
       "id": "2443ac9e-a3db-423d-accb-8963f6fb0a53",
@@ -1957,8 +1957,8 @@
       "inputPrice": 3,
       "outputPrice": 15,
       "blendedPrice": 6,
-      "outputSpeed": 77.62,
-      "latency": 1.61
+      "outputSpeed": 68.34,
+      "latency": 1.65
     },
     {
       "id": "248deb0d-426c-4fa9-86fa-bc60aa9c3719",
@@ -1993,8 +1993,8 @@
       "inputPrice": 0.08,
       "outputPrice": 0.135,
       "blendedPrice": 0.09375,
-      "outputSpeed": 37.87,
-      "latency": 0.9
+      "outputSpeed": 36.55,
+      "latency": 0.88
     },
     {
       "id": "24d8fdfe-6241-424e-b7b7-1b6efb06e4fb",
@@ -2011,8 +2011,8 @@
       "inputPrice": 0.435,
       "outputPrice": 0.87,
       "blendedPrice": 0.54375,
-      "outputSpeed": 41.49,
-      "latency": 51.72,
+      "outputSpeed": 41.08,
+      "latency": 52.21,
       "dimensions": {
         "pillars": {
           "coding": 29.41,
@@ -2046,8 +2046,8 @@
       "inputPrice": 5,
       "outputPrice": 25,
       "blendedPrice": 10,
-      "outputSpeed": 58.01,
-      "latency": 16.34
+      "outputSpeed": 54.98,
+      "latency": 16.92
     },
     {
       "id": "26614164-6840-4e17-a65a-2deb2fe7e87b",
@@ -2064,7 +2064,7 @@
       "inputPrice": 2,
       "outputPrice": 6,
       "blendedPrice": 3,
-      "outputSpeed": 71.93,
+      "outputSpeed": 65.19,
       "latency": 35.65
     },
     {
@@ -2075,15 +2075,15 @@
       "creatorId": "f0aa413f-e8ae-4fcd-9c48-0e049f4f3128",
       "releaseDate": "2026-09-28",
       "reasoning": false,
-      "intelligence": 41.1,
+      "intelligence": 41.5,
       "coding": null,
       "agentic": null,
       "costPerTask": 1.6361,
       "inputPrice": 2,
       "outputPrice": 10,
       "blendedPrice": 4,
-      "outputSpeed": 105.28,
-      "latency": 12.83
+      "outputSpeed": 103.42,
+      "latency": 12.59
     },
     {
       "id": "2698f6c6-e436-47ce-a583-dbc25596c571",
@@ -2100,8 +2100,8 @@
       "inputPrice": 0.1,
       "outputPrice": 1.1,
       "blendedPrice": 0.35000000000000003,
-      "outputSpeed": 178.95,
-      "latency": 0.9
+      "outputSpeed": 177.1,
+      "latency": 0.88
     },
     {
       "id": "26c0b5df-efa7-470f-a65e-2d883329e493",
@@ -2136,8 +2136,8 @@
       "inputPrice": 2,
       "outputPrice": 12,
       "blendedPrice": 4.5,
-      "outputSpeed": 105.08,
-      "latency": 1.57
+      "outputSpeed": 104.02,
+      "latency": 1.48
     },
     {
       "id": "27202e5f-c82d-4710-92e9-4317877d4883",
@@ -2154,7 +2154,7 @@
       "inputPrice": 1.25,
       "outputPrice": 10,
       "blendedPrice": 3.4375,
-      "outputSpeed": 105.7,
+      "outputSpeed": 103.86,
       "latency": 26.38
     },
     {
@@ -2165,15 +2165,15 @@
       "creatorId": "a1e3ddcf-d3e4-44a5-9e8f-029a69850875",
       "releaseDate": "2026-09-21",
       "reasoning": false,
-      "intelligence": 35,
+      "intelligence": 35.2,
       "coding": null,
       "agentic": null,
       "costPerTask": 6.1836,
       "inputPrice": 2,
       "outputPrice": 6,
       "blendedPrice": 3,
-      "outputSpeed": 75.94,
-      "latency": 66.05
+      "outputSpeed": 74.21,
+      "latency": 51.98
     },
     {
       "id": "272ff333-442f-4169-a804-ac9177bc99d7",
@@ -2190,8 +2190,8 @@
       "inputPrice": 0.3,
       "outputPrice": 1.2,
       "blendedPrice": 0.5249999999999999,
-      "outputSpeed": 53.02,
-      "latency": 39.41
+      "outputSpeed": 51.35,
+      "latency": 40.63
     },
     {
       "id": "277f939a-985b-4b37-859d-b3eabc7c0b26",
@@ -2201,15 +2201,15 @@
       "creatorId": "a31a9071-6144-4dbb-92dc-2e02d653ecea",
       "releaseDate": "2026-06-01",
       "reasoning": false,
-      "intelligence": 18.7,
+      "intelligence": 18.9,
       "coding": null,
       "agentic": null,
       "costPerTask": 1.2851,
       "inputPrice": 0.3,
       "outputPrice": 1.2,
       "blendedPrice": 0.5249999999999999,
-      "outputSpeed": 105.97,
-      "latency": 19.94
+      "outputSpeed": 98.39,
+      "latency": 21.24
     },
     {
       "id": "27b24366-fd1a-44b7-8011-e24d7501318d",
@@ -2281,7 +2281,7 @@
       "outputPrice": 2,
       "blendedPrice": 0.6875,
       "outputSpeed": 91.53,
-      "latency": 79.67
+      "latency": 70.81
     },
     {
       "id": "29976311-665a-4b2f-ac72-557c33e0758e",
@@ -2299,7 +2299,7 @@
       "outputPrice": 0.2,
       "blendedPrice": 0.095,
       "outputSpeed": 300.89,
-      "latency": 7.22
+      "latency": 7.21
     },
     {
       "id": "2aacdc07-5f4e-4ab9-8ea5-5f7ab93f9eeb",
@@ -2406,8 +2406,8 @@
       "inputPrice": 0.07,
       "outputPrice": 0.4,
       "blendedPrice": 0.15250000000000002,
-      "outputSpeed": 129.41,
-      "latency": 16.56
+      "outputSpeed": 120.12,
+      "latency": 17.76
     },
     {
       "id": "2cd04201-2b6e-47ef-853e-7601f705f2a8",
@@ -2496,7 +2496,7 @@
       "inputPrice": 1.1,
       "outputPrice": 4.4,
       "blendedPrice": 1.9250000000000003,
-      "outputSpeed": 228.98,
+      "outputSpeed": 226.34,
       "latency": 7.89
     },
     {
@@ -2532,8 +2532,8 @@
       "inputPrice": 3,
       "outputPrice": 15,
       "blendedPrice": 6,
-      "outputSpeed": 44.92,
-      "latency": 1
+      "outputSpeed": 43.1,
+      "latency": 1.06
     },
     {
       "id": "2e46d2fd-eb2b-42b9-9fe4-be50630fe870",
@@ -2586,7 +2586,7 @@
       "inputPrice": 0.05,
       "outputPrice": 0.195,
       "blendedPrice": 0.08625000000000001,
-      "outputSpeed": 171.49,
+      "outputSpeed": 171.55,
       "latency": 1.01
     },
     {
@@ -2604,8 +2604,8 @@
       "inputPrice": 0,
       "outputPrice": 0,
       "blendedPrice": 0,
-      "outputSpeed": 182.53,
-      "latency": 11.41
+      "outputSpeed": 186.55,
+      "latency": 11.17
     },
     {
       "id": "2f339a97-9a0d-499a-9cb5-e0db665bfa25",
@@ -2622,8 +2622,8 @@
       "inputPrice": 10,
       "outputPrice": 50,
       "blendedPrice": 20,
-      "outputSpeed": 67.97,
-      "latency": 336.7,
+      "outputSpeed": 66.64,
+      "latency": 316.24,
       "dimensions": {
         "pillars": {
           "coding": 50.73,
@@ -2650,20 +2650,20 @@
       "creatorId": "f0aa413f-e8ae-4fcd-9c48-0e049f4f3128",
       "releaseDate": "2026-09-22",
       "reasoning": false,
-      "intelligence": 58.4,
+      "intelligence": 59.1,
       "coding": null,
       "agentic": null,
       "costPerTask": 10.0364,
       "inputPrice": 4,
       "outputPrice": 20,
       "blendedPrice": 8,
-      "outputSpeed": 95.66,
-      "latency": 627.31,
+      "outputSpeed": 95.04,
+      "latency": 612.37,
       "dimensions": {
         "pillars": {
           "coding": 53.02,
           "akw": 66.09,
-          "science": 60.02,
+          "science": 63.52,
           "reasoning": 67.9,
           "knowledge": 70.42
         },
@@ -2710,8 +2710,8 @@
       "inputPrice": 5,
       "outputPrice": 25,
       "blendedPrice": 10,
-      "outputSpeed": 45.14,
-      "latency": 0.99
+      "outputSpeed": 44.72,
+      "latency": 1.01
     },
     {
       "id": "2ffa7571-fa78-453a-b589-9aa3fac702d2",
@@ -2746,8 +2746,8 @@
       "inputPrice": 0.6,
       "outputPrice": 1.8,
       "blendedPrice": 0.8999999999999999,
-      "outputSpeed": 62.44,
-      "latency": 35.34
+      "outputSpeed": 62.16,
+      "latency": 35.45
     },
     {
       "id": "30c9ba61-d0a1-4794-938e-35865f379d15",
@@ -2764,7 +2764,7 @@
       "inputPrice": 0.03,
       "outputPrice": 0.15,
       "blendedPrice": 0.06,
-      "outputSpeed": 38.71,
+      "outputSpeed": 41.56,
       "latency": 0.82
     },
     {
@@ -2782,7 +2782,7 @@
       "inputPrice": 0.6,
       "outputPrice": 3.6,
       "blendedPrice": 1.35,
-      "outputSpeed": 59.15,
+      "outputSpeed": 59.27,
       "latency": 2.2
     },
     {
@@ -2908,8 +2908,8 @@
       "inputPrice": 0.035,
       "outputPrice": 0.14,
       "blendedPrice": 0.061250000000000006,
-      "outputSpeed": 276.68,
-      "latency": 0.78
+      "outputSpeed": 270.31,
+      "latency": 0.79
     },
     {
       "id": "34ef2b5c-3df3-437e-b9c5-81346f8c14a8",
@@ -2944,8 +2944,8 @@
       "inputPrice": 0.7,
       "outputPrice": 2.1,
       "blendedPrice": 1.0499999999999998,
-      "outputSpeed": 153.94,
-      "latency": 14.72
+      "outputSpeed": 132.4,
+      "latency": 17.13
     },
     {
       "id": "352f834f-a03c-4117-8a29-c3ccd8a568ce",
@@ -2998,7 +2998,7 @@
       "inputPrice": 0.5,
       "outputPrice": 3,
       "blendedPrice": 1.125,
-      "outputSpeed": 45.22,
+      "outputSpeed": 45.58,
       "latency": 4.02
     },
     {
@@ -3027,20 +3027,20 @@
       "creatorId": "e1694725-0192-4e54-b1b8-c97e816c6cbe",
       "releaseDate": "2026-10-15",
       "reasoning": false,
-      "intelligence": 24.7,
+      "intelligence": 24.9,
       "coding": null,
       "agentic": null,
       "costPerTask": 2.0177,
       "inputPrice": 1.25,
       "outputPrice": 4.25,
       "blendedPrice": 2,
-      "outputSpeed": 179.66,
-      "latency": 11.88,
+      "outputSpeed": 178.34,
+      "latency": 11.99,
       "dimensions": {
         "pillars": {
           "coding": 7.84,
           "akw": 38.99,
-          "science": 14.7,
+          "science": 15.7,
           "reasoning": 26.3,
           "knowledge": 65.58
         },
@@ -3062,7 +3062,7 @@
       "creatorId": "e67e56e3-15cd-43db-b679-da4660a69f41",
       "releaseDate": "2026-09-22",
       "reasoning": false,
-      "intelligence": 18.3,
+      "intelligence": 18.5,
       "coding": null,
       "agentic": null,
       "costPerTask": 0.0422,
@@ -3105,8 +3105,8 @@
       "inputPrice": 0.05,
       "outputPrice": 0.22,
       "blendedPrice": 0.0925,
-      "outputSpeed": 171.17,
-      "latency": 12.4
+      "outputSpeed": 169.31,
+      "latency": 12.53
     },
     {
       "id": "385376b1-9815-47dd-83cc-85aac34f247d",
@@ -3141,8 +3141,8 @@
       "inputPrice": 0.75,
       "outputPrice": 4.5,
       "blendedPrice": 1.6875,
-      "outputSpeed": 230.29,
-      "latency": 7.29
+      "outputSpeed": 221.13,
+      "latency": 6.18
     },
     {
       "id": "39b64e04-7a69-4aa2-9e2e-fe38c24681ec",
@@ -3177,8 +3177,8 @@
       "inputPrice": 0.6,
       "outputPrice": 3.6,
       "blendedPrice": 1.35,
-      "outputSpeed": 57.62,
-      "latency": 3.61
+      "outputSpeed": 56.62,
+      "latency": 3.57
     },
     {
       "id": "3b5ba264-ad25-429b-a460-4d8698205f0d",
@@ -3213,8 +3213,8 @@
       "inputPrice": 2,
       "outputPrice": 8,
       "blendedPrice": 3.5,
-      "outputSpeed": 174.81,
-      "latency": 0.86
+      "outputSpeed": 166.61,
+      "latency": 0.89
     },
     {
       "id": "3b7de71c-e034-4591-8ca6-6b6be2fa471f",
@@ -3224,15 +3224,15 @@
       "creatorId": "f0aa413f-e8ae-4fcd-9c48-0e049f4f3128",
       "releaseDate": "2026-09-01",
       "reasoning": false,
-      "intelligence": 43,
+      "intelligence": 43.2,
       "coding": null,
       "agentic": null,
       "costPerTask": 5.5643,
       "inputPrice": 10,
       "outputPrice": 50,
       "blendedPrice": 20,
-      "outputSpeed": 56.32,
-      "latency": 14.36
+      "outputSpeed": 54.75,
+      "latency": 14.66
     },
     {
       "id": "3b84fee3-b70a-41bc-819e-5fbdef9a0042",
@@ -3242,15 +3242,15 @@
       "creatorId": "e67e56e3-15cd-43db-b679-da4660a69f41",
       "releaseDate": "2026-09-29",
       "reasoning": false,
-      "intelligence": 50.2,
+      "intelligence": 50.3,
       "coding": null,
       "agentic": null,
       "costPerTask": 0.591,
       "inputPrice": 2,
       "outputPrice": 10,
       "blendedPrice": 4,
-      "outputSpeed": 68.24,
-      "latency": 79.6
+      "outputSpeed": 65.33,
+      "latency": 75.51
     },
     {
       "id": "3bc32f13-5afa-4e28-bce1-10e57376686b",
@@ -3267,8 +3267,8 @@
       "inputPrice": 2.5,
       "outputPrice": 10,
       "blendedPrice": 4.375,
-      "outputSpeed": 14.21,
-      "latency": 2.3
+      "outputSpeed": 16.77,
+      "latency": 2.15
     },
     {
       "id": "3c5289e5-1c62-434c-bc44-c51c39f640a1",
@@ -3375,8 +3375,8 @@
       "inputPrice": 0.135,
       "outputPrice": 0.55,
       "blendedPrice": 0.23875000000000002,
-      "outputSpeed": 130.5,
-      "latency": 15.87
+      "outputSpeed": 135.43,
+      "latency": 15.33
     },
     {
       "id": "3e87c73e-a257-495e-9730-367a66229811",
@@ -3386,7 +3386,7 @@
       "creatorId": "f0aa413f-e8ae-4fcd-9c48-0e049f4f3128",
       "releaseDate": "2026-09-01",
       "reasoning": false,
-      "intelligence": 49,
+      "intelligence": 49.2,
       "coding": null,
       "agentic": null,
       "costPerTask": 12.994,
@@ -3399,7 +3399,7 @@
         "pillars": {
           "coding": 41.82,
           "akw": 58.92,
-          "science": 47.17,
+          "science": 47.92,
           "reasoning": 60.1,
           "knowledge": 66.75
         },
@@ -3428,7 +3428,7 @@
       "inputPrice": 0.45,
       "outputPrice": 0.7,
       "blendedPrice": 0.5125,
-      "outputSpeed": 24.74,
+      "outputSpeed": 25,
       "latency": 1.04
     },
     {
@@ -3464,8 +3464,8 @@
       "inputPrice": 0.15,
       "outputPrice": 0.6,
       "blendedPrice": 0.26249999999999996,
-      "outputSpeed": 169.85,
-      "latency": 12.7
+      "outputSpeed": 173.35,
+      "latency": 12.46
     },
     {
       "id": "405e2235-0925-4634-a3c7-fbd5f6394bc0",
@@ -3500,8 +3500,8 @@
       "inputPrice": 1,
       "outputPrice": 3.2,
       "blendedPrice": 1.55,
-      "outputSpeed": 58.9,
-      "latency": 54.21
+      "outputSpeed": 54.24,
+      "latency": 58.75
     },
     {
       "id": "4077490a-bbfb-404e-979a-a97a20e3b5de",
@@ -3518,7 +3518,7 @@
       "inputPrice": 5,
       "outputPrice": 25,
       "blendedPrice": 10,
-      "outputSpeed": 49.82,
+      "outputSpeed": 47.38,
       "latency": 1.08
     },
     {
@@ -3529,15 +3529,15 @@
       "creatorId": "f0aa413f-e8ae-4fcd-9c48-0e049f4f3128",
       "releaseDate": "2026-10-07",
       "reasoning": false,
-      "intelligence": 34.3,
+      "intelligence": 34.6,
       "coding": null,
       "agentic": null,
       "costPerTask": 0.2484,
       "inputPrice": 0.1,
       "outputPrice": 0.5,
       "blendedPrice": 0.2,
-      "outputSpeed": 189.77,
-      "latency": 62.95
+      "outputSpeed": 180.83,
+      "latency": 61.83
     },
     {
       "id": "41f73c27-880c-4f30-8b07-9999ce89a4ae",
@@ -3590,8 +3590,8 @@
       "inputPrice": 0.2,
       "outputPrice": 1.2,
       "blendedPrice": 0.45,
-      "outputSpeed": 108.17,
-      "latency": 144.27
+      "outputSpeed": 106.62,
+      "latency": 139.37
     },
     {
       "id": "42908ae3-d3bd-4934-be19-fbff93d3fde8",
@@ -3608,8 +3608,8 @@
       "inputPrice": 0.1,
       "outputPrice": 0.5,
       "blendedPrice": 0.2,
-      "outputSpeed": 166.79,
-      "latency": 8.95
+      "outputSpeed": 160.36,
+      "latency": 8.96
     },
     {
       "id": "43098bd0-77ca-408b-b698-9d60b1d1c3b8",
@@ -3627,7 +3627,7 @@
       "outputPrice": 0.9,
       "blendedPrice": 0.44999999999999996,
       "outputSpeed": 73.63,
-      "latency": 3.84
+      "latency": 3.83
     },
     {
       "id": "432d6c36-8825-47f3-b4eb-58529cea346b",
@@ -3734,8 +3734,8 @@
       "inputPrice": 5,
       "outputPrice": 25,
       "blendedPrice": 10,
-      "outputSpeed": 39.94,
-      "latency": 1.84
+      "outputSpeed": 39.51,
+      "latency": 1.77
     },
     {
       "id": "43da3718-3d6e-40dd-901a-05664179ff7f",
@@ -3752,7 +3752,7 @@
       "inputPrice": 0.075,
       "outputPrice": 0.2,
       "blendedPrice": 0.10625,
-      "outputSpeed": 46.56,
+      "outputSpeed": 42.87,
       "latency": 0.87
     },
     {
@@ -3770,8 +3770,8 @@
       "inputPrice": 0.32,
       "outputPrice": 0.89,
       "blendedPrice": 0.4625,
-      "outputSpeed": 85.21,
-      "latency": 0.92
+      "outputSpeed": 56.23,
+      "latency": 0.91
     },
     {
       "id": "4416ca93-fde6-4b7b-abbc-3a6be109cc3d",
@@ -3781,14 +3781,14 @@
       "creatorId": "f0aa413f-e8ae-4fcd-9c48-0e049f4f3128",
       "releaseDate": "2026-09-22",
       "reasoning": false,
-      "intelligence": 34.5,
+      "intelligence": 34.8,
       "coding": null,
       "agentic": null,
       "costPerTask": 0.9755,
       "inputPrice": 4,
       "outputPrice": 20,
       "blendedPrice": 8,
-      "outputSpeed": 78.75,
+      "outputSpeed": 77.79,
       "latency": 10.71
     },
     {
@@ -3806,8 +3806,8 @@
       "inputPrice": 0.57,
       "outputPrice": 2.3,
       "blendedPrice": 1.0025,
-      "outputSpeed": 50,
-      "latency": 1.87
+      "outputSpeed": 45.12,
+      "latency": 1.89
     },
     {
       "id": "444cdb1e-bab8-42cd-938c-b2d7a93e2da1",
@@ -3878,8 +3878,8 @@
       "inputPrice": 0.12,
       "outputPrice": 0.24,
       "blendedPrice": 0.15,
-      "outputSpeed": 39.29,
-      "latency": 51.97
+      "outputSpeed": 34,
+      "latency": 60
     },
     {
       "id": "45790612-02e3-4c42-b5bd-cd7ed2ea1f2f",
@@ -3896,8 +3896,8 @@
       "inputPrice": 0.042,
       "outputPrice": 0.17,
       "blendedPrice": 0.07400000000000001,
-      "outputSpeed": 131.18,
-      "latency": 16.89
+      "outputSpeed": 120.94,
+      "latency": 18.18
     },
     {
       "id": "45c87531-2d57-48e0-8012-202cd636189e",
@@ -3932,8 +3932,8 @@
       "inputPrice": 0.56,
       "outputPrice": 0.56,
       "blendedPrice": 0.56,
-      "outputSpeed": 39.25,
-      "latency": 1.83
+      "outputSpeed": 37.46,
+      "latency": 1.87
     },
     {
       "id": "46d8315e-1630-463f-ab62-84185fa0faab",
@@ -3983,10 +3983,10 @@
       "coding": null,
       "agentic": null,
       "costPerTask": null,
-      "inputPrice": 0.39,
-      "outputPrice": 1.17,
-      "blendedPrice": 0.585,
-      "outputSpeed": 51.36,
+      "inputPrice": 0.674,
+      "outputPrice": 1.848,
+      "blendedPrice": 0.9675,
+      "outputSpeed": 52.44,
       "latency": 1.1
     },
     {
@@ -4058,8 +4058,8 @@
       "inputPrice": 0.5,
       "outputPrice": 1.5,
       "blendedPrice": 0.75,
-      "outputSpeed": 97.35,
-      "latency": 1.21
+      "outputSpeed": 88.45,
+      "latency": 1.13
     },
     {
       "id": "493f6a1e-7717-4e98-9d6f-548b92c4702d",
@@ -4076,7 +4076,7 @@
       "inputPrice": 2.5,
       "outputPrice": 15,
       "blendedPrice": 5.625,
-      "outputSpeed": 59.35,
+      "outputSpeed": 58.1,
       "latency": 0.81
     },
     {
@@ -4094,7 +4094,7 @@
       "inputPrice": 1.75,
       "outputPrice": 14,
       "blendedPrice": 4.8125,
-      "outputSpeed": 81.71,
+      "outputSpeed": 80.92,
       "latency": 147.11
     },
     {
@@ -4184,8 +4184,8 @@
       "inputPrice": 0.3,
       "outputPrice": 1.2,
       "blendedPrice": 0.5249999999999999,
-      "outputSpeed": 53.01,
-      "latency": 48.27
+      "outputSpeed": 52.62,
+      "latency": 48.54
     },
     {
       "id": "4c111fbc-d13a-42b4-858c-1dc17fe3c1d1",
@@ -4256,8 +4256,8 @@
       "inputPrice": 1.25,
       "outputPrice": 10,
       "blendedPrice": 3.4375,
-      "outputSpeed": 137.93,
-      "latency": 39.78
+      "outputSpeed": 136.13,
+      "latency": 35.48
     },
     {
       "id": "5016ea75-7b0e-4737-a7e6-1062c6d90fd4",
@@ -4274,8 +4274,8 @@
       "inputPrice": 1.5,
       "outputPrice": 9,
       "blendedPrice": 3.375,
-      "outputSpeed": 192.73,
-      "latency": 12.47
+      "outputSpeed": 187.13,
+      "latency": 12.41
     },
     {
       "id": "504412c2-2ada-499b-aebf-7e0a35c9d286",
@@ -4328,7 +4328,7 @@
       "inputPrice": 0.3,
       "outputPrice": 2.4,
       "blendedPrice": 0.825,
-      "outputSpeed": 82.04,
+      "outputSpeed": 82,
       "latency": 5.61
     },
     {
@@ -4364,8 +4364,8 @@
       "inputPrice": 3,
       "outputPrice": 15,
       "blendedPrice": 6,
-      "outputSpeed": 53.3,
-      "latency": 40.83
+      "outputSpeed": 50.54,
+      "latency": 42.71
     },
     {
       "id": "515852e7-ba9c-4571-8cf9-82ad6b45f22f",
@@ -4400,8 +4400,8 @@
       "inputPrice": 0.35,
       "outputPrice": 0.6,
       "blendedPrice": 0.4125,
-      "outputSpeed": 35.55,
-      "latency": 3.77
+      "outputSpeed": 38.49,
+      "latency": 3.07
     },
     {
       "id": "523125f4-a1da-4990-9abd-dd08a069100e",
@@ -4454,8 +4454,8 @@
       "inputPrice": 2,
       "outputPrice": 10,
       "blendedPrice": 4,
-      "outputSpeed": 142.27,
-      "latency": 15.93
+      "outputSpeed": 135.06,
+      "latency": 15.22
     },
     {
       "id": "5303601c-8133-4f52-bc4e-5241ee6b3c10",
@@ -4472,7 +4472,7 @@
       "inputPrice": 0.02,
       "outputPrice": 0.1,
       "blendedPrice": 0.04,
-      "outputSpeed": 51.81,
+      "outputSpeed": 52.24,
       "latency": 0.75
     },
     {
@@ -4490,7 +4490,7 @@
       "inputPrice": 2.5,
       "outputPrice": 15,
       "blendedPrice": 5.625,
-      "outputSpeed": 61.55,
+      "outputSpeed": 60.44,
       "latency": 2.22
     },
     {
@@ -4501,7 +4501,7 @@
       "creatorId": "4df238a9-d4fd-4cf2-ab1e-d12956c41f9b",
       "releaseDate": "2026-10-22",
       "reasoning": false,
-      "intelligence": 29.5,
+      "intelligence": 29.6,
       "coding": null,
       "agentic": null,
       "costPerTask": 3.1851,
@@ -4514,7 +4514,7 @@
         "pillars": {
           "coding": 24.92,
           "akw": 51.18,
-          "science": 20.89,
+          "science": 21.39,
           "reasoning": 17.2,
           "knowledge": 54.42
         },
@@ -4561,8 +4561,8 @@
       "inputPrice": 5,
       "outputPrice": 25,
       "blendedPrice": 10,
-      "outputSpeed": 44.34,
-      "latency": 21.16
+      "outputSpeed": 40.83,
+      "latency": 20.41
     },
     {
       "id": "540ebc58-a2d8-4dc9-ba6b-973efa52fab1",
@@ -4616,7 +4616,7 @@
       "outputPrice": 3.2,
       "blendedPrice": 1.4000000000000001,
       "outputSpeed": 130.92,
-      "latency": 1.05
+      "latency": 1.07
     },
     {
       "id": "54c7f3fc-7078-442a-b472-e8691257a88c",
@@ -4669,8 +4669,8 @@
       "inputPrice": 0.3,
       "outputPrice": 1.2,
       "blendedPrice": 0.5249999999999999,
-      "outputSpeed": 179.39,
-      "latency": 1.35
+      "outputSpeed": 171.55,
+      "latency": 1.31
     },
     {
       "id": "573bbd93-114c-4b71-9ede-a73a7d4bdf84",
@@ -4724,7 +4724,7 @@
       "outputPrice": 1.2,
       "blendedPrice": 0.5249999999999999,
       "outputSpeed": 123.51,
-      "latency": 17.38
+      "latency": 17.39
     },
     {
       "id": "58b812bf-8498-46db-b834-f43ccc614b61",
@@ -4741,7 +4741,7 @@
       "inputPrice": 0.2,
       "outputPrice": 1.2,
       "blendedPrice": 0.45,
-      "outputSpeed": 108.79,
+      "outputSpeed": 103.29,
       "latency": 2.61
     },
     {
@@ -4752,20 +4752,20 @@
       "creatorId": "a1e3ddcf-d3e4-44a5-9e8f-029a69850875",
       "releaseDate": "2026-09-21",
       "reasoning": false,
-      "intelligence": 35.3,
+      "intelligence": 35.5,
       "coding": null,
       "agentic": null,
       "costPerTask": 7.7715,
       "inputPrice": 2,
       "outputPrice": 6,
       "blendedPrice": 3,
-      "outputSpeed": 85.73,
-      "latency": 106.05,
+      "outputSpeed": 75.56,
+      "latency": 102.56,
       "dimensions": {
         "pillars": {
           "coding": 27.21,
           "akw": 57.86,
-          "science": 21.71,
+          "science": 22.46,
           "reasoning": 23.2,
           "knowledge": 66.25
         },
@@ -4812,8 +4812,8 @@
       "inputPrice": 0.25,
       "outputPrice": 1.5,
       "blendedPrice": 0.5625,
-      "outputSpeed": 390.77,
-      "latency": 4.69
+      "outputSpeed": 356.09,
+      "latency": 4.76
     },
     {
       "id": "598de97d-029e-47b6-96ec-dbc1e0f9045a",
@@ -4884,8 +4884,8 @@
       "inputPrice": 1.75,
       "outputPrice": 14,
       "blendedPrice": 4.8125,
-      "outputSpeed": 104.42,
-      "latency": 68.87
+      "outputSpeed": 99.48,
+      "latency": 70.88
     },
     {
       "id": "59e22326-1bca-4432-a5fa-147fbe8854e7",
@@ -4902,8 +4902,8 @@
       "inputPrice": 0.4,
       "outputPrice": 2,
       "blendedPrice": 0.8,
-      "outputSpeed": 40.54,
-      "latency": 2.37
+      "outputSpeed": 40.62,
+      "latency": 2.35
     },
     {
       "id": "5a088cde-18e2-4dfa-98dd-d283e1c19654",
@@ -4956,8 +4956,8 @@
       "inputPrice": 1.19,
       "outputPrice": 3.74,
       "blendedPrice": 1.8275000000000001,
-      "outputSpeed": 85.78,
-      "latency": 45.45
+      "outputSpeed": 84.84,
+      "latency": 45.95
     },
     {
       "id": "5ad2f60f-ee05-49fd-85a0-cef69aa7cb7b",
@@ -5010,8 +5010,8 @@
       "inputPrice": 0.6,
       "outputPrice": 2.7,
       "blendedPrice": 1.125,
-      "outputSpeed": 161.33,
-      "latency": 15.33
+      "outputSpeed": 161.12,
+      "latency": 15.36
     },
     {
       "id": "5bb1f426-2d64-4d03-99fb-8041ee85c33b",
@@ -5046,8 +5046,8 @@
       "inputPrice": 0.75,
       "outputPrice": 2.95,
       "blendedPrice": 1.3,
-      "outputSpeed": 72.99,
-      "latency": 30.13
+      "outputSpeed": 68.92,
+      "latency": 31.75
     },
     {
       "id": "5c3dd927-48a3-4f3c-8045-9b135f62dfbb",
@@ -5064,8 +5064,8 @@
       "inputPrice": 0.06,
       "outputPrice": 0.24,
       "blendedPrice": 0.105,
-      "outputSpeed": 172.72,
-      "latency": 0.91
+      "outputSpeed": 174.56,
+      "latency": 0.89
     },
     {
       "id": "5c6533f3-75a2-4109-b9a9-3623afc6b86a",
@@ -5082,8 +5082,8 @@
       "inputPrice": 0.21,
       "outputPrice": 0.57,
       "blendedPrice": 0.3,
-      "outputSpeed": 39.25,
-      "latency": 53.93
+      "outputSpeed": 39.35,
+      "latency": 53.77
     },
     {
       "id": "5ce30d25-5353-45bb-bef9-6b87480ba3a2",
@@ -5118,8 +5118,8 @@
       "inputPrice": 1.25,
       "outputPrice": 10,
       "blendedPrice": 3.4375,
-      "outputSpeed": 189.5,
-      "latency": 15.89
+      "outputSpeed": 182.19,
+      "latency": 13.47
     },
     {
       "id": "5d303dc9-c027-401f-9803-4e9aa3331007",
@@ -5136,8 +5136,8 @@
       "inputPrice": 0.17,
       "outputPrice": 0.98,
       "blendedPrice": 0.3725,
-      "outputSpeed": 82.22,
-      "latency": 26.77
+      "outputSpeed": 81.37,
+      "latency": 27
     },
     {
       "id": "5d4acc80-7a88-4e84-bfe7-99071b84e6a4",
@@ -5281,7 +5281,7 @@
       "outputPrice": 6,
       "blendedPrice": 3,
       "outputSpeed": 39.43,
-      "latency": 53.4
+      "latency": 53.45
     },
     {
       "id": "5e8b0d98-a3b4-42b5-93d8-ecb748788754",
@@ -5298,8 +5298,8 @@
       "inputPrice": 1.25,
       "outputPrice": 2.5,
       "blendedPrice": 1.5625,
-      "outputSpeed": 95.66,
-      "latency": 17.44
+      "outputSpeed": 88.89,
+      "latency": 18.41
     },
     {
       "id": "5e965af0-ca5c-4f47-9ba9-06000508b84a",
@@ -5316,8 +5316,8 @@
       "inputPrice": 1.25,
       "outputPrice": 10,
       "blendedPrice": 3.4375,
-      "outputSpeed": 106.24,
-      "latency": 37.22
+      "outputSpeed": 105.94,
+      "latency": 37.36
     },
     {
       "id": "5ea94a4a-55ac-4ea1-8898-2b3971e94af6",
@@ -5334,7 +5334,7 @@
       "inputPrice": 3,
       "outputPrice": 15,
       "blendedPrice": 6,
-      "outputSpeed": 75.92,
+      "outputSpeed": 74.42,
       "latency": 9.9
     },
     {
@@ -5370,7 +5370,7 @@
       "inputPrice": 0.345,
       "outputPrice": 0.345,
       "blendedPrice": 0.345,
-      "outputSpeed": 24.39,
+      "outputSpeed": 24.99,
       "latency": 1.35
     },
     {
@@ -5478,8 +5478,8 @@
       "inputPrice": 0.3,
       "outputPrice": 2.5,
       "blendedPrice": 0.85,
-      "outputSpeed": 178.21,
-      "latency": 30.2
+      "outputSpeed": 178.38,
+      "latency": 27.71
     },
     {
       "id": "62de31e8-a1a3-429c-b634-a2afccfd9363",
@@ -5515,7 +5515,7 @@
       "outputPrice": 0.4,
       "blendedPrice": 0.17500000000000002,
       "outputSpeed": 102.42,
-      "latency": 21.55
+      "latency": 21.47
     },
     {
       "id": "63872e9c-3377-4a6b-b477-7bba244c38e9",
@@ -5532,8 +5532,8 @@
       "inputPrice": 0.3,
       "outputPrice": 0.9,
       "blendedPrice": 0.44999999999999996,
-      "outputSpeed": 155,
-      "latency": 14.31
+      "outputSpeed": 150.96,
+      "latency": 14.58
     },
     {
       "id": "63cb48ea-0b0c-4e07-8ded-6d28dec4fa28",
@@ -5550,8 +5550,8 @@
       "inputPrice": 0.1,
       "outputPrice": 0.5,
       "blendedPrice": 0.2,
-      "outputSpeed": 110.39,
-      "latency": 0.82
+      "outputSpeed": 108.07,
+      "latency": 0.83
     },
     {
       "id": "641a073a-41c9-4773-9b02-d965c16607c5",
@@ -5587,7 +5587,7 @@
       "outputPrice": 2.5,
       "blendedPrice": 1.5625,
       "outputSpeed": 118.41,
-      "latency": 0.5
+      "latency": 0.49
     },
     {
       "id": "651ef7ae-9a8f-477e-9c8e-460aa156ba02",
@@ -5604,8 +5604,8 @@
       "inputPrice": 0.03,
       "outputPrice": 0.15,
       "blendedPrice": 0.06,
-      "outputSpeed": 25.61,
-      "latency": 78.94
+      "outputSpeed": 29.35,
+      "latency": 69
     },
     {
       "id": "660965b2-66d2-49ee-a6b9-79a6ac47d3c0",
@@ -5640,8 +5640,8 @@
       "inputPrice": 0.6,
       "outputPrice": 2.5,
       "blendedPrice": 1.075,
-      "outputSpeed": 49.53,
-      "latency": 1.8
+      "outputSpeed": 48.84,
+      "latency": 1.69
     },
     {
       "id": "6657d7de-a2a9-40bc-a32f-86e80ad63698",
@@ -5658,8 +5658,8 @@
       "inputPrice": 0.5,
       "outputPrice": 3,
       "blendedPrice": 1.125,
-      "outputSpeed": 49.58,
-      "latency": 44.25
+      "outputSpeed": 47.59,
+      "latency": 45.94
     },
     {
       "id": "665c67ca-09eb-48f0-a7a3-0096e1d5de51",
@@ -5669,20 +5669,20 @@
       "creatorId": "0a177021-87dd-4250-9a37-f01df196bfe0",
       "releaseDate": "2026-10-23",
       "reasoning": false,
-      "intelligence": 46,
+      "intelligence": 46.5,
       "coding": null,
       "agentic": null,
       "costPerTask": 3.6812,
       "inputPrice": 2,
       "outputPrice": 10,
       "blendedPrice": 4,
-      "outputSpeed": 31.82,
-      "latency": 66.08,
+      "outputSpeed": 30.82,
+      "latency": 68.33,
       "dimensions": {
         "pillars": {
           "coding": 46.31,
           "akw": 58.89,
-          "science": 39.64,
+          "science": 41.89,
           "reasoning": 37.3,
           "knowledge": 64.25
         },
@@ -5729,7 +5729,7 @@
       "inputPrice": 0.375,
       "outputPrice": 2.25,
       "blendedPrice": 0.84375,
-      "outputSpeed": 147.13,
+      "outputSpeed": 144.16,
       "latency": 2.07
     },
     {
@@ -5747,8 +5747,8 @@
       "inputPrice": 0.1,
       "outputPrice": 0.1,
       "blendedPrice": 0.1,
-      "outputSpeed": 163.36,
-      "latency": 0.86
+      "outputSpeed": 186.26,
+      "latency": 0.92
     },
     {
       "id": "686ab020-ee58-4a70-a9ac-24d675a73506",
@@ -5801,8 +5801,8 @@
       "inputPrice": 0.4,
       "outputPrice": 1.2,
       "blendedPrice": 0.6000000000000001,
-      "outputSpeed": 356.77,
-      "latency": 6.31,
+      "outputSpeed": 349.84,
+      "latency": 6.44,
       "dimensions": {
         "pillars": {
           "coding": 4.28,
@@ -5837,7 +5837,7 @@
       "outputPrice": 7.5,
       "blendedPrice": 3.75,
       "outputSpeed": 202.44,
-      "latency": 14.11
+      "latency": 14.1
     },
     {
       "id": "6a5d56e1-bb68-4205-8d9b-26b97888bc84",
@@ -5854,8 +5854,8 @@
       "inputPrice": 0.55,
       "outputPrice": 2.2,
       "blendedPrice": 0.9625000000000001,
-      "outputSpeed": 35.06,
-      "latency": 61.08
+      "outputSpeed": 34.62,
+      "latency": 61.46
     },
     {
       "id": "6a7c0e25-1dcb-4b15-8495-a8536a9da051",
@@ -5890,8 +5890,8 @@
       "inputPrice": 0.3,
       "outputPrice": 2.5,
       "blendedPrice": 0.85,
-      "outputSpeed": 207.94,
-      "latency": 0.36
+      "outputSpeed": 201.04,
+      "latency": 0.39
     },
     {
       "id": "6b08a75a-19ee-40b4-be33-133b8ef42f92",
@@ -5926,7 +5926,7 @@
       "inputPrice": 5,
       "outputPrice": 30,
       "blendedPrice": 11.25,
-      "outputSpeed": 75.29,
+      "outputSpeed": 73.22,
       "latency": 7.5
     },
     {
@@ -5962,8 +5962,8 @@
       "inputPrice": 0.2,
       "outputPrice": 1.15,
       "blendedPrice": 0.4375,
-      "outputSpeed": 84.81,
-      "latency": 26.22
+      "outputSpeed": 83.43,
+      "latency": 26.61
     },
     {
       "id": "6d6fa1c9-b833-40b2-8a58-fa810e24a84e",
@@ -6034,8 +6034,8 @@
       "inputPrice": 1.75,
       "outputPrice": 14,
       "blendedPrice": 4.8125,
-      "outputSpeed": 73.37,
-      "latency": 0.83
+      "outputSpeed": 70.9,
+      "latency": 0.87
     },
     {
       "id": "6e1b44ff-c227-496b-aef4-19b70cd18c76",
@@ -6052,8 +6052,8 @@
       "inputPrice": 0.1,
       "outputPrice": 0.34,
       "blendedPrice": 0.16000000000000003,
-      "outputSpeed": 104.19,
-      "latency": 20.13
+      "outputSpeed": 97.95,
+      "latency": 21.35
     },
     {
       "id": "6e2a2572-ed8d-4616-8d7d-68d125fc8ee7",
@@ -6070,7 +6070,7 @@
       "inputPrice": 1.74,
       "outputPrice": 3.48,
       "blendedPrice": 2.175,
-      "outputSpeed": 183.77,
+      "outputSpeed": 180.67,
       "latency": 1.49
     },
     {
@@ -6124,8 +6124,8 @@
       "inputPrice": 5,
       "outputPrice": 30,
       "blendedPrice": 11.25,
-      "outputSpeed": 70.45,
-      "latency": 0.96
+      "outputSpeed": 69.18,
+      "latency": 0.97
     },
     {
       "id": "6f3534b1-1168-472e-b3e3-23ab521504f5",
@@ -6142,8 +6142,8 @@
       "inputPrice": 0.1,
       "outputPrice": 0.8,
       "blendedPrice": 0.275,
-      "outputSpeed": 239.19,
-      "latency": 1.79
+      "outputSpeed": 228.82,
+      "latency": 1.78
     },
     {
       "id": "6fb13851-40ce-4bda-ad3f-6b38e0c5daa7",
@@ -6153,20 +6153,20 @@
       "creatorId": "e67e56e3-15cd-43db-b679-da4660a69f41",
       "releaseDate": "2026-09-22",
       "reasoning": false,
-      "intelligence": 27.8,
+      "intelligence": 27.9,
       "coding": null,
       "agentic": null,
       "costPerTask": 0.152,
       "inputPrice": 0.1,
       "outputPrice": 0.5,
       "blendedPrice": 0.2,
-      "outputSpeed": 115.46,
-      "latency": 120.87,
+      "outputSpeed": 113.82,
+      "latency": 121.69,
       "dimensions": {
         "pillars": {
           "coding": 18.9,
           "akw": 41.78,
-          "science": 25.04,
+          "science": 25.54,
           "reasoning": 22.2,
           "knowledge": 48.83
         },
@@ -6213,8 +6213,8 @@
       "inputPrice": 0.3,
       "outputPrice": 2.5,
       "blendedPrice": 0.85,
-      "outputSpeed": 176.45,
-      "latency": 20.07
+      "outputSpeed": 164.51,
+      "latency": 20.9
     },
     {
       "id": "70152cb0-fb36-4732-a925-89ef40994be1",
@@ -6231,8 +6231,8 @@
       "inputPrice": 0.5,
       "outputPrice": 1.5,
       "blendedPrice": 0.75,
-      "outputSpeed": 74.47,
-      "latency": 28.36
+      "outputSpeed": 74.6,
+      "latency": 28.31
     },
     {
       "id": "70882ec6-914c-41f0-9754-5e8f75005f77",
@@ -6249,7 +6249,7 @@
       "inputPrice": 0.115,
       "outputPrice": 0.4,
       "blendedPrice": 0.18625000000000003,
-      "outputSpeed": 124.14,
+      "outputSpeed": 123.1,
       "latency": 0.92
     },
     {
@@ -6267,7 +6267,7 @@
       "inputPrice": 5,
       "outputPrice": 25,
       "blendedPrice": 10,
-      "outputSpeed": 50.76,
+      "outputSpeed": 49.69,
       "latency": 18.74
     },
     {
@@ -6286,7 +6286,7 @@
       "outputPrice": 0.2,
       "blendedPrice": 0.2,
       "outputSpeed": 49.9,
-      "latency": 1.05
+      "latency": 1.15
     },
     {
       "id": "715e05fb-1313-441c-bf1d-8651c752a841",
@@ -6357,8 +6357,8 @@
       "inputPrice": 0.3,
       "outputPrice": 1.2,
       "blendedPrice": 0.5249999999999999,
-      "outputSpeed": 232.47,
-      "latency": 10.21
+      "outputSpeed": 228.82,
+      "latency": 10.36
     },
     {
       "id": "72c358fd-7d45-4d68-89aa-699743710924",
@@ -6375,8 +6375,8 @@
       "inputPrice": 0.1,
       "outputPrice": 0.4,
       "blendedPrice": 0.17500000000000002,
-      "outputSpeed": 275.02,
-      "latency": 1.05
+      "outputSpeed": 269.06,
+      "latency": 1.06
     },
     {
       "id": "7393c56a-ec31-48e9-b804-c04f2d2cb641",
@@ -6411,8 +6411,8 @@
       "inputPrice": 0.035,
       "outputPrice": 0.065,
       "blendedPrice": 0.0425,
-      "outputSpeed": 141.63,
-      "latency": 0.88
+      "outputSpeed": 141.62,
+      "latency": 0.89
     },
     {
       "id": "739e531a-eb0a-478f-bb67-5845b79ce65d",
@@ -6447,8 +6447,8 @@
       "inputPrice": 0.3,
       "outputPrice": 1.2,
       "blendedPrice": 0.5249999999999999,
-      "outputSpeed": 255.56,
-      "latency": 0.89
+      "outputSpeed": 249.6,
+      "latency": 0.91
     },
     {
       "id": "744fa3c1-42a7-4995-b138-fb6be11f463c",
@@ -6458,7 +6458,7 @@
       "creatorId": "faddc6d9-2c14-445f-9b28-56726f59c793",
       "releaseDate": "2026-09-02",
       "reasoning": false,
-      "intelligence": 30,
+      "intelligence": 30.1,
       "coding": null,
       "agentic": null,
       "costPerTask": 6.2586,
@@ -6501,8 +6501,8 @@
       "inputPrice": 0.24,
       "outputPrice": 0.9,
       "blendedPrice": 0.405,
-      "outputSpeed": 168.41,
-      "latency": 0.65
+      "outputSpeed": 162.62,
+      "latency": 0.66
     },
     {
       "id": "76361085-f5dc-49ec-b069-fe56ca885933",
@@ -6591,7 +6591,7 @@
       "inputPrice": 10,
       "outputPrice": 30,
       "blendedPrice": 15,
-      "outputSpeed": 107.68,
+      "outputSpeed": 105.8,
       "latency": 1.51
     },
     {
@@ -6609,8 +6609,8 @@
       "inputPrice": 0.3,
       "outputPrice": 2.5,
       "blendedPrice": 0.85,
-      "outputSpeed": 176.6,
-      "latency": 1.05
+      "outputSpeed": 175.35,
+      "latency": 1.04
     },
     {
       "id": "76dcf6ef-39ea-4be0-b693-b88da25b4caf",
@@ -6627,8 +6627,8 @@
       "inputPrice": 0.05,
       "outputPrice": 0.2,
       "blendedPrice": 0.08750000000000001,
-      "outputSpeed": 230.63,
-      "latency": 9.63
+      "outputSpeed": 229.2,
+      "latency": 9.69
     },
     {
       "id": "7707a46f-895f-4247-b7a8-ddab87c9a11d",
@@ -6645,8 +6645,8 @@
       "inputPrice": 0.44,
       "outputPrice": 1.32,
       "blendedPrice": 0.66,
-      "outputSpeed": 156.39,
-      "latency": 14.49
+      "outputSpeed": 155.27,
+      "latency": 14.56
     },
     {
       "id": "7764d514-694f-444c-8d60-bdc6e24e223f",
@@ -6735,7 +6735,7 @@
       "inputPrice": 0.75,
       "outputPrice": 3.75,
       "blendedPrice": 1.5,
-      "outputSpeed": 194.18,
+      "outputSpeed": 189.33,
       "latency": 16.17
     },
     {
@@ -6753,8 +6753,8 @@
       "inputPrice": 0.5,
       "outputPrice": 3,
       "blendedPrice": 1.125,
-      "outputSpeed": 189.28,
-      "latency": 0.83
+      "outputSpeed": 186.77,
+      "latency": 0.85
     },
     {
       "id": "78452c64-7303-4192-bca5-2d9ec5c623d4",
@@ -6789,7 +6789,7 @@
       "inputPrice": 2,
       "outputPrice": 6,
       "blendedPrice": 3,
-      "outputSpeed": 59.29,
+      "outputSpeed": 57.56,
       "latency": 13.3
     },
     {
@@ -6879,8 +6879,8 @@
       "inputPrice": 4,
       "outputPrice": 20,
       "blendedPrice": 8,
-      "outputSpeed": 109.04,
-      "latency": 0.87
+      "outputSpeed": 108.79,
+      "latency": 0.88
     },
     {
       "id": "7c73c3be-7f51-4d14-bec8-d5789488df25",
@@ -6897,8 +6897,8 @@
       "inputPrice": 0.5,
       "outputPrice": 3,
       "blendedPrice": 1.125,
-      "outputSpeed": 198.65,
-      "latency": 5.79
+      "outputSpeed": 194.13,
+      "latency": 5.99
     },
     {
       "id": "7d064a11-6e78-4030-b535-cdf940615041",
@@ -6908,20 +6908,20 @@
       "creatorId": "f0aa413f-e8ae-4fcd-9c48-0e049f4f3128",
       "releaseDate": "2026-10-07",
       "reasoning": false,
-      "intelligence": 36.2,
+      "intelligence": 36.5,
       "coding": null,
       "agentic": null,
       "costPerTask": 0.411,
       "inputPrice": 0.1,
       "outputPrice": 0.5,
       "blendedPrice": 0.2,
-      "outputSpeed": 235.83,
-      "latency": 328.39,
+      "outputSpeed": 235.38,
+      "latency": 279.01,
       "dimensions": {
         "pillars": {
           "coding": 33.88,
           "akw": 53.91,
-          "science": 30.5,
+          "science": 31.75,
           "reasoning": 29.6,
           "knowledge": 57
         },
@@ -6950,8 +6950,8 @@
       "inputPrice": 0.1,
       "outputPrice": 0.5,
       "blendedPrice": 0.2,
-      "outputSpeed": 119.56,
-      "latency": 23.9
+      "outputSpeed": 117.04,
+      "latency": 19.54
     },
     {
       "id": "7d2aa050-888e-4c27-a92d-10337a4dfb3a",
@@ -7004,8 +7004,8 @@
       "inputPrice": 0.5,
       "outputPrice": 3,
       "blendedPrice": 1.125,
-      "outputSpeed": 47.69,
-      "latency": 46.04
+      "outputSpeed": 45.72,
+      "latency": 47.77
     },
     {
       "id": "7eabd8ca-bf43-4d56-b3df-efd1c4eebfb0",
@@ -7040,8 +7040,8 @@
       "inputPrice": 0,
       "outputPrice": 0,
       "blendedPrice": 0,
-      "outputSpeed": 57.98,
-      "latency": 36.96
+      "outputSpeed": 58.23,
+      "latency": 36.81
     },
     {
       "id": "7ec1065a-c90e-41e4-bd17-abb7042eed76",
@@ -7058,7 +7058,7 @@
       "inputPrice": 0.1,
       "outputPrice": 0.3,
       "blendedPrice": 0.15000000000000002,
-      "outputSpeed": 198.84,
+      "outputSpeed": 199.67,
       "latency": 0.93
     },
     {
@@ -7076,8 +7076,8 @@
       "inputPrice": 1.25,
       "outputPrice": 10,
       "blendedPrice": 3.4375,
-      "outputSpeed": 90.32,
-      "latency": 8.38
+      "outputSpeed": 88.68,
+      "latency": 7.92
     },
     {
       "id": "8014c311-fa23-4a4b-8485-8a864db8a113",
@@ -7094,8 +7094,8 @@
       "inputPrice": 0.2,
       "outputPrice": 0.7,
       "blendedPrice": 0.325,
-      "outputSpeed": 1632.59,
-      "latency": 0.55
+      "outputSpeed": 1581.33,
+      "latency": 0.57
     },
     {
       "id": "806032ff-6252-4c22-ba99-a126e411b7a4",
@@ -7166,8 +7166,8 @@
       "inputPrice": 2,
       "outputPrice": 12,
       "blendedPrice": 4.5,
-      "outputSpeed": 109.55,
-      "latency": 3.75
+      "outputSpeed": 102.8,
+      "latency": 3.11
     },
     {
       "id": "81b6ddfc-111e-4422-bd44-42ee6165b699",
@@ -7184,7 +7184,7 @@
       "inputPrice": 0.525,
       "outputPrice": 2.1,
       "blendedPrice": 0.9187500000000001,
-      "outputSpeed": 39.1,
+      "outputSpeed": 37.72,
       "latency": 2.38
     },
     {
@@ -7257,7 +7257,7 @@
       "outputPrice": 3,
       "blendedPrice": 1.5,
       "outputSpeed": 40.93,
-      "latency": 51.18
+      "latency": 51.19
     },
     {
       "id": "82b36b4d-84dd-4bc0-ad32-e3aee9442789",
@@ -7311,7 +7311,7 @@
       "outputPrice": 3.96,
       "blendedPrice": 1.98,
       "outputSpeed": 81.89,
-      "latency": 26.18
+      "latency": 26.14
     },
     {
       "id": "83cb898e-05d9-4e4b-9de3-2d305014d923",
@@ -7364,8 +7364,8 @@
       "inputPrice": 1.1,
       "outputPrice": 4.4,
       "blendedPrice": 1.9250000000000003,
-      "outputSpeed": 122.09,
-      "latency": 21.06
+      "outputSpeed": 146.1,
+      "latency": 19.13
     },
     {
       "id": "84e3f11e-d659-4941-8988-1dbfabbaf538",
@@ -7418,8 +7418,8 @@
       "inputPrice": 0.375,
       "outputPrice": 2.25,
       "blendedPrice": 0.84375,
-      "outputSpeed": 134.94,
-      "latency": 42.03
+      "outputSpeed": 132.62,
+      "latency": 42.72
     },
     {
       "id": "87110ff0-1f79-41b4-9976-eda250597317",
@@ -7436,7 +7436,7 @@
       "inputPrice": 0.2,
       "outputPrice": 1.2,
       "blendedPrice": 0.45,
-      "outputSpeed": 113.15,
+      "outputSpeed": 108.64,
       "latency": 60.09
     },
     {
@@ -7491,7 +7491,7 @@
       "outputPrice": 0.57,
       "blendedPrice": 0.2475,
       "outputSpeed": 7.93,
-      "latency": 2.45
+      "latency": 2.46
     },
     {
       "id": "8869f28a-a6ff-487f-8d32-93fe335fdda5",
@@ -7508,7 +7508,7 @@
       "inputPrice": 0.2,
       "outputPrice": 1.25,
       "blendedPrice": 0.4625,
-      "outputSpeed": 176.96,
+      "outputSpeed": 175.13,
       "latency": 5.76
     },
     {
@@ -7591,20 +7591,20 @@
       "creatorId": "faddc6d9-2c14-445f-9b28-56726f59c793",
       "releaseDate": "2026-09-02",
       "reasoning": false,
-      "intelligence": 30.5,
+      "intelligence": 30.8,
       "coding": null,
       "agentic": null,
       "costPerTask": 7.766,
       "inputPrice": 0.75,
       "outputPrice": 3.75,
       "blendedPrice": 1.5,
-      "outputSpeed": 136.54,
+      "outputSpeed": 129.99,
       "latency": 25.27,
       "dimensions": {
         "pillars": {
           "coding": 19.22,
           "akw": 35.08,
-          "science": 26.75,
+          "science": 28.25,
           "reasoning": 33.1,
           "knowledge": 61.25
         },
@@ -7633,8 +7633,8 @@
       "inputPrice": 4,
       "outputPrice": 20,
       "blendedPrice": 8,
-      "outputSpeed": 120.57,
-      "latency": 11.71
+      "outputSpeed": 117.82,
+      "latency": 11.22
     },
     {
       "id": "8b1a70d1-e05f-426b-9122-023d4629ab47",
@@ -7669,7 +7669,7 @@
       "inputPrice": 2.5,
       "outputPrice": 10,
       "blendedPrice": 4.375,
-      "outputSpeed": 144.56,
+      "outputSpeed": 142.83,
       "latency": 0.97
     },
     {
@@ -7687,8 +7687,8 @@
       "inputPrice": 0.6,
       "outputPrice": 3.6,
       "blendedPrice": 1.35,
-      "outputSpeed": 57.23,
-      "latency": 102.82
+      "outputSpeed": 56.55,
+      "latency": 104.01
     },
     {
       "id": "8c748e53-61ae-48b8-af8d-eb8298b1e9db",
@@ -7705,8 +7705,8 @@
       "inputPrice": 0.5,
       "outputPrice": 0.9,
       "blendedPrice": 0.6,
-      "outputSpeed": 231.29,
-      "latency": 9.53
+      "outputSpeed": 232.21,
+      "latency": 9.51
     },
     {
       "id": "8ca48626-ff5e-48b3-8401-38081376d706",
@@ -7777,8 +7777,8 @@
       "inputPrice": 2,
       "outputPrice": 6,
       "blendedPrice": 3,
-      "outputSpeed": 38.34,
-      "latency": 55.36
+      "outputSpeed": 39.08,
+      "latency": 54.26
     },
     {
       "id": "8e78cf7a-5b76-4beb-beba-b99c6233b208",
@@ -7813,8 +7813,8 @@
       "inputPrice": 0.05,
       "outputPrice": 0.4,
       "blendedPrice": 0.1375,
-      "outputSpeed": 173.85,
-      "latency": 37.05
+      "outputSpeed": 164.83,
+      "latency": 33.9
     },
     {
       "id": "8f0a75d6-8d00-4c2e-bcd4-8e88a570a93c",
@@ -7878,20 +7878,20 @@
       "creatorId": "faddc6d9-2c14-445f-9b28-56726f59c793",
       "releaseDate": "2026-10-28",
       "reasoning": false,
-      "intelligence": 59.4,
+      "intelligence": 60,
       "coding": null,
       "agentic": null,
       "costPerTask": 7.7555,
       "inputPrice": 4,
       "outputPrice": 20,
       "blendedPrice": 8,
-      "outputSpeed": 92.45,
+      "outputSpeed": 88.2,
       "latency": 150.4,
       "dimensions": {
         "pillars": {
           "coding": 52.86,
           "akw": 55.57,
-          "science": 63.88,
+          "science": 66.88,
           "reasoning": 69.1,
           "knowledge": 72.83
         },
@@ -7920,8 +7920,8 @@
       "inputPrice": 1.25,
       "outputPrice": 2.5,
       "blendedPrice": 1.5625,
-      "outputSpeed": 69.65,
-      "latency": 0.67
+      "outputSpeed": 68.4,
+      "latency": 0.66
     },
     {
       "id": "90e078f2-051b-4c63-8919-76618971cb3f",
@@ -7938,8 +7938,8 @@
       "inputPrice": 3,
       "outputPrice": 15,
       "blendedPrice": 6,
-      "outputSpeed": 51.11,
-      "latency": 14.33
+      "outputSpeed": 49.75,
+      "latency": 13.83
     },
     {
       "id": "91cb6144-4937-4e4e-aeda-b4341d355c10",
@@ -7956,8 +7956,8 @@
       "inputPrice": 3,
       "outputPrice": 15,
       "blendedPrice": 6,
-      "outputSpeed": 42.02,
-      "latency": 1.01
+      "outputSpeed": 40.66,
+      "latency": 1.02
     },
     {
       "id": "91e3b45f-3f52-4511-8c15-8948854bebc5",
@@ -8010,8 +8010,8 @@
       "inputPrice": 0.25,
       "outputPrice": 0.92,
       "blendedPrice": 0.4175,
-      "outputSpeed": 58.06,
-      "latency": 0.98
+      "outputSpeed": 57.03,
+      "latency": 0.99
     },
     {
       "id": "92b19c88-fa87-4595-957e-fe9aa5fa5ad4",
@@ -8046,7 +8046,7 @@
       "inputPrice": 1.285,
       "outputPrice": 4.07,
       "blendedPrice": 1.98125,
-      "outputSpeed": 88.97,
+      "outputSpeed": 85.26,
       "latency": 1.02
     },
     {
@@ -8100,8 +8100,8 @@
       "inputPrice": 0.575,
       "outputPrice": 2.2,
       "blendedPrice": 0.98125,
-      "outputSpeed": 37.05,
-      "latency": 5.43
+      "outputSpeed": 36.34,
+      "latency": 5.51
     },
     {
       "id": "948892b5-db03-4118-a4a8-ccd51ed871ea",
@@ -8118,8 +8118,8 @@
       "inputPrice": 1.25,
       "outputPrice": 2.5,
       "blendedPrice": 1.5625,
-      "outputSpeed": 87.34,
-      "latency": 27.32
+      "outputSpeed": 76.14,
+      "latency": 28.59
     },
     {
       "id": "94a6d26e-a903-47f3-8323-ae422d237bb9",
@@ -8173,7 +8173,7 @@
       "outputPrice": 0.15,
       "blendedPrice": 0.15,
       "outputSpeed": 119.29,
-      "latency": 1.08
+      "latency": 1.16
     },
     {
       "id": "975aeaef-50bd-4a65-9c73-f1015adcd4d4",
@@ -8183,15 +8183,15 @@
       "creatorId": "f0aa413f-e8ae-4fcd-9c48-0e049f4f3128",
       "releaseDate": "2026-09-28",
       "reasoning": false,
-      "intelligence": 49.6,
+      "intelligence": 49.9,
       "coding": null,
       "agentic": null,
       "costPerTask": 4.092,
       "inputPrice": 2,
       "outputPrice": 10,
       "blendedPrice": 4,
-      "outputSpeed": 108.05,
-      "latency": 35.72
+      "outputSpeed": 106.81,
+      "latency": 33.35
     },
     {
       "id": "976cc8ad-7904-4056-83c5-960181f47d5f",
@@ -8208,7 +8208,7 @@
       "inputPrice": 0.6,
       "outputPrice": 0.71,
       "blendedPrice": 0.6275,
-      "outputSpeed": 91.09,
+      "outputSpeed": 89.17,
       "latency": 1.85
     },
     {
@@ -8262,7 +8262,7 @@
       "inputPrice": 5,
       "outputPrice": 25,
       "blendedPrice": 10,
-      "outputSpeed": 65.88,
+      "outputSpeed": 63.12,
       "latency": 54.48
     },
     {
@@ -8273,15 +8273,15 @@
       "creatorId": "e1694725-0192-4e54-b1b8-c97e816c6cbe",
       "releaseDate": "2026-09-02",
       "reasoning": false,
-      "intelligence": 36.4,
+      "intelligence": 36.6,
       "coding": null,
       "agentic": null,
       "costPerTask": 2.3858,
       "inputPrice": 1.25,
       "outputPrice": 4.25,
       "blendedPrice": 2,
-      "outputSpeed": 190.1,
-      "latency": 50.2
+      "outputSpeed": 154.29,
+      "latency": 52.64
     },
     {
       "id": "99f376bf-cbcb-4124-bf3e-6b0a4e6e9bea",
@@ -8298,8 +8298,8 @@
       "inputPrice": 2,
       "outputPrice": 10,
       "blendedPrice": 4,
-      "outputSpeed": 68.89,
-      "latency": 28.39
+      "outputSpeed": 67.84,
+      "latency": 31.91
     },
     {
       "id": "9ac3908c-9eb2-44db-8c01-3ec7da6fc2ae",
@@ -8317,7 +8317,7 @@
       "outputPrice": 0.47,
       "blendedPrice": 0.22999999999999998,
       "outputSpeed": 53.51,
-      "latency": 39.62
+      "latency": 39.71
     },
     {
       "id": "9b166bf3-42db-4f63-8338-1c4a1244ffe8",
@@ -8327,15 +8327,15 @@
       "creatorId": "f0aa413f-e8ae-4fcd-9c48-0e049f4f3128",
       "releaseDate": "2026-09-01",
       "reasoning": false,
-      "intelligence": 49.7,
+      "intelligence": 50,
       "coding": null,
       "agentic": null,
       "costPerTask": 10.8475,
       "inputPrice": 10,
       "outputPrice": 50,
       "blendedPrice": 20,
-      "outputSpeed": 63.13,
-      "latency": 81.27
+      "outputSpeed": 62.03,
+      "latency": 79.47
     },
     {
       "id": "9b97a35e-6ac7-44d9-91c6-422fa678963e",
@@ -8352,8 +8352,8 @@
       "inputPrice": 2,
       "outputPrice": 12,
       "blendedPrice": 4.5,
-      "outputSpeed": 112.11,
-      "latency": 0.83
+      "outputSpeed": 106.52,
+      "latency": 0.82
     },
     {
       "id": "9ca246a7-cf13-42c9-9182-5b5ad6b79026",
@@ -8370,8 +8370,8 @@
       "inputPrice": 0.55,
       "outputPrice": 2.2,
       "blendedPrice": 0.9625000000000001,
-      "outputSpeed": 130,
-      "latency": 16.97
+      "outputSpeed": 125.6,
+      "latency": 17.49
     },
     {
       "id": "9ca71ac4-41c8-42c0-87dd-5704a9e5b94d",
@@ -8417,15 +8417,15 @@
       "creatorId": "f0aa413f-e8ae-4fcd-9c48-0e049f4f3128",
       "releaseDate": "2026-09-01",
       "reasoning": false,
-      "intelligence": 47,
+      "intelligence": 47.2,
       "coding": null,
       "agentic": null,
       "costPerTask": 7.54,
       "inputPrice": 10,
       "outputPrice": 50,
       "blendedPrice": 20,
-      "outputSpeed": 58.24,
-      "latency": 19.37
+      "outputSpeed": 57.16,
+      "latency": 18.32
     },
     {
       "id": "9dba61f5-78ee-4190-8d1d-8e7063ffd386",
@@ -8478,7 +8478,7 @@
       "inputPrice": 2,
       "outputPrice": 12,
       "blendedPrice": 4.5,
-      "outputSpeed": 113.34,
+      "outputSpeed": 111.45,
       "latency": 33.66
     },
     {
@@ -8550,8 +8550,8 @@
       "inputPrice": 0.4,
       "outputPrice": 1.6,
       "blendedPrice": 0.7000000000000001,
-      "outputSpeed": 161.28,
-      "latency": 0.78
+      "outputSpeed": 158.28,
+      "latency": 0.79
     },
     {
       "id": "9f873c2f-2c2d-4ccb-9e1b-71bf61b052be",
@@ -8568,7 +8568,7 @@
       "inputPrice": 0.075,
       "outputPrice": 0.3,
       "blendedPrice": 0.13124999999999998,
-      "outputSpeed": 45.04,
+      "outputSpeed": 45.09,
       "latency": 0.85
     },
     {
@@ -8622,7 +8622,7 @@
       "inputPrice": 1.25,
       "outputPrice": 10,
       "blendedPrice": 3.4375,
-      "outputSpeed": 122.22,
+      "outputSpeed": 122.24,
       "latency": 1.12
     },
     {
@@ -8669,15 +8669,15 @@
       "creatorId": "e67e56e3-15cd-43db-b679-da4660a69f41",
       "releaseDate": "2026-09-29",
       "reasoning": false,
-      "intelligence": 46.1,
+      "intelligence": 46.3,
       "coding": null,
       "agentic": null,
       "costPerTask": 0.3594,
       "inputPrice": 2,
       "outputPrice": 10,
       "blendedPrice": 4,
-      "outputSpeed": 59.84,
-      "latency": 8.9
+      "outputSpeed": 55.66,
+      "latency": 8.23
     },
     {
       "id": "a3043d4f-9b92-4261-8ea2-a2d391b09cf4",
@@ -8723,15 +8723,15 @@
       "creatorId": "e67e56e3-15cd-43db-b679-da4660a69f41",
       "releaseDate": "2026-09-03",
       "reasoning": false,
-      "intelligence": 43,
+      "intelligence": 43.3,
       "coding": null,
       "agentic": null,
       "costPerTask": 1.4237,
       "inputPrice": 10,
       "outputPrice": 50,
       "blendedPrice": 20,
-      "outputSpeed": 51.16,
-      "latency": 2.59
+      "outputSpeed": 50.33,
+      "latency": 2.37
     },
     {
       "id": "a5092ece-d5a7-461f-b036-3faef262423f",
@@ -8784,8 +8784,8 @@
       "inputPrice": 0.6,
       "outputPrice": 3,
       "blendedPrice": 1.2,
-      "outputSpeed": 57.18,
-      "latency": 53.83
+      "outputSpeed": 56.82,
+      "latency": 54.16
     },
     {
       "id": "a6043b9b-628a-4a76-a021-2834e0627d05",
@@ -8803,7 +8803,7 @@
       "outputPrice": 0.9,
       "blendedPrice": 0.44999999999999996,
       "outputSpeed": 217.39,
-      "latency": 11.03
+      "latency": 11.04
     },
     {
       "id": "a6340098-d7ae-462d-b372-0a0a67fc44b4",
@@ -8820,7 +8820,7 @@
       "inputPrice": 1,
       "outputPrice": 5,
       "blendedPrice": 2,
-      "outputSpeed": 91.06,
+      "outputSpeed": 90.3,
       "latency": 20.54
     },
     {
@@ -8946,8 +8946,8 @@
       "inputPrice": 1.85,
       "outputPrice": 2.75,
       "blendedPrice": 2.075,
-      "outputSpeed": 26.53,
-      "latency": 76.67
+      "outputSpeed": 28.98,
+      "latency": 70.3
     },
     {
       "id": "a87fce42-eea3-4e45-a96d-fe057814f371",
@@ -8964,8 +8964,8 @@
       "inputPrice": 0.4,
       "outputPrice": 1.6,
       "blendedPrice": 0.7000000000000001,
-      "outputSpeed": 57.84,
-      "latency": 37
+      "outputSpeed": 57.97,
+      "latency": 36.9
     },
     {
       "id": "a89c4b28-2d8c-456e-88ea-255fb51fd2b6",
@@ -8982,8 +8982,8 @@
       "inputPrice": 2.5,
       "outputPrice": 15,
       "blendedPrice": 5.625,
-      "outputSpeed": 91.26,
-      "latency": 201.46
+      "outputSpeed": 89.07,
+      "latency": 186.98
     },
     {
       "id": "a8c67863-9d66-44dd-8d27-f58654ecde03",
@@ -9054,8 +9054,8 @@
       "inputPrice": 0.2,
       "outputPrice": 1.2,
       "blendedPrice": 0.45,
-      "outputSpeed": 107.33,
-      "latency": 22.8
+      "outputSpeed": 106.45,
+      "latency": 19.38
     },
     {
       "id": "aa83359a-d804-4f0b-b5bf-dc637711c26f",
@@ -9090,8 +9090,8 @@
       "inputPrice": 0.2,
       "outputPrice": 0.6,
       "blendedPrice": 0.30000000000000004,
-      "outputSpeed": 200.6,
-      "latency": 1.03
+      "outputSpeed": 201.98,
+      "latency": 1.04
     },
     {
       "id": "aba82268-2bb7-4a0f-80be-9b7722e2145b",
@@ -9234,7 +9234,7 @@
       "inputPrice": 0.18,
       "outputPrice": 0.66,
       "blendedPrice": 0.30000000000000004,
-      "outputSpeed": 94.11,
+      "outputSpeed": 94.54,
       "latency": 0.83
     },
     {
@@ -9252,8 +9252,8 @@
       "inputPrice": 0.06,
       "outputPrice": 0.25,
       "blendedPrice": 0.1075,
-      "outputSpeed": 42.07,
-      "latency": 48.43
+      "outputSpeed": 58.06,
+      "latency": 35.25
     },
     {
       "id": "ae447455-940d-4d30-9139-a664fa896eaf",
@@ -9270,8 +9270,8 @@
       "inputPrice": 0.75,
       "outputPrice": 4.5,
       "blendedPrice": 1.6875,
-      "outputSpeed": 237.18,
-      "latency": 0.73
+      "outputSpeed": 223.85,
+      "latency": 0.75
     },
     {
       "id": "ae4fe623-80ab-4ea3-8921-70a18ea0fc7e",
@@ -9324,8 +9324,8 @@
       "inputPrice": 0.1,
       "outputPrice": 0.5,
       "blendedPrice": 0.2,
-      "outputSpeed": 175.99,
-      "latency": 14.14
+      "outputSpeed": 168.16,
+      "latency": 13.81
     },
     {
       "id": "af74f222-05c7-422d-a653-b9c0707c9c72",
@@ -9360,8 +9360,8 @@
       "inputPrice": 0.24,
       "outputPrice": 0.54,
       "blendedPrice": 0.315,
-      "outputSpeed": 26.53,
-      "latency": 76.86
+      "outputSpeed": 28.14,
+      "latency": 72.56
     },
     {
       "id": "b01dee41-c62b-48ed-8d16-984adc405e5c",
@@ -9378,8 +9378,8 @@
       "inputPrice": 0.5,
       "outputPrice": 3,
       "blendedPrice": 1.125,
-      "outputSpeed": 41.41,
-      "latency": 52.32,
+      "outputSpeed": 42.39,
+      "latency": 51.16,
       "dimensions": {
         "pillars": {
           "coding": 10.23,
@@ -9460,20 +9460,20 @@
       "creatorId": "e67e56e3-15cd-43db-b679-da4660a69f41",
       "releaseDate": "2026-10-26",
       "reasoning": false,
-      "intelligence": 51,
+      "intelligence": 51.3,
       "coding": null,
       "agentic": null,
       "costPerTask": 0.9611,
       "inputPrice": 1,
       "outputPrice": 5,
       "blendedPrice": 2,
-      "outputSpeed": 110.71,
-      "latency": 282.94,
+      "outputSpeed": 109.45,
+      "latency": 279.05,
       "dimensions": {
         "pillars": {
           "coding": 48.94,
           "akw": 45.16,
-          "science": 61.06,
+          "science": 62.81,
           "reasoning": 47.3,
           "knowledge": 62
         },
@@ -9495,7 +9495,7 @@
       "creatorId": "d874d370-74d3-4fa0-ba00-5272f92f946b",
       "releaseDate": "2026-09-02",
       "reasoning": false,
-      "intelligence": 33.6,
+      "intelligence": 33.7,
       "coding": null,
       "agentic": null,
       "costPerTask": 10.0239,
@@ -9508,7 +9508,7 @@
         "pillars": {
           "coding": 31.16,
           "akw": 57.11,
-          "science": 20.2,
+          "science": 20.7,
           "reasoning": 24,
           "knowledge": 57
         },
@@ -9537,8 +9537,8 @@
       "inputPrice": 5,
       "outputPrice": 30,
       "blendedPrice": 11.25,
-      "outputSpeed": 84.02,
-      "latency": 36.1
+      "outputSpeed": 79.74,
+      "latency": 31.94
     },
     {
       "id": "b171d979-5ec1-45de-b8b9-db1ee65e77ec",
@@ -9548,20 +9548,20 @@
       "creatorId": "f0aa413f-e8ae-4fcd-9c48-0e049f4f3128",
       "releaseDate": "2026-09-28",
       "reasoning": false,
-      "intelligence": 54.2,
+      "intelligence": 54.5,
       "coding": null,
       "agentic": null,
       "costPerTask": 10.0206,
       "inputPrice": 2,
       "outputPrice": 10,
       "blendedPrice": 4,
-      "outputSpeed": 137.1,
-      "latency": 456.04,
+      "outputSpeed": 137.88,
+      "latency": 445.74,
       "dimensions": {
         "pillars": {
           "coding": 52.67,
           "akw": 65.54,
-          "science": 54.67,
+          "science": 56.17,
           "reasoning": 53.3,
           "knowledge": 62.92
         },
@@ -9626,8 +9626,8 @@
       "inputPrice": 0.136,
       "outputPrice": 0.555,
       "blendedPrice": 0.24075000000000002,
-      "outputSpeed": 92.92,
-      "latency": 24.31
+      "outputSpeed": 92.94,
+      "latency": 24.29
     },
     {
       "id": "b25ac058-1e33-4c31-bbc9-a20c3ad0717a",
@@ -9637,20 +9637,20 @@
       "creatorId": "e67e56e3-15cd-43db-b679-da4660a69f41",
       "releaseDate": "2026-09-29",
       "reasoning": false,
-      "intelligence": 54.5,
+      "intelligence": 54.6,
       "coding": null,
       "agentic": null,
       "costPerTask": 1.2721,
       "inputPrice": 2,
       "outputPrice": 10,
       "blendedPrice": 4,
-      "outputSpeed": 80.32,
-      "latency": 307.83,
+      "outputSpeed": 75.07,
+      "latency": 261.74,
       "dimensions": {
         "pillars": {
           "coding": 48.34,
           "akw": 53.21,
-          "science": 63.3,
+          "science": 63.8,
           "reasoning": 58.8,
           "knowledge": 65.33
         },
@@ -9780,10 +9780,10 @@
       "creatorId": "faddc6d9-2c14-445f-9b28-56726f59c793",
       "releaseDate": "2026-10-28",
       "reasoning": false,
-      "intelligence": 53.7,
+      "intelligence": 54.2,
       "coding": null,
       "agentic": null,
-      "costPerTask": null,
+      "costPerTask": 7.1866,
       "inputPrice": 4,
       "outputPrice": 20,
       "blendedPrice": 8,
@@ -9859,7 +9859,7 @@
       "inputPrice": 0.475,
       "outputPrice": 0.495,
       "blendedPrice": 0.48,
-      "outputSpeed": 26.61,
+      "outputSpeed": 26.3,
       "latency": 4.13
     },
     {
@@ -9913,8 +9913,8 @@
       "inputPrice": 0.15,
       "outputPrice": 0.6,
       "blendedPrice": 0.26249999999999996,
-      "outputSpeed": 110.41,
-      "latency": 0.98
+      "outputSpeed": 106.23,
+      "latency": 1.17
     },
     {
       "id": "b6d2e43d-3082-43f5-9318-0f4dbcb54163",
@@ -9967,8 +9967,8 @@
       "inputPrice": 0.15,
       "outputPrice": 0.6,
       "blendedPrice": 0.26249999999999996,
-      "outputSpeed": 135.43,
-      "latency": 16
+      "outputSpeed": 139.05,
+      "latency": 15.61
     },
     {
       "id": "b8fc61f7-5e9a-49e6-8547-6ac56db24627",
@@ -9985,8 +9985,8 @@
       "inputPrice": 5,
       "outputPrice": 25,
       "blendedPrice": 10,
-      "outputSpeed": 53.96,
-      "latency": 68.92
+      "outputSpeed": 51.6,
+      "latency": 68.32
     },
     {
       "id": "b97ef678-2d31-4375-9416-67ea97f87204",
@@ -10003,8 +10003,8 @@
       "inputPrice": 0.25,
       "outputPrice": 0.97,
       "blendedPrice": 0.43,
-      "outputSpeed": 100.31,
-      "latency": 21.8
+      "outputSpeed": 101.29,
+      "latency": 21.6
     },
     {
       "id": "b9dc72c6-7bea-4936-a55a-4b0c835fc755",
@@ -10039,8 +10039,8 @@
       "inputPrice": 2,
       "outputPrice": 10,
       "blendedPrice": 4,
-      "outputSpeed": 69.06,
-      "latency": 16.9
+      "outputSpeed": 66.74,
+      "latency": 16.78
     },
     {
       "id": "ba04694d-326a-4a6a-8f1b-46316f872a7f",
@@ -10057,8 +10057,8 @@
       "inputPrice": 0.6,
       "outputPrice": 3,
       "blendedPrice": 1.2,
-      "outputSpeed": 55.13,
-      "latency": 2.17
+      "outputSpeed": 54.98,
+      "latency": 2.19
     },
     {
       "id": "ba242e40-83b7-4cd3-a0e0-b56237984914",
@@ -10075,8 +10075,8 @@
       "inputPrice": 0.75,
       "outputPrice": 4.5,
       "blendedPrice": 1.6875,
-      "outputSpeed": 293.34,
-      "latency": 103.18
+      "outputSpeed": 280.33,
+      "latency": 105.79
     },
     {
       "id": "bb3d7e75-8e22-4082-b9d6-1db0803e042f",
@@ -10099,7 +10099,7 @@
         "pillars": {
           "coding": 6.68,
           "akw": 40.2,
-          "science": 5.75,
+          "science": 6,
           "reasoning": 10.2,
           "knowledge": 54.42
         },
@@ -10115,14 +10115,14 @@
       "creatorId": "f0aa413f-e8ae-4fcd-9c48-0e049f4f3128",
       "releaseDate": "2026-09-28",
       "reasoning": false,
-      "intelligence": 25.3,
+      "intelligence": 25.6,
       "coding": null,
       "agentic": null,
       "costPerTask": 0.5113,
       "inputPrice": 2,
       "outputPrice": 10,
       "blendedPrice": 4,
-      "outputSpeed": 103.87,
+      "outputSpeed": 96.67,
       "latency": 1.2
     },
     {
@@ -10140,8 +10140,8 @@
       "inputPrice": 2,
       "outputPrice": 12,
       "blendedPrice": 4.5,
-      "outputSpeed": 139.65,
-      "latency": 19.76
+      "outputSpeed": 138.55,
+      "latency": 20.89
     },
     {
       "id": "bbe6d782-e630-48d5-b11c-3ce37f373f1e",
@@ -10176,7 +10176,7 @@
       "inputPrice": 0.25,
       "outputPrice": 2,
       "blendedPrice": 0.6875,
-      "outputSpeed": 103.34,
+      "outputSpeed": 96.72,
       "latency": 0.86
     },
     {
@@ -10223,14 +10223,14 @@
       "creatorId": "e67e56e3-15cd-43db-b679-da4660a69f41",
       "releaseDate": "2026-07-09",
       "reasoning": false,
-      "intelligence": null,
+      "intelligence": 32.2,
       "coding": null,
       "agentic": null,
-      "costPerTask": null,
+      "costPerTask": 3.7341,
       "inputPrice": 2,
       "outputPrice": 12,
       "blendedPrice": 4.5,
-      "outputSpeed": 137.21,
+      "outputSpeed": 128.81,
       "latency": 151.77
     },
     {
@@ -10266,8 +10266,8 @@
       "inputPrice": 0.6,
       "outputPrice": 2.5,
       "blendedPrice": 1.075,
-      "outputSpeed": 119.91,
-      "latency": 18.46
+      "outputSpeed": 117.01,
+      "latency": 18.89
     },
     {
       "id": "be185709-ddb4-4268-9597-856464359b25",
@@ -10302,8 +10302,8 @@
       "inputPrice": 1.31,
       "outputPrice": 3.135,
       "blendedPrice": 1.7662499999999999,
-      "outputSpeed": 105.34,
-      "latency": 42.95
+      "outputSpeed": 98.68,
+      "latency": 45.72
     },
     {
       "id": "bf60740e-6aa5-422f-ba49-ef6e9d171205",
@@ -10321,7 +10321,7 @@
       "outputPrice": 0.6,
       "blendedPrice": 0.26249999999999996,
       "outputSpeed": 60.39,
-      "latency": 1.38
+      "latency": 1.39
     },
     {
       "id": "bf9708d8-933d-44f6-affa-b696a7a650c9",
@@ -10338,8 +10338,8 @@
       "inputPrice": 0.1,
       "outputPrice": 0.5,
       "blendedPrice": 0.2,
-      "outputSpeed": 115.32,
-      "latency": 2.6
+      "outputSpeed": 112.74,
+      "latency": 2.49
     },
     {
       "id": "c07e65e6-32fc-451e-938d-7477a1c3ffcc",
@@ -10356,8 +10356,8 @@
       "inputPrice": 2,
       "outputPrice": 6,
       "blendedPrice": 3,
-      "outputSpeed": 71.16,
-      "latency": 8.56
+      "outputSpeed": 68.7,
+      "latency": 8.61
     },
     {
       "id": "c1045dc0-4fd3-4adb-9548-18763e0d051f",
@@ -10374,7 +10374,7 @@
       "inputPrice": 2.5,
       "outputPrice": 10,
       "blendedPrice": 4.375,
-      "outputSpeed": 177.38,
+      "outputSpeed": 171.67,
       "latency": 0.91
     },
     {
@@ -10410,7 +10410,7 @@
       "inputPrice": 0.2,
       "outputPrice": 1.25,
       "blendedPrice": 0.4625,
-      "outputSpeed": 174.61,
+      "outputSpeed": 170.54,
       "latency": 0.76
     },
     {
@@ -10428,7 +10428,7 @@
       "inputPrice": 1,
       "outputPrice": 5,
       "blendedPrice": 2,
-      "outputSpeed": 81.75,
+      "outputSpeed": 81.61,
       "latency": 0.54
     },
     {
@@ -10446,7 +10446,7 @@
       "inputPrice": 0.25,
       "outputPrice": 2,
       "blendedPrice": 0.6875,
-      "outputSpeed": 100.36,
+      "outputSpeed": 92.68,
       "latency": 17.05
     },
     {
@@ -10464,7 +10464,7 @@
       "inputPrice": 1.25,
       "outputPrice": 10,
       "blendedPrice": 3.4375,
-      "outputSpeed": 100.19,
+      "outputSpeed": 98.4,
       "latency": 1.05
     },
     {
@@ -10475,15 +10475,15 @@
       "creatorId": "58b835bf-4c87-4f87-a846-df4b692c6e7d",
       "releaseDate": "2026-10-17",
       "reasoning": false,
-      "intelligence": 28.5,
+      "intelligence": 28.6,
       "coding": null,
       "agentic": null,
       "costPerTask": null,
       "inputPrice": 0.3,
       "outputPrice": 1.2,
       "blendedPrice": 0.5249999999999999,
-      "outputSpeed": 201.24,
-      "latency": 10.93
+      "outputSpeed": 174.88,
+      "latency": 12.42
     },
     {
       "id": "c3f12f61-9d57-4e2c-9106-5a82bb1cfee2",
@@ -10518,8 +10518,8 @@
       "inputPrice": 5,
       "outputPrice": 30,
       "blendedPrice": 11.25,
-      "outputSpeed": 157.85,
-      "latency": 13.55
+      "outputSpeed": 154.19,
+      "latency": 13.85
     },
     {
       "id": "c43aa1f9-31bd-4a99-be70-84c5e6bd2e75",
@@ -10547,15 +10547,15 @@
       "creatorId": "e67e56e3-15cd-43db-b679-da4660a69f41",
       "releaseDate": "2026-10-26",
       "reasoning": false,
-      "intelligence": 38.1,
+      "intelligence": 38.2,
       "coding": null,
       "agentic": null,
       "costPerTask": 0.1688,
       "inputPrice": 1,
       "outputPrice": 5,
       "blendedPrice": 2,
-      "outputSpeed": 90.9,
-      "latency": 3.86
+      "outputSpeed": 89.74,
+      "latency": 3.67
     },
     {
       "id": "c4c3b42f-e0f0-48ca-b6f9-b296e7697806",
@@ -10583,15 +10583,15 @@
       "creatorId": "e67e56e3-15cd-43db-b679-da4660a69f41",
       "releaseDate": "2026-09-22",
       "reasoning": false,
-      "intelligence": null,
+      "intelligence": 44.1,
       "coding": null,
       "agentic": null,
-      "costPerTask": null,
+      "costPerTask": 2.4657,
       "inputPrice": 2,
       "outputPrice": 10,
       "blendedPrice": 4,
-      "outputSpeed": 153.75,
-      "latency": 95.46
+      "outputSpeed": 151.56,
+      "latency": 92.22
     },
     {
       "id": "c6a47d8a-7517-46e2-8383-329fe7241725",
@@ -10626,8 +10626,8 @@
       "inputPrice": 1.25,
       "outputPrice": 2.5,
       "blendedPrice": 1.5625,
-      "outputSpeed": 123.46,
-      "latency": 20.03
+      "outputSpeed": 123.26,
+      "latency": 20.48
     },
     {
       "id": "c7327e6e-b27f-4b1b-859d-159a34e0ba1c",
@@ -10698,7 +10698,7 @@
       "inputPrice": 5,
       "outputPrice": 30,
       "blendedPrice": 11.25,
-      "outputSpeed": 75.09,
+      "outputSpeed": 71.99,
       "latency": 1.74
     },
     {
@@ -10716,8 +10716,8 @@
       "inputPrice": 0.1,
       "outputPrice": 0.3,
       "blendedPrice": 0.15000000000000002,
-      "outputSpeed": 130.65,
-      "latency": 18.64
+      "outputSpeed": 123.64,
+      "latency": 19.52
     },
     {
       "id": "c8673741-5e1a-46a1-9e4f-710a5c920982",
@@ -10734,8 +10734,8 @@
       "inputPrice": 0.07,
       "outputPrice": 0.4,
       "blendedPrice": 0.15250000000000002,
-      "outputSpeed": 113.91,
-      "latency": 1.8
+      "outputSpeed": 109.31,
+      "latency": 1.93
     },
     {
       "id": "c8a3fa87-735e-49a9-afb1-270c5e9f53f7",
@@ -10788,8 +10788,8 @@
       "inputPrice": 2,
       "outputPrice": 6,
       "blendedPrice": 3,
-      "outputSpeed": 68.17,
-      "latency": 36.35
+      "outputSpeed": 66.84,
+      "latency": 38.04
     },
     {
       "id": "c955b262-a17f-4f1a-b097-6860b866295b",
@@ -10799,15 +10799,15 @@
       "creatorId": "e67e56e3-15cd-43db-b679-da4660a69f41",
       "releaseDate": "2026-10-26",
       "reasoning": false,
-      "intelligence": 29.2,
+      "intelligence": 29.4,
       "coding": null,
       "agentic": null,
       "costPerTask": 0.0713,
       "inputPrice": 1,
       "outputPrice": 5,
       "blendedPrice": 2,
-      "outputSpeed": 90.88,
-      "latency": 1.51
+      "outputSpeed": 90.86,
+      "latency": 1.43
     },
     {
       "id": "c99f3bde-7c08-4de8-bd5c-8ee9123ebffa",
@@ -10824,8 +10824,8 @@
       "inputPrice": 0.125,
       "outputPrice": 0.595,
       "blendedPrice": 0.2425,
-      "outputSpeed": 257.83,
-      "latency": 8.5
+      "outputSpeed": 257.23,
+      "latency": 8.51
     },
     {
       "id": "ca04852c-eaae-4881-a208-f9b2ca3b7cd6",
@@ -10896,8 +10896,8 @@
       "inputPrice": 1.4,
       "outputPrice": 4.4,
       "blendedPrice": 2.15,
-      "outputSpeed": 81.81,
-      "latency": 26.17
+      "outputSpeed": 80.5,
+      "latency": 26.58
     },
     {
       "id": "cc1fa238-1a76-486d-a997-22309275eadd",
@@ -10932,8 +10932,8 @@
       "inputPrice": 2,
       "outputPrice": 12,
       "blendedPrice": 4.5,
-      "outputSpeed": 100.68,
-      "latency": 1.55
+      "outputSpeed": 98.6,
+      "latency": 1.52
     },
     {
       "id": "ccbfa8c3-a762-480b-aade-34fb9697f98c",
@@ -10968,8 +10968,8 @@
       "inputPrice": 0,
       "outputPrice": 0,
       "blendedPrice": 0,
-      "outputSpeed": 35.45,
-      "latency": 50.05
+      "outputSpeed": 35.48,
+      "latency": 50
     },
     {
       "id": "cd55210d-358e-4df1-ba9c-9acb5f186cc9",
@@ -10986,7 +10986,7 @@
       "inputPrice": 10,
       "outputPrice": 50,
       "blendedPrice": 20,
-      "outputSpeed": 69.47,
+      "outputSpeed": 67.61,
       "latency": 117.05
     },
     {
@@ -11004,8 +11004,8 @@
       "inputPrice": 1.4,
       "outputPrice": 4.4,
       "blendedPrice": 2.15,
-      "outputSpeed": 87.88,
-      "latency": 24.22,
+      "outputSpeed": 85.66,
+      "latency": 24.84,
       "dimensions": {
         "pillars": {
           "coding": 31.75,
@@ -11129,7 +11129,7 @@
       "inputPrice": 0.165,
       "outputPrice": 0.4,
       "blendedPrice": 0.22375,
-      "outputSpeed": 60.25,
+      "outputSpeed": 60.59,
       "latency": 1.79
     },
     {
@@ -11147,7 +11147,7 @@
       "inputPrice": 1.25,
       "outputPrice": 10,
       "blendedPrice": 3.4375,
-      "outputSpeed": 122.29,
+      "outputSpeed": 118.82,
       "latency": 1.08
     },
     {
@@ -11219,8 +11219,8 @@
       "inputPrice": 0.3,
       "outputPrice": 0.9,
       "blendedPrice": 0.44999999999999996,
-      "outputSpeed": 85.89,
-      "latency": 26.74
+      "outputSpeed": 91.7,
+      "latency": 25.27
     },
     {
       "id": "d306cccd-0085-4b2f-8aa0-ffcdbb434695",
@@ -11256,7 +11256,7 @@
       "outputPrice": 20,
       "blendedPrice": 8,
       "outputSpeed": 82.2,
-      "latency": 41.32
+      "latency": 41.52
     },
     {
       "id": "d370fcbf-c4a1-41a2-abc4-d204fcc3fcbf",
@@ -11291,8 +11291,8 @@
       "inputPrice": 1,
       "outputPrice": 3,
       "blendedPrice": 1.5,
-      "outputSpeed": 42.23,
-      "latency": 2.32
+      "outputSpeed": 41.18,
+      "latency": 2.31
     },
     {
       "id": "d3e20e76-9e1a-45b6-b809-ad6aa37430cf",
@@ -11309,8 +11309,8 @@
       "inputPrice": 2,
       "outputPrice": 10,
       "blendedPrice": 4,
-      "outputSpeed": 132.21,
-      "latency": 0.84
+      "outputSpeed": 129.34,
+      "latency": 0.87
     },
     {
       "id": "d49c8680-e29b-400e-9511-824f7ddebe07",
@@ -11320,7 +11320,7 @@
       "creatorId": "a31a9071-6144-4dbb-92dc-2e02d653ecea",
       "releaseDate": "2026-10-19",
       "reasoning": false,
-      "intelligence": 28.9,
+      "intelligence": 29.1,
       "coding": null,
       "agentic": null,
       "costPerTask": 0.491,
@@ -11328,12 +11328,12 @@
       "outputPrice": 0.6,
       "blendedPrice": 0.26249999999999996,
       "outputSpeed": 123.6,
-      "latency": 17.06,
+      "latency": 17.09,
       "dimensions": {
         "pillars": {
           "coding": 23.29,
           "akw": 48.75,
-          "science": 17.17,
+          "science": 17.92,
           "reasoning": 28.1,
           "knowledge": 47.58
         },
@@ -11381,7 +11381,7 @@
       "outputPrice": 3.96,
       "blendedPrice": 1.98,
       "outputSpeed": 90.91,
-      "latency": 1.79
+      "latency": 1.73
     },
     {
       "id": "d4fc3f33-f2b0-4da1-88ee-f1f82bd4de31",
@@ -11398,8 +11398,8 @@
       "inputPrice": 0.2,
       "outputPrice": 1.25,
       "blendedPrice": 0.4625,
-      "outputSpeed": 175.08,
-      "latency": 109.49
+      "outputSpeed": 173.84,
+      "latency": 105.63
     },
     {
       "id": "d5170215-69be-4129-849b-26d8d8825bfc",
@@ -11416,8 +11416,8 @@
       "inputPrice": 1.25,
       "outputPrice": 4.25,
       "blendedPrice": 2,
-      "outputSpeed": 319.19,
-      "latency": 24.26
+      "outputSpeed": 274.76,
+      "latency": 24.95
     },
     {
       "id": "d58b9ada-fd9d-4fff-a086-242034657963",
@@ -11434,8 +11434,8 @@
       "inputPrice": 2,
       "outputPrice": 10,
       "blendedPrice": 4,
-      "outputSpeed": 67.8,
-      "latency": 0.82
+      "outputSpeed": 65.71,
+      "latency": 0.87
     },
     {
       "id": "d58cf573-1bd3-4d1f-9182-5482a460f570",
@@ -11452,8 +11452,8 @@
       "inputPrice": 0.215,
       "outputPrice": 1.39,
       "blendedPrice": 0.50875,
-      "outputSpeed": 35.15,
-      "latency": 1.07
+      "outputSpeed": 35.68,
+      "latency": 1.11
     },
     {
       "id": "d61493e2-43ff-460c-9054-eaf6ba317360",
@@ -11470,8 +11470,8 @@
       "inputPrice": 1.25,
       "outputPrice": 4.25,
       "blendedPrice": 2,
-      "outputSpeed": 261.31,
-      "latency": 20.32
+      "outputSpeed": 230.61,
+      "latency": 21.06
     },
     {
       "id": "d621247c-d47e-458c-82cb-a166bc3b37e5",
@@ -11506,8 +11506,8 @@
       "inputPrice": 2,
       "outputPrice": 6,
       "blendedPrice": 3,
-      "outputSpeed": 74.61,
-      "latency": 51.11
+      "outputSpeed": 72.28,
+      "latency": 49.96
     },
     {
       "id": "d734e2ce-5cf8-467f-8148-586d02671333",
@@ -11542,8 +11542,8 @@
       "inputPrice": 0.02,
       "outputPrice": 0.1,
       "blendedPrice": 0.04,
-      "outputSpeed": 49.08,
-      "latency": 41.55
+      "outputSpeed": 52.46,
+      "latency": 38.92
     },
     {
       "id": "d8ddb241-b3e4-4c25-a6a3-72eb1b30c541",
@@ -11560,8 +11560,8 @@
       "inputPrice": 0.1119,
       "outputPrice": 0.2338,
       "blendedPrice": 0.142375,
-      "outputSpeed": 88.19,
-      "latency": 64.88
+      "outputSpeed": 87.8,
+      "latency": 65.13
     },
     {
       "id": "d925845d-39ad-4de3-8495-f176b79828c0",
@@ -11596,8 +11596,8 @@
       "inputPrice": 4,
       "outputPrice": 20,
       "blendedPrice": 8,
-      "outputSpeed": 130.15,
-      "latency": 84.78
+      "outputSpeed": 126.63,
+      "latency": 84.14
     },
     {
       "id": "d97713f2-afa6-4f8d-b2f3-ac89a24c4d6c",
@@ -11632,7 +11632,7 @@
       "inputPrice": 4,
       "outputPrice": 20,
       "blendedPrice": 8,
-      "outputSpeed": 123.85,
+      "outputSpeed": 121.84,
       "latency": 39.47
     },
     {
@@ -11650,8 +11650,8 @@
       "inputPrice": 2,
       "outputPrice": 10,
       "blendedPrice": 4,
-      "outputSpeed": 145.42,
-      "latency": 48.74
+      "outputSpeed": 137.94,
+      "latency": 42.83
     },
     {
       "id": "da9fe224-8af3-46d7-a8c4-6220779c3f35",
@@ -11668,8 +11668,8 @@
       "inputPrice": 0.19,
       "outputPrice": 0.765,
       "blendedPrice": 0.33375,
-      "outputSpeed": 241.26,
-      "latency": 0.96
+      "outputSpeed": 242.72,
+      "latency": 0.93
     },
     {
       "id": "dae31abc-0587-44d0-ba53-f78e96b6e486",
@@ -11722,8 +11722,8 @@
       "inputPrice": 0.1,
       "outputPrice": 0.2,
       "blendedPrice": 0.125,
-      "outputSpeed": 88.64,
-      "latency": 23.95
+      "outputSpeed": 89.13,
+      "latency": 23.79
     },
     {
       "id": "dbe7c625-3100-4463-b479-a228c41f75dd",
@@ -11740,8 +11740,8 @@
       "inputPrice": 0.3,
       "outputPrice": 1.2,
       "blendedPrice": 0.5249999999999999,
-      "outputSpeed": 209.77,
-      "latency": 10.37
+      "outputSpeed": 204.94,
+      "latency": 10.61
     },
     {
       "id": "dc64f856-3ded-497d-9527-d41d31267ed5",
@@ -11758,8 +11758,8 @@
       "inputPrice": 0.2,
       "outputPrice": 1.2,
       "blendedPrice": 0.45,
-      "outputSpeed": 106.52,
-      "latency": 0.81
+      "outputSpeed": 103.51,
+      "latency": 0.82
     },
     {
       "id": "dd059b25-d82a-4ead-82a4-4adceaaec48b",
@@ -11776,8 +11776,8 @@
       "inputPrice": 1.5,
       "outputPrice": 7.5,
       "blendedPrice": 3,
-      "outputSpeed": 175.97,
-      "latency": 13.71
+      "outputSpeed": 162.02,
+      "latency": 14.72
     },
     {
       "id": "dd738be7-2b69-4775-91a5-8851d3341c2d",
@@ -11913,15 +11913,15 @@
       "creatorId": "f0aa413f-e8ae-4fcd-9c48-0e049f4f3128",
       "releaseDate": "2026-09-22",
       "reasoning": false,
-      "intelligence": 57,
+      "intelligence": 57.4,
       "coding": null,
       "agentic": null,
       "costPerTask": 6.0472,
       "inputPrice": 4,
       "outputPrice": 20,
       "blendedPrice": 8,
-      "outputSpeed": 81.91,
-      "latency": 137.31
+      "outputSpeed": 80.36,
+      "latency": 128.76
     },
     {
       "id": "df8d14e0-3997-4e4d-b4ad-9c047acc9c69",
@@ -11938,8 +11938,8 @@
       "inputPrice": 3,
       "outputPrice": 15,
       "blendedPrice": 6,
-      "outputSpeed": 58.14,
-      "latency": 120.34
+      "outputSpeed": 57.64,
+      "latency": 119.04
     },
     {
       "id": "df95f83f-5ebb-466a-9d2d-b95efc8c012c",
@@ -11974,7 +11974,7 @@
       "inputPrice": 0.27,
       "outputPrice": 1,
       "blendedPrice": 0.4525,
-      "outputSpeed": 66.16,
+      "outputSpeed": 62.3,
       "latency": 0.72
     },
     {
@@ -12028,8 +12028,8 @@
       "inputPrice": 10,
       "outputPrice": 50,
       "blendedPrice": 20,
-      "outputSpeed": 60.5,
-      "latency": 103.36
+      "outputSpeed": 56.18,
+      "latency": 100.65
     },
     {
       "id": "e18e5e6a-5a31-4c0b-b80b-ac401392f446",
@@ -12047,7 +12047,7 @@
       "outputPrice": 0.4,
       "blendedPrice": 0.1375,
       "outputSpeed": 186.81,
-      "latency": 71.23
+      "latency": 62.53
     },
     {
       "id": "e1bfc488-5f48-4d42-abf6-7f3c53d79f9c",
@@ -12118,8 +12118,8 @@
       "inputPrice": 0.2,
       "outputPrice": 0.5,
       "blendedPrice": 0.275,
-      "outputSpeed": 440.94,
-      "latency": 5.25,
+      "outputSpeed": 430.34,
+      "latency": 5.36,
       "dimensions": {
         "pillars": {
           "coding": 3.05,
@@ -12279,8 +12279,8 @@
       "inputPrice": 0.05,
       "outputPrice": 0.08,
       "blendedPrice": 0.05750000000000001,
-      "outputSpeed": 48.19,
-      "latency": 0.98
+      "outputSpeed": 47.4,
+      "latency": 0.95
     },
     {
       "id": "e76e0fe5-93ca-4272-9359-2eb1740467d1",
@@ -12290,14 +12290,14 @@
       "creatorId": "e67e56e3-15cd-43db-b679-da4660a69f41",
       "releaseDate": "2026-09-29",
       "reasoning": false,
-      "intelligence": 34.5,
+      "intelligence": 34.8,
       "coding": null,
       "agentic": null,
       "costPerTask": 0.1615,
       "inputPrice": 2,
       "outputPrice": 10,
       "blendedPrice": 4,
-      "outputSpeed": 62.43,
+      "outputSpeed": 61.04,
       "latency": 2.51
     },
     {
@@ -12315,7 +12315,7 @@
       "inputPrice": 1.4,
       "outputPrice": 4.4,
       "blendedPrice": 2.15,
-      "outputSpeed": 195.74,
+      "outputSpeed": 188.2,
       "latency": 1.21
     },
     {
@@ -12344,15 +12344,15 @@
       "creatorId": "e67e56e3-15cd-43db-b679-da4660a69f41",
       "releaseDate": "2026-10-26",
       "reasoning": false,
-      "intelligence": 45,
+      "intelligence": 45.3,
       "coding": null,
       "agentic": null,
       "costPerTask": 0.4007,
       "inputPrice": 1,
       "outputPrice": 5,
       "blendedPrice": 2,
-      "outputSpeed": 100.14,
-      "latency": 65.67
+      "outputSpeed": 97.54,
+      "latency": 61.96
     },
     {
       "id": "e8ffd75b-766f-4551-8c52-6e54706220eb",
@@ -12380,15 +12380,15 @@
       "creatorId": "e67e56e3-15cd-43db-b679-da4660a69f41",
       "releaseDate": "2026-09-03",
       "reasoning": false,
-      "intelligence": 51.5,
+      "intelligence": 51.6,
       "coding": null,
       "agentic": null,
       "costPerTask": 2.7324,
       "inputPrice": 10,
       "outputPrice": 50,
       "blendedPrice": 20,
-      "outputSpeed": 54.52,
-      "latency": 7.87
+      "outputSpeed": 50.69,
+      "latency": 7.3
     },
     {
       "id": "e98e911e-9fb2-4a9a-826e-3d681d0cdca8",
@@ -12405,8 +12405,8 @@
       "inputPrice": 5,
       "outputPrice": 15,
       "blendedPrice": 7.5,
-      "outputSpeed": 144.57,
-      "latency": 1.1
+      "outputSpeed": 130.07,
+      "latency": 1.15
     },
     {
       "id": "e994a6e0-d36b-4dab-8ae1-c1b469e4d9e2",
@@ -12416,7 +12416,7 @@
       "creatorId": "e1694725-0192-4e54-b1b8-c97e816c6cbe",
       "releaseDate": "2026-10-12",
       "reasoning": false,
-      "intelligence": 49.7,
+      "intelligence": 50.1,
       "coding": null,
       "agentic": null,
       "costPerTask": null,
@@ -12429,7 +12429,7 @@
         "pillars": {
           "coding": 47.41,
           "akw": 61.47,
-          "science": 45.07,
+          "science": 46.82,
           "reasoning": 48.5,
           "knowledge": 66.25
         },
@@ -12452,7 +12452,7 @@
       "inputPrice": 5,
       "outputPrice": 25,
       "blendedPrice": 10,
-      "outputSpeed": 52.66,
+      "outputSpeed": 50.92,
       "latency": 27.88
     },
     {
@@ -12463,15 +12463,15 @@
       "creatorId": "e67e56e3-15cd-43db-b679-da4660a69f41",
       "releaseDate": "2026-10-26",
       "reasoning": false,
-      "intelligence": 42.3,
+      "intelligence": 42.4,
       "coding": null,
       "agentic": null,
       "costPerTask": 0.2593,
       "inputPrice": 1,
       "outputPrice": 5,
       "blendedPrice": 2,
-      "outputSpeed": 93.19,
-      "latency": 19.19
+      "outputSpeed": 91.47,
+      "latency": 16.75
     },
     {
       "id": "ea5019ae-b0b7-49a5-80b3-0e584807af0f",
@@ -12481,7 +12481,7 @@
       "creatorId": "b5c0639a-cc9c-443b-a07e-bae6b7088933",
       "releaseDate": "2026-10-29",
       "reasoning": false,
-      "intelligence": 26,
+      "intelligence": 26.1,
       "coding": null,
       "agentic": null,
       "costPerTask": 2.0615,
@@ -12494,7 +12494,7 @@
         "pillars": {
           "coding": 19.85,
           "akw": 42.48,
-          "science": 15.14,
+          "science": 15.64,
           "reasoning": 17.3,
           "knowledge": 58.33
         },
@@ -12534,15 +12534,15 @@
       "creatorId": "f0aa413f-e8ae-4fcd-9c48-0e049f4f3128",
       "releaseDate": "2026-09-22",
       "reasoning": false,
-      "intelligence": 48.1,
+      "intelligence": 48.2,
       "coding": null,
       "agentic": null,
       "costPerTask": 2.4511,
       "inputPrice": 4,
       "outputPrice": 20,
       "blendedPrice": 8,
-      "outputSpeed": 79.41,
-      "latency": 22.58
+      "outputSpeed": 77.91,
+      "latency": 22.12
     },
     {
       "id": "eab1492c-b853-4852-aa71-06b0ec2481c1",
@@ -12685,7 +12685,7 @@
       "inputPrice": 0.12,
       "outputPrice": 0.24,
       "blendedPrice": 0.15,
-      "outputSpeed": 31.46,
+      "outputSpeed": 30.84,
       "latency": 1.01
     },
     {
@@ -12703,7 +12703,7 @@
       "inputPrice": 0.125,
       "outputPrice": 0.5,
       "blendedPrice": 0.21875,
-      "outputSpeed": 41.44,
+      "outputSpeed": 41.37,
       "latency": 2.43
     },
     {
@@ -12721,7 +12721,7 @@
       "inputPrice": 0.25,
       "outputPrice": 2,
       "blendedPrice": 0.6875,
-      "outputSpeed": 167.91,
+      "outputSpeed": 165.67,
       "latency": 2.03
     },
     {
@@ -12739,8 +12739,8 @@
       "inputPrice": 2,
       "outputPrice": 10,
       "blendedPrice": 4,
-      "outputSpeed": 63.15,
-      "latency": 3.75
+      "outputSpeed": 60.59,
+      "latency": 3.52
     },
     {
       "id": "f0083258-8646-45b8-8082-7aaf6c2ea82a",
@@ -12757,8 +12757,8 @@
       "inputPrice": 0.15,
       "outputPrice": 0.6,
       "blendedPrice": 0.26249999999999996,
-      "outputSpeed": 210.9,
-      "latency": 10.24
+      "outputSpeed": 204.79,
+      "latency": 10.52
     },
     {
       "id": "f151fd0b-2139-40cf-a3ec-995e8cedc592",
@@ -12768,20 +12768,20 @@
       "creatorId": "58b835bf-4c87-4f87-a846-df4b692c6e7d",
       "releaseDate": "2026-10-17",
       "reasoning": false,
-      "intelligence": 32.5,
+      "intelligence": 32.6,
       "coding": null,
       "agentic": null,
       "costPerTask": 0.6021,
       "inputPrice": 0.3,
       "outputPrice": 1.2,
       "blendedPrice": 0.5249999999999999,
-      "outputSpeed": 172.7,
-      "latency": 12.81,
+      "outputSpeed": 164.71,
+      "latency": 13.37,
       "dimensions": {
         "pillars": {
           "coding": 31.15,
           "akw": 53.52,
-          "science": 18.43,
+          "science": 18.93,
           "reasoning": 25.3,
           "knowledge": 53.5
         },
@@ -12810,8 +12810,8 @@
       "inputPrice": 1,
       "outputPrice": 3.2,
       "blendedPrice": 1.55,
-      "outputSpeed": 55.55,
-      "latency": 1.85
+      "outputSpeed": 50.2,
+      "latency": 1.89
     },
     {
       "id": "f1d52583-9d20-4099-99ac-b5df9430c3b6",
@@ -12828,8 +12828,8 @@
       "inputPrice": 0.04,
       "outputPrice": 0.16,
       "blendedPrice": 0.07,
-      "outputSpeed": 258.75,
-      "latency": 8.29
+      "outputSpeed": 230.38,
+      "latency": 9.24
     },
     {
       "id": "f2e21112-192e-4aed-ae82-68ca3b38e667",
@@ -12846,8 +12846,8 @@
       "inputPrice": 3,
       "outputPrice": 15,
       "blendedPrice": 6,
-      "outputSpeed": 44.88,
-      "latency": 1.03
+      "outputSpeed": 43.19,
+      "latency": 1.04
     },
     {
       "id": "f2f60e3a-e5f5-4471-acd2-9f2f29c76007",
@@ -12875,15 +12875,15 @@
       "creatorId": "f0aa413f-e8ae-4fcd-9c48-0e049f4f3128",
       "releaseDate": "2026-09-22",
       "reasoning": false,
-      "intelligence": 51.7,
+      "intelligence": 51.8,
       "coding": null,
       "agentic": null,
       "costPerTask": 3.4647,
       "inputPrice": 4,
       "outputPrice": 20,
       "blendedPrice": 8,
-      "outputSpeed": 80,
-      "latency": 40.89
+      "outputSpeed": 78.32,
+      "latency": 33.7
     },
     {
       "id": "f3169f25-8c6f-48e4-ae87-0cf872dc0ec1",
@@ -12900,8 +12900,8 @@
       "inputPrice": 0.12,
       "outputPrice": 0.5,
       "blendedPrice": 0.215,
-      "outputSpeed": 128.09,
-      "latency": 0.56
+      "outputSpeed": 145.68,
+      "latency": 0.59
     },
     {
       "id": "f371ad68-6947-4767-a78f-1f6c81f96b93",
@@ -12918,8 +12918,8 @@
       "inputPrice": 0.5,
       "outputPrice": 3,
       "blendedPrice": 1.125,
-      "outputSpeed": 55.75,
-      "latency": 101.6
+      "outputSpeed": 56.01,
+      "latency": 101.14
     },
     {
       "id": "f3a0e101-086f-44b3-a1b2-d23498f9716b",
@@ -12954,8 +12954,8 @@
       "inputPrice": 1.25,
       "outputPrice": 10,
       "blendedPrice": 3.4375,
-      "outputSpeed": 128.98,
-      "latency": 25.9
+      "outputSpeed": 126.95,
+      "latency": 26.35
     },
     {
       "id": "f4e8194a-d0e6-48eb-92be-4307de5aeeec",
@@ -12973,7 +12973,7 @@
       "outputPrice": 0.4,
       "blendedPrice": 0.17500000000000002,
       "outputSpeed": 407.39,
-      "latency": 17.25
+      "latency": 17.9
     },
     {
       "id": "f5d83128-047f-496d-ba49-8a428abe8345",
@@ -13008,8 +13008,8 @@
       "inputPrice": 0.23,
       "outputPrice": 2.3,
       "blendedPrice": 0.7474999999999999,
-      "outputSpeed": 107.62,
-      "latency": 19.38
+      "outputSpeed": 119.59,
+      "latency": 17.49
     },
     {
       "id": "f6db039b-0f3b-485c-9d7f-982988e44f26",
@@ -13019,7 +13019,7 @@
       "creatorId": "faddc6d9-2c14-445f-9b28-56726f59c793",
       "releaseDate": "2026-09-02",
       "reasoning": false,
-      "intelligence": 22.3,
+      "intelligence": 22.5,
       "coding": null,
       "agentic": null,
       "costPerTask": null,
@@ -13062,8 +13062,8 @@
       "inputPrice": 0.3,
       "outputPrice": 1.2,
       "blendedPrice": 0.5249999999999999,
-      "outputSpeed": 118.99,
-      "latency": 18.15
+      "outputSpeed": 118.51,
+      "latency": 18.24
     },
     {
       "id": "f78138d6-2e04-4a84-919a-20d177cb6ff1",
@@ -13098,8 +13098,8 @@
       "inputPrice": 1.4,
       "outputPrice": 4.4,
       "blendedPrice": 2.15,
-      "outputSpeed": 80.5,
-      "latency": 26.56
+      "outputSpeed": 81.01,
+      "latency": 26.4
     },
     {
       "id": "f7d2fc3e-1f7b-405f-818c-07952a4af78f",
@@ -13116,8 +13116,8 @@
       "inputPrice": 3,
       "outputPrice": 15,
       "blendedPrice": 6,
-      "outputSpeed": 55.23,
-      "latency": 41.67
+      "outputSpeed": 53.49,
+      "latency": 42.73
     },
     {
       "id": "f818a7bb-6f23-4b24-8d52-6b9c1a5ca628",
@@ -13170,8 +13170,8 @@
       "inputPrice": 0.11,
       "outputPrice": 0.33,
       "blendedPrice": 0.165,
-      "outputSpeed": 168.8,
-      "latency": 13.16
+      "outputSpeed": 165.77,
+      "latency": 13.37
     },
     {
       "id": "fb112343-c82c-4b43-afea-996bd5101d62",
@@ -13206,8 +13206,8 @@
       "inputPrice": 0.56,
       "outputPrice": 1.68,
       "blendedPrice": 0.8400000000000001,
-      "outputSpeed": 103.82,
-      "latency": 1.36
+      "outputSpeed": 101.91,
+      "latency": 1.45
     },
     {
       "id": "fbc58677-e324-4b45-a979-7fd8eec555cd",
@@ -13242,8 +13242,8 @@
       "inputPrice": 0.3,
       "outputPrice": 2.5,
       "blendedPrice": 0.85,
-      "outputSpeed": 190.82,
-      "latency": 32.17
+      "outputSpeed": 189.34,
+      "latency": 30.3
     },
     {
       "id": "fc4223e8-4586-4ca1-97ca-bb55ff586947",
@@ -13278,7 +13278,7 @@
       "inputPrice": 0.31,
       "outputPrice": 1,
       "blendedPrice": 0.4825,
-      "outputSpeed": 80.06,
+      "outputSpeed": 81.88,
       "latency": 0.88
     },
     {
@@ -13296,8 +13296,8 @@
       "inputPrice": 0.25,
       "outputPrice": 2,
       "blendedPrice": 0.6875,
-      "outputSpeed": 175.04,
-      "latency": 19.23
+      "outputSpeed": 176.4,
+      "latency": 17.21
     },
     {
       "id": "fddb72bd-60d3-41af-acc5-3df9a290eb8e",
@@ -13350,8 +13350,8 @@
       "inputPrice": 1.25,
       "outputPrice": 2.5,
       "blendedPrice": 1.5625,
-      "outputSpeed": 76.99,
-      "latency": 7.28
+      "outputSpeed": 71.42,
+      "latency": 7.32
     },
     {
       "id": "fe4c0848-e284-4e52-a79d-cdc28392f1a9",
@@ -13368,8 +13368,8 @@
       "inputPrice": 0.14,
       "outputPrice": 0.28,
       "blendedPrice": 0.17500000000000002,
-      "outputSpeed": 142.18,
-      "latency": 15.66
+      "outputSpeed": 138.46,
+      "latency": 16.06
     },
     {
       "id": "feb02d3b-ff8d-4ed4-b165-13f8d4a7192c",
@@ -13386,8 +13386,8 @@
       "inputPrice": 0.1,
       "outputPrice": 0.3,
       "blendedPrice": 0.15000000000000002,
-      "outputSpeed": 117.87,
-      "latency": 19.2
+      "outputSpeed": 110.02,
+      "latency": 20.43
     },
     {
       "id": "ff2f3f3d-783f-4e27-8a39-47237501a313",
@@ -13397,20 +13397,20 @@
       "creatorId": "e1694725-0192-4e54-b1b8-c97e816c6cbe",
       "releaseDate": "2026-10-12",
       "reasoning": false,
-      "intelligence": 43.3,
+      "intelligence": 43.6,
       "coding": null,
       "agentic": null,
       "costPerTask": 6.952,
       "inputPrice": 4,
       "outputPrice": 20,
       "blendedPrice": 8,
-      "outputSpeed": 194.2,
-      "latency": 38.04,
+      "outputSpeed": 171.98,
+      "latency": 41.6,
       "dimensions": {
         "pillars": {
           "coding": 39.95,
           "akw": 57.93,
-          "science": 36.86,
+          "science": 38.11,
           "reasoning": 39,
           "knowledge": 64.83
         },
@@ -13439,7 +13439,7 @@
       "inputPrice": 5,
       "outputPrice": 25,
       "blendedPrice": 10,
-      "outputSpeed": 50.4,
+      "outputSpeed": 49.64,
       "latency": 10.05
     },
     {
@@ -13457,8 +13457,8 @@
       "inputPrice": 0.3,
       "outputPrice": 0.5,
       "blendedPrice": 0.35,
-      "outputSpeed": 45.99,
-      "latency": 45.23
+      "outputSpeed": 45.45,
+      "latency": 45.79
     },
     {
       "id": "ffd65ef7-fbdb-4145-98ae-b5d01cda770b",
@@ -13479,7 +13479,7 @@
       "latency": null
     }
   ],
-  "syncedAt": "2026-11-03T16:00:00.000Z",
+  "syncedAt": "2026-11-04T00:00:00.000Z",
   "refreshIntervalMs": 28800000,
   "indexVersion": 5,
   "source": {
