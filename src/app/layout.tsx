@@ -62,7 +62,7 @@ const localeBootstrapScript = `
 `;
 
 export const metadata: Metadata = {
-  title: "Parallax · 编程与工程模型版图",
+  title: "CodePareto · 编程与工程模型版图",
   description: "只关心编程与工程能力的模型版图：成本 × 能力、帕累托前沿与膝点。",
 };
 

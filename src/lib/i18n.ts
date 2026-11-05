@@ -15,7 +15,7 @@ export type Locale = (typeof LOCALE_OPTIONS)[number]["value"];
 export const DEFAULT_LOCALE: Locale = "zh-CN";
 
 const zhCN = {
-  "metadata.title": "Parallax · 编程与工程模型版图",
+  "metadata.title": "CodePareto · 编程与工程模型版图",
   "metadata.description": "只关心编程与工程能力的模型版图：成本 × 能力、帕累托前沿与膝点。",
   language: "语言",
   "theme.light": "浅色",
@@ -43,7 +43,7 @@ const zhCN = {
   "alternative.cost": "成本",
   "empty.noModels": "还没有可展示的模型",
   "empty.checkApi": "请检查 API 配置后重试。",
-  "brand.home": "Parallax 首页",
+  "brand.home": "CodePareto 首页",
   "hero.eyebrow": "BETWEEN MODELS",
   "hero.titleLead": "选择，",
   "hero.titleAccent": "有迹可循。",
@@ -157,7 +157,7 @@ const zhCN = {
   "alternatives.balancedCount": "{count} 个相近选择",
   "alternatives.balancedNone": "暂无匹配候选",
   "alternatives.balancedMissingMessage": "补充能力指数与任务成本后，才能计算相近候选。",
-  "footer.tagline": "Parallax · Explore the frontier of model capability and cost.",
+  "footer.tagline": "CodePareto · Explore the frontier of model capability and cost.",
   "footer.sourcePrefix": "数据来源：",
   "source.missingApiKey": "未检测到 API Key，当前使用示例数据。配置后会自动切换为实时数据。",
   "source.apiError": "实时数据源返回 {status}，暂时显示示例数据。请检查 API Key 与订阅层级。",
@@ -201,7 +201,7 @@ export type Translator = (
 ) => string;
 
 const en: Record<TranslationKey, string> = {
-  "metadata.title": "Parallax · Coding & Engineering Model Landscape",
+  "metadata.title": "CodePareto · Coding & Engineering Model Landscape",
   "metadata.description": "A model landscape scored only on coding and engineering: cost x capability, Pareto frontier and knee point.",
   language: "Language",
   "theme.light": "Light",
@@ -229,7 +229,7 @@ const en: Record<TranslationKey, string> = {
   "alternative.cost": "Cost",
   "empty.noModels": "No models to display",
   "empty.checkApi": "Check the API configuration and try again.",
-  "brand.home": "Parallax home",
+  "brand.home": "CodePareto home",
   "hero.eyebrow": "BETWEEN MODELS",
   "hero.titleLead": "Choose,",
   "hero.titleAccent": "with evidence.",
@@ -343,7 +343,7 @@ const en: Record<TranslationKey, string> = {
   "alternatives.balancedCount": "{count} similar options",
   "alternatives.balancedNone": "No matching candidates",
   "alternatives.balancedMissingMessage": "Add an intelligence index and task cost to calculate similar candidates.",
-  "footer.tagline": "Parallax · Explore the frontier of model capability and cost.",
+  "footer.tagline": "CodePareto · Explore the frontier of model capability and cost.",
   "footer.sourcePrefix": "Data source: ",
   "source.missingApiKey": "No API key detected. Showing demo data until a key is configured.",
   "source.apiError": "The live data source returned {status}; showing demo data for now. Check your API key and subscription tier.",
@@ -380,7 +380,7 @@ const en: Record<TranslationKey, string> = {
 };
 
 const ja: Record<TranslationKey, string> = {
-  "metadata.title": "Parallax · コーディング／エンジニアリング特化のモデルランドスケープ",
+  "metadata.title": "CodePareto · コーディング／エンジニアリング特化のモデルランドスケープ",
   "metadata.description": "コーディングとエンジニアリング能力だけに絞ったモデル地図：コスト × 能力、パレート前線と膝点。",
   language: "言語",
   "theme.light": "ライト",
@@ -408,7 +408,7 @@ const ja: Record<TranslationKey, string> = {
   "alternative.cost": "コスト",
   "empty.noModels": "表示できるモデルがありません",
   "empty.checkApi": "API 設定を確認して、もう一度お試しください。",
-  "brand.home": "Parallax ホーム",
+  "brand.home": "CodePareto ホーム",
   "hero.eyebrow": "BETWEEN MODELS",
   "hero.titleLead": "選択に、",
   "hero.titleAccent": "根拠を。",
@@ -522,7 +522,7 @@ const ja: Record<TranslationKey, string> = {
   "alternatives.balancedCount": "近い候補 {count} 件",
   "alternatives.balancedNone": "一致する候補はありません",
   "alternatives.balancedMissingMessage": "能力指数とタスクコストを追加すると、近い候補を計算できます。",
-  "footer.tagline": "Parallax · モデルの能力とコストのフロンティアを探索。",
+  "footer.tagline": "CodePareto · モデルの能力とコストのフロンティアを探索。",
   "footer.sourcePrefix": "データソース：",
   "source.missingApiKey": "API キーが検出されないため、サンプルデータを表示しています。設定するとリアルタイムデータに切り替わります。",
   "source.apiError": "リアルタイムデータソースが {status} を返したため、サンプルデータを表示しています。API キーと契約プランを確認してください。",
@@ -559,7 +559,7 @@ const ja: Record<TranslationKey, string> = {
 };
 
 const zhTW: Record<TranslationKey, string> = {
-  "metadata.title": "Parallax · 編程與工程模型版圖",
+  "metadata.title": "CodePareto · 編程與工程模型版圖",
   "metadata.description": "只關心編程與工程能力的模型版圖：成本 × 能力、帕雷托前緣與膝點。",
   language: "語言",
   "theme.light": "淺色",
@@ -587,7 +587,7 @@ const zhTW: Record<TranslationKey, string> = {
   "alternative.cost": "成本",
   "empty.noModels": "還沒有可展示的模型",
   "empty.checkApi": "請檢查 API 設定後重試。",
-  "brand.home": "Parallax 首頁",
+  "brand.home": "CodePareto 首頁",
   "hero.eyebrow": "BETWEEN MODELS",
   "hero.titleLead": "選擇，",
   "hero.titleAccent": "有跡可循。",
@@ -701,7 +701,7 @@ const zhTW: Record<TranslationKey, string> = {
   "alternatives.balancedCount": "{count} 個相近選擇",
   "alternatives.balancedNone": "暫無相符候選",
   "alternatives.balancedMissingMessage": "補充能力指數與任務成本後，才能計算相近候選。",
-  "footer.tagline": "Parallax · Explore the frontier of model capability and cost.",
+  "footer.tagline": "CodePareto · Explore the frontier of model capability and cost.",
   "footer.sourcePrefix": "資料來源：",
   "source.missingApiKey": "未偵測到 API Key，目前使用範例資料。設定後會自動切換為即時資料。",
   "source.apiError": "即時資料來源回傳 {status}，暫時顯示範例資料。請檢查 API Key 與訂閱層級。",
@@ -738,7 +738,7 @@ const zhTW: Record<TranslationKey, string> = {
 };
 
 const ko: Record<TranslationKey, string> = {
-  "metadata.title": "Parallax · 코딩·엔지니어링 모델 지형",
+  "metadata.title": "CodePareto · 코딩·엔지니어링 모델 지형",
   "metadata.description": "코딩과 엔지니어링 능력만 보는 모델 지형: 비용 × 능력, 파레토 전선과 무릎점.",
   language: "언어",
   "theme.light": "라이트",
@@ -766,7 +766,7 @@ const ko: Record<TranslationKey, string> = {
   "alternative.cost": "비용",
   "empty.noModels": "표시할 모델이 없습니다",
   "empty.checkApi": "API 설정을 확인한 후 다시 시도하세요.",
-  "brand.home": "Parallax 홈",
+  "brand.home": "CodePareto 홈",
   "hero.eyebrow": "BETWEEN MODELS",
   "hero.titleLead": "선택에,",
   "hero.titleAccent": "근거를.",
@@ -880,7 +880,7 @@ const ko: Record<TranslationKey, string> = {
   "alternatives.balancedCount": "유사 선택 {count}개",
   "alternatives.balancedNone": "일치하는 후보 없음",
   "alternatives.balancedMissingMessage": "능력 지수와 작업 비용을 보완해야 유사 후보를 계산할 수 있습니다.",
-  "footer.tagline": "Parallax · 모델 능력과 비용의 프론티어를 탐색합니다.",
+  "footer.tagline": "CodePareto · 모델 능력과 비용의 프론티어를 탐색합니다.",
   "footer.sourcePrefix": "데이터 출처: ",
   "source.missingApiKey": "API 키가 감지되지 않아 데모 데이터를 표시합니다. 설정 후 실시간 데이터로 전환됩니다.",
   "source.apiError": "실시간 데이터 소스가 {status}를 반환해 데모 데이터를 표시합니다. API 키와 구독 등급을 확인하세요.",

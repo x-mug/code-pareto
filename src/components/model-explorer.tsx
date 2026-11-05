@@ -1425,7 +1425,7 @@ export function ModelExplorer({ initialCatalog }: ModelExplorerProps) {
       <header className="site-header site-shell">
         <a className="brand" href="#top" aria-label={t("brand.home")}>
           <span>
-            <strong>Parallax</strong>
+            <strong>CodePareto</strong>
             <small>CODING &amp; ENGINEERING LANDSCAPE</small>
           </span>
         </a>
