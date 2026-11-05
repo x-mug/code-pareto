@@ -1,6 +1,148 @@
 {
   "events": [
     {
+      "modelId": "38a98e3d-779b-49ec-b005-230a3a72088a",
+      "name": "Muse Wonder (High)",
+      "creator": "Meta",
+      "kind": "added",
+      "observedAt": "2026-11-05T04:19:08.378Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": null,
+          "after": 40.5
+        },
+        {
+          "field": "inputPrice",
+          "before": null,
+          "after": 4
+        },
+        {
+          "field": "outputPrice",
+          "before": null,
+          "after": 20
+        }
+      ]
+    },
+    {
+      "modelId": "d274918e-ea82-4951-8b37-8ed9ab898dbc",
+      "name": "Hy4",
+      "creator": "Tencent",
+      "kind": "added",
+      "observedAt": "2026-11-05T04:19:08.378Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": null,
+          "after": 34.6
+        }
+      ]
+    },
+    {
+      "modelId": "426d24c8-49ae-482a-b4a8-20f1c53f21c1",
+      "name": "GPT-5.6 Luna (Max)",
+      "creator": "OpenAI",
+      "kind": "updated",
+      "observedAt": "2026-11-05T03:40:16.122Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": null,
+          "after": 23.8
+        },
+        {
+          "field": "costPerTask",
+          "before": null,
+          "after": 0.3313
+        }
+      ]
+    },
+    {
+      "modelId": "a6340098-d7ae-462d-b372-0a0a67fc44b4",
+      "name": "Claude 4.5 Haiku (Reasoning)",
+      "creator": "Anthropic",
+      "kind": "updated",
+      "observedAt": "2026-11-05T03:40:16.122Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": null,
+          "after": 7.4
+        },
+        {
+          "field": "costPerTask",
+          "before": null,
+          "after": 0.5318
+        }
+      ]
+    },
+    {
+      "modelId": "d366dfa1-d940-4788-aa73-d298c45699b3",
+      "name": "Gemini 4 Argon (High)",
+      "creator": "Google",
+      "kind": "updated",
+      "observedAt": "2026-11-05T03:40:16.122Z",
+      "changes": [
+        {
+          "field": "costPerTask",
+          "before": 7.6827,
+          "after": 9.9466
+        }
+      ]
+    },
+    {
+      "modelId": "dbe7c625-3100-4463-b479-a228c41f75dd",
+      "name": "DeepSeek V4.1 Flash (Max)",
+      "creator": "DeepSeek",
+      "kind": "updated",
+      "observedAt": "2026-11-05T03:40:16.122Z",
+      "changes": [
+        {
+          "field": "inputPrice",
+          "before": 0.3,
+          "after": 0.29
+        }
+      ]
+    },
+    {
+      "modelId": "dd059b25-d82a-4ead-82a4-4adceaaec48b",
+      "name": "Mistral Medium 3.5",
+      "creator": "Mistral",
+      "kind": "updated",
+      "observedAt": "2026-11-05T03:40:16.122Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": null,
+          "after": 4.6
+        },
+        {
+          "field": "costPerTask",
+          "before": null,
+          "after": 1.0391
+        }
+      ]
+    },
+    {
+      "modelId": "f3a0e101-086f-44b3-a1b2-d23498f9716b",
+      "name": "Agnes 2.5 Pro Beta",
+      "creator": "Sapiens AI",
+      "kind": "updated",
+      "observedAt": "2026-11-05T03:40:16.122Z",
+      "changes": [
+        {
+          "field": "inputPrice",
+          "before": 0.1,
+          "after": null
+        },
+        {
+          "field": "outputPrice",
+          "before": 0.3,
+          "after": null
+        }
+      ]
+    },
+    {
       "modelId": "598190f8-dc9c-4fea-a7ea-4b81c402ab18",
       "name": "Gemini 3.1 Flash-Lite",
       "creator": "Google",
