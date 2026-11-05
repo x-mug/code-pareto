@@ -132,11 +132,13 @@ function indexSource(rows, label, requireId) {
   return { bySlug, byId };
 }
 
-function selectExisting(index, id, slug, label) {
+function selectExisting(index, id, slug, label, allowIdRename = false) {
   const byId = NONEMPTY(id) ? index.byId.get(id) : undefined;
   const bySlug = index.bySlug.get(slug);
   if (byId && bySlug && byId !== bySlug) throw new Error(label + "的 id 与 slug 指向不同模型: " + slug);
-  if (byId && byId.slug !== slug && !bySlug) throw new Error(label + "的 id 对应不同 slug: " + slug);
+  if (byId && byId.slug !== slug && !bySlug && !allowIdRename) {
+    throw new Error(label + "的 id 对应不同 slug，缺少已验证身份: " + slug);
+  }
   return byId ?? bySlug;
 }
 
@@ -205,7 +207,17 @@ export async function mergeAaCatalog({ catalogModels, previousModels = [], intel
     const marker = previous.catalogIdentity;
     if (!marker) continue;
     const sourceId = marker.source === "parallax" ? marker.parallaxId : marker.aaId;
-    const existing = selectExisting(current, sourceId, previous.slug, "Parallax 目录");
+    const aaAliases = [intelligence, releases, leaderboard]
+      .map((source) => source.byId.get(marker.aaId))
+      .filter(Boolean);
+    const sourceMatch = current.byId.get(sourceId);
+    const confirmedIdRename = marker.source === "parallax" || aaAliases.some((row) => row.slug === sourceMatch?.slug);
+    const previousMatch = selectExisting(current, sourceId, previous.slug, "Parallax 目录", confirmedIdRename);
+    const aliasMatches = new Set(aaAliases.map((row) => current.bySlug.get(row.slug)).filter(Boolean));
+    if (aliasMatches.size > 1 || (previousMatch && aliasMatches.size && !aliasMatches.has(previousMatch))) {
+      throw new Error("AA 模型 id 与 Parallax 别名指向不同模型: " + previous.slug);
+    }
+    const existing = previousMatch ?? aliasMatches.values().next().value;
     if (existing) {
       if (taken.has(existing)) throw new Error("多个旧模型指向同一个 Parallax 模型: " + existing.slug);
       taken.add(existing);
@@ -280,7 +292,13 @@ export async function mergeAaCatalog({ catalogModels, previousModels = [], intel
     const detail = details.get(slug);
     const sourceIds = [intel?.id, release?.id, row?.id, detail?.id].filter(NONEMPTY);
     if (new Set(sourceIds).size > 1) throw new Error("AA 多个来源的模型 id 冲突: " + slug);
-    const existing = selectExisting(index, sourceIds[0], slug, "AA 模型");
+    const identityMatch = index.byId.get(sourceIds[0]);
+    const sourceCreatorId = intel?.creator?.id ?? detail?.creator?.id;
+    const sourceCreatorName = intel?.creator?.name ?? detail?.creator?.name ?? row?.modelCreatorName;
+    const confirmedIdRename = identityMatch?.catalogIdentity?.aaId === sourceIds[0] ||
+      (!identityMatch?.catalogIdentity && NONEMPTY(identityMatch?.creatorId) &&
+        identityMatch.creatorId === sourceCreatorId);
+    const existing = selectExisting(index, sourceIds[0], slug, "AA 模型", confirmedIdRename);
     if (existing && sourceIds.some((id) => index.byId.get(id) !== existing)) {
       throw new Error("AA 模型 id 与已有记录冲突: " + slug);
     }
@@ -302,8 +320,21 @@ export async function mergeAaCatalog({ catalogModels, previousModels = [], intel
       warnings.push(slug + ": 缺少真实名称或厂商，无法收录");
       continue;
     }
+    if (existing && NONEMPTY(existing.creatorId) && NONEMPTY(sourceCreatorId)) {
+      if (existing.creatorId !== sourceCreatorId) throw new Error("AA 模型的厂商 id 与已有记录不一致: " + slug);
+    } else if (existing) {
+      if (NONEMPTY(existing.creator) && NONEMPTY(sourceCreatorName) && existing.creator !== sourceCreatorName) {
+        throw new Error("AA 模型的厂商名称与已有记录不一致: " + slug);
+      }
+      if (existing.slug !== slug && (!NONEMPTY(existing.creator) || !NONEMPTY(sourceCreatorName))) {
+        throw new Error("AA 模型改名时缺少可核实的厂商信息: " + slug);
+      }
+    }
     if (existing && existing.catalogIdentity?.source !== "aa-only") {
-      if (!index.byId.has(primary.id)) throw new Error("AA 和 Parallax 的同 slug 模型 id 冲突: " + slug);
+      if (!index.byId.has(primary.id) ||
+          (existing.catalogIdentity && existing.catalogIdentity.aaId !== primary.id)) {
+        throw new Error("AA 和 Parallax 的模型 id 冲突: " + slug);
+      }
       continue;
     }
     if (existing && existing.catalogIdentity.aaId !== primary.id) {

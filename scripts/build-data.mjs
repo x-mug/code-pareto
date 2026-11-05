@@ -261,6 +261,15 @@ export function buildDimensions(intelligenceModels, engineeringModels, catalogBy
     engineeringById.set(model.id, model);
     engineeringBySlug.set(model.slug, model);
   }
+  const catalogByAaId = new Map();
+  for (const model of catalogBySlug.values()) {
+    const aaId = model.catalogIdentity?.aaId ?? model.id;
+    if (!aaId) continue;
+    if (catalogByAaId.has(aaId) && catalogByAaId.get(aaId) !== model) {
+      throw new Error("模型目录包含重复的 AA 身份: " + aaId);
+    }
+    catalogByAaId.set(aaId, model);
+  }
   const dimensionsBySlug = new Map();
   const problems = [];
   const warnings = [];
@@ -269,16 +278,49 @@ export function buildDimensions(intelligenceModels, engineeringModels, catalogBy
   for (const model of intelligenceModels) {
     const engineering = engineeringById.get(model.id);
     const engineeringSlugMatch = engineeringBySlug.get(model.slug);
-    if ((engineering && engineering.slug !== model.slug) || (engineeringSlugMatch && engineeringSlugMatch.id !== model.id)) {
+    if (engineeringSlugMatch && engineeringSlugMatch.id !== model.id) {
       throw new Error(model.slug + ": Engineering 页的 id 或 slug 冲突");
     }
     if (!engineering) {
       warnings.push(model.slug + ": Engineering 页缺少同 id 的记录，保留基础数据");
       continue;
     }
-    if (!catalogBySlug.has(model.slug)) {
-      warnings.push(model.slug + ": 模型目录里还没有这个 slug，跳过");
+    const intelligenceCreator = model.creator ?? {};
+    const engineeringCreator = engineering.creator ?? {};
+    if (intelligenceCreator.id && engineeringCreator.id) {
+      if (intelligenceCreator.id !== engineeringCreator.id) throw new Error(model.slug + ": Engineering 页的厂商 id 冲突");
+    } else if (intelligenceCreator.name && engineeringCreator.name) {
+      if (intelligenceCreator.name !== engineeringCreator.name) throw new Error(model.slug + ": Engineering 页的厂商名称冲突");
+    } else if (engineering.slug !== model.slug) {
+      throw new Error(model.slug + ": Engineering 页的改名缺少可核实的厂商信息");
+    }
+    const catalogSlugMatch = catalogBySlug.get(model.slug);
+    const catalogIdMatch = catalogByAaId.get(model.id);
+    if (catalogSlugMatch && catalogIdMatch && catalogSlugMatch !== catalogIdMatch) {
+      throw new Error(model.slug + ": 模型目录的 id 与 slug 冲突");
+    }
+    const catalogModel = catalogSlugMatch ?? catalogIdMatch;
+    if (!catalogModel) {
+      warnings.push(model.slug + ": 模型目录里没有对应模型，跳过");
       continue;
+    }
+    const catalogAaId = catalogModel.catalogIdentity?.aaId ?? catalogModel.id;
+    if (catalogAaId !== model.id) throw new Error(model.slug + ": 模型目录的 AA id 冲突");
+    const catalogCreatorId = catalogModel.creatorId ?? catalogModel.creator?.id;
+    const catalogCreatorName = typeof catalogModel.creator === "string" ? catalogModel.creator : catalogModel.creator?.name;
+    const hasMatchingCreatorIds = Boolean(intelligenceCreator.id && catalogCreatorId &&
+      intelligenceCreator.id === catalogCreatorId);
+    const hasMatchingCreatorNames = Boolean(intelligenceCreator.name && catalogCreatorName &&
+      intelligenceCreator.name === catalogCreatorName);
+    if (intelligenceCreator.id && catalogCreatorId) {
+      if (!hasMatchingCreatorIds) throw new Error(model.slug + ": 模型目录的厂商 id 冲突");
+    } else if (intelligenceCreator.name && catalogCreatorName) {
+      if (!hasMatchingCreatorNames) throw new Error(model.slug + ": 模型目录的厂商名称冲突");
+    } else if (catalogModel.slug !== model.slug) {
+      throw new Error(model.slug + ": 模型目录的改名缺少可核实的厂商信息");
+    }
+    if (catalogModel.slug !== model.slug && catalogModel.catalogIdentity?.aaId !== model.id && !hasMatchingCreatorIds) {
+      throw new Error(model.slug + ": 模型目录的改名缺少已验证身份");
     }
 
     const subScores = engineering.subScores ?? {};
@@ -338,7 +380,7 @@ export function buildDimensions(intelligenceModels, engineeringModels, catalogBy
       }
     }
 
-    dimensionsBySlug.set(model.slug, {
+    dimensionsBySlug.set(catalogModel.slug, {
       pillars,
       pillarCosts,
       openWeights: typeof model.isOpenWeights === "boolean" ? model.isOpenWeights : null,
