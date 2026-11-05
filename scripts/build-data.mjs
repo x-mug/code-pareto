@@ -15,9 +15,10 @@
  * 用法: node scripts/build-data.mjs
  */
 import { mkdir, readFile } from "node:fs/promises";
-import { dirname } from "node:path";
+import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { buildModelUpdates, persistSnapshotFiles } from "./model-updates.mjs";
+import { extractAaIndexMajor, extractAaModelDetails, extractAaReleaseModels, mergeAaCatalog } from "./aa-catalog-merge.mjs";
 
 const USER_AGENT =
   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/131.0 Safari/537.36";
@@ -27,6 +28,8 @@ const SOURCES = {
   intelligence:
     "https://artificialanalysis.ai/evaluations/artificial-analysis-intelligence-index",
   engineering: "https://artificialanalysis.ai/indexes/engineering",
+  leaderboard: "https://artificialanalysis.ai/leaderboards/models",
+  releases: "https://artificialanalysis.ai/models/releases",
 };
 
 const OUTPUT_PATH = fileURLToPath(
@@ -245,8 +248,19 @@ function validateCatalog(catalog) {
 }
 
 /** 把 AA 两个页面的数据合成每个模型的 dimensions */
-function buildDimensions(intelligenceModels, engineeringModels, catalogBySlug) {
-  const engineeringById = new Map(engineeringModels.map((model) => [model.id, model]));
+export function buildDimensions(intelligenceModels, engineeringModels, catalogBySlug) {
+  const engineeringById = new Map();
+  const engineeringBySlug = new Map();
+  for (const model of engineeringModels) {
+    if (!model || typeof model.id !== "string" || !model.id || typeof model.slug !== "string" || !model.slug) {
+      throw new Error("Engineering 页包含缺少 id 或 slug 的模型");
+    }
+    if (engineeringById.has(model.id) || engineeringBySlug.has(model.slug)) {
+      throw new Error("Engineering 页包含重复身份: " + model.slug);
+    }
+    engineeringById.set(model.id, model);
+    engineeringBySlug.set(model.slug, model);
+  }
   const dimensionsBySlug = new Map();
   const problems = [];
   const warnings = [];
@@ -254,12 +268,16 @@ function buildDimensions(intelligenceModels, engineeringModels, catalogBySlug) {
 
   for (const model of intelligenceModels) {
     const engineering = engineeringById.get(model.id);
+    const engineeringSlugMatch = engineeringBySlug.get(model.slug);
+    if ((engineering && engineering.slug !== model.slug) || (engineeringSlugMatch && engineeringSlugMatch.id !== model.id)) {
+      throw new Error(model.slug + ": Engineering 页的 id 或 slug 冲突");
+    }
     if (!engineering) {
-      problems.push(model.slug + ": Engineering 页缺少同 id 的记录");
+      warnings.push(model.slug + ": Engineering 页缺少同 id 的记录，保留基础数据");
       continue;
     }
     if (!catalogBySlug.has(model.slug)) {
-      problems.push(model.slug + ": 模型目录里没有这个 slug");
+      warnings.push(model.slug + ": 模型目录里还没有这个 slug，跳过");
       continue;
     }
 
@@ -269,12 +287,22 @@ function buildDimensions(intelligenceModels, engineeringModels, catalogBySlug) {
     for (const pillar of PILLARS) {
       const field = SUB_SCORE_FIELDS[pillar];
       const value = subScores[field];
+      if (value === null || value === undefined) {
+        warnings.push(model.slug + ": subScores." + field + " 缺失，保留基础数据");
+        pillarsComplete = false;
+        break;
+      }
       if (!isFiniteNumber(value) || value < 0 || value > 100) {
         problems.push(model.slug + ": subScores." + field + " 不是 0-100 的数字");
         pillarsComplete = false;
         break;
       }
       pillars[pillar] = round(value, 2);
+    }
+    if (!pillarsComplete) continue;
+    if (typeof model.isOpenWeights !== "boolean") {
+      warnings.push(model.slug + ": 开源权重信息缺失，保留基础数据");
+      continue;
     }
 
     // 缺任何一项评测的 token 消耗都会让成本口径偏窄，先记下来
@@ -291,9 +319,10 @@ function buildDimensions(intelligenceModels, engineeringModels, catalogBySlug) {
     const costsPositive = PILLARS.every(
       (pillar) => isFiniteNumber(rawCosts[pillar]) && rawCosts[pillar] > 0,
     );
-    const pillarCosts = costsPositive
+    const roundedCosts = costsPositive
       ? Object.fromEntries(PILLARS.map((pillar) => [pillar, round(rawCosts[pillar], 4)]))
       : null;
+    const pillarCosts = roundedCosts && PILLARS.every((pillar) => roundedCosts[pillar] > 0) ? roundedCosts : null;
 
     // 交叉校验：用支柱分数反算 AA 官方 Engineering Index，验证 subScores 字段映射没变
     if (pillarsComplete && isFiniteNumber(engineering.weightedIndex)) {
@@ -310,7 +339,7 @@ function buildDimensions(intelligenceModels, engineeringModels, catalogBySlug) {
     }
 
     dimensionsBySlug.set(model.slug, {
-      pillars: pillarsComplete ? pillars : null,
+      pillars,
       pillarCosts,
       openWeights: typeof model.isOpenWeights === "boolean" ? model.isOpenWeights : null,
     });
@@ -350,20 +379,108 @@ function assertEvalWeights() {
   }
 }
 
+export function applyDimensions(models, dimensionsBySlug) {
+  let merged = 0;
+  function completeDimensions(model) {
+    const dimensions = model.dimensions;
+    const pillars = dimensions?.pillars;
+    const costs = dimensions?.pillarCosts;
+    if (!isFiniteNumber(model.intelligence) || !pillars || typeof dimensions.openWeights !== "boolean") return false;
+    if (Object.keys(pillars).length !== PILLARS.length ||
+        !PILLARS.every((pillar) => isFiniteNumber(pillars[pillar]) && pillars[pillar] >= 0 && pillars[pillar] <= 100)) return false;
+    return costs === null || (costs && Object.keys(costs).length === PILLARS.length &&
+      PILLARS.every((pillar) => isFiniteNumber(costs[pillar]) && costs[pillar] > 0));
+  }
+  const result = models.map((model) => {
+    if (model.aaStale === true) return completeDimensions(model) ? model : withoutDimensions(model);
+    const dimensions = dimensionsBySlug.get(model.slug);
+    if (isFiniteNumber(model.intelligence) && dimensions) {
+      merged += 1;
+      return { ...model, dimensions };
+    }
+    return withoutDimensions(model);
+  });
+  return { models: result, merged };
+}
+
+function withoutDimensions(model) {
+  if (model.dimensions === undefined) return model;
+  const rest = { ...model };
+  delete rest.dimensions;
+  return rest;
+}
+
 async function main() {
   assertEvalWeights();
+  async function readIfPresent(path) {
+    try {
+      return await readFile(path, "utf8");
+    } catch (error) {
+      if (error.code === "ENOENT") return null;
+      throw error;
+    }
+  }
+  const [previous, previousUpdatesText] = await Promise.all([
+    readIfPresent(OUTPUT_PATH),
+    readIfPresent(UPDATES_PATH),
+  ]);
+  const previousCatalog = previous === null ? null : JSON.parse(previous);
+  const previousUpdates = previousUpdatesText === null ? { events: [] } : JSON.parse(previousUpdatesText);
   log("抓取数据源 ...");
-  const [catalog, intelligenceHtml, engineeringHtml] = await Promise.all([
+  const optionalPage = async (url, label) => {
+    try {
+      return await fetchText(url);
+    } catch (error) {
+      log("警告: " + label + " 获取失败：" + error.message);
+      return null;
+    }
+  };
+  const [catalog, intelligenceHtml, engineeringHtml, leaderboardHtml, releasesHtml] = await Promise.all([
     fetchJson(SOURCES.catalog),
     fetchText(SOURCES.intelligence),
     fetchText(SOURCES.engineering),
+    optionalPage(SOURCES.leaderboard, "AA 排行榜"),
+    optionalPage(SOURCES.releases, "AA 发布列表"),
   ]);
   validateCatalog(catalog);
 
   const intelligenceModels = extractInitialModels(intelligenceHtml, "Intelligence Index");
+  function optionalModels(html, label) {
+    if (html === null) return [];
+    try {
+      return extractInitialModels(html, label);
+    } catch (error) {
+      log("警告: " + label + " 解析失败：" + error.message);
+      return [];
+    }
+  }
   const engineeringModels = extractInitialModels(engineeringHtml, "Engineering Index");
-  const catalogBySlug = new Map(catalog.models.map((model) => [model.slug, model]));
-  const creators = new Set(catalog.models.map((model) => model.creator));
+  if (engineeringModels.length === 0) throw new Error("Engineering Index 没有模型，放弃写入");
+  const leaderboardModels = optionalModels(leaderboardHtml, "AA 排行榜");
+  let releaseModels = [];
+  if (releasesHtml !== null) {
+    try {
+      releaseModels = extractAaReleaseModels(releasesHtml);
+    } catch (error) {
+      log("警告: AA 发布列表解析失败：" + error.message);
+    }
+  }
+  const supplemented = await mergeAaCatalog({
+    catalogModels: catalog.models,
+    previousModels: previousCatalog?.models ?? [],
+    intelligenceModels,
+    releaseModels,
+    leaderboardModels,
+    indexVersion: catalog.indexVersion,
+    aaIndexMajor: extractAaIndexMajor(intelligenceHtml),
+    fetchDetail: async (slug) => {
+      const html = await fetchText("https://artificialanalysis.ai/models/" + encodeURIComponent(slug));
+      return extractAaModelDetails(html, slug);
+    },
+  });
+  for (const warning of supplemented.warnings) log("警告: " + warning);
+  const catalogBySlug = new Map(supplemented.models.map((model) => [model.slug, model]));
+  const creators = new Set(supplemented.models.map((model) => model.creator));
 
   log(
     "模型目录 " + catalog.models.length + " 个模型 / " + creators.size + " 个厂商, syncedAt=" +
@@ -380,7 +497,7 @@ async function main() {
   }
 
   const { dimensionsBySlug, problems, warnings } = buildDimensions(
-    intelligenceModels,
+    [...intelligenceModels, ...supplemented.supplementalCandidates],
     engineeringModels,
     catalogBySlug,
   );
@@ -390,18 +507,7 @@ async function main() {
   for (const warning of warnings) log("警告: " + warning);
 
   // 只给有 AA 数据的模型加 dimensions，其余上游字段原样保留、顺序不变
-  let merged = 0;
-  const models = catalog.models.map((model) => {
-    const dimensions = dimensionsBySlug.get(model.slug);
-    if (!dimensions) return model;
-    merged += 1;
-    return { ...model, dimensions };
-  });
-  if (merged !== dimensionsBySlug.size) {
-    throw new Error(
-      "dimensions 只合并进 " + merged + " 个模型，预期 " + dimensionsBySlug.size + " 个",
-    );
-  }
+  const { models, merged } = applyDimensions(supplemented.models, dimensionsBySlug);
 
   const nextCatalog = { ...catalog, models };
   const serialized = JSON.stringify(nextCatalog, null, 2) + "\n";
@@ -444,21 +550,6 @@ async function main() {
       " / 开源权重 " + openWeights + "），综合视角可比较 " + comparable + " 个模型",
   );
 
-  async function readIfPresent(path) {
-    try {
-      return await readFile(path, "utf8");
-    } catch (error) {
-      if (error.code === "ENOENT") return null;
-      throw error;
-    }
-  }
-
-  const [previous, previousUpdatesText] = await Promise.all([
-    readIfPresent(OUTPUT_PATH),
-    readIfPresent(UPDATES_PATH),
-  ]);
-  const previousCatalog = previous === null ? null : JSON.parse(previous);
-  const previousUpdates = previousUpdatesText === null ? { events: [] } : JSON.parse(previousUpdatesText);
   const nextUpdates = buildModelUpdates(previousCatalog, nextCatalog, previousUpdates, new Date().toISOString());
   const updatesSerialized = nextUpdates === previousUpdates && previousUpdatesText !== null
     ? previousUpdatesText
@@ -482,7 +573,9 @@ async function main() {
   }
 }
 
-main().catch((error) => {
-  console.error("[build-data] 失败: " + (error instanceof Error ? error.message : String(error)));
-  process.exitCode = 1;
-});
+if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  main().catch((error) => {
+    console.error("[build-data] 失败: " + (error instanceof Error ? error.message : String(error)));
+    process.exitCode = 1;
+  });
+}
