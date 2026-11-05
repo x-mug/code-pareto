@@ -188,22 +188,31 @@ export function RecentModelUpdates({ events, models, locale, t, onSelect }: Rece
     >
       <div className="recent-updates__heading">
         <div className="recent-updates__heading-copy">
-          <h3 id="recent-updates-title">{t("updates.title")}</h3>
+          <h3 id="recent-updates-title">
+            <button
+              type="button"
+              className="recent-updates__title-toggle"
+              aria-expanded={isOpen}
+              aria-controls="recent-updates-content"
+              onClick={() => changeView(isOpen ? "collapsed" : "partial")}
+            >
+              {t("updates.title")}
+              <svg
+                className="recent-updates__chevron"
+                viewBox="0 0 12 12"
+                aria-hidden="true"
+                focusable="false"
+              >
+                <path d="m3 4.5 3 3 3-3" />
+              </svg>
+            </button>
+          </h3>
           {!isOpen && (
             <p className="recent-updates__summary">
               {t("updates.summary", { added: added.length, changed: changed.length })}
             </p>
           )}
         </div>
-        <button
-          type="button"
-          className="recent-updates__toggle"
-          aria-expanded={isOpen}
-          aria-controls="recent-updates-content"
-          onClick={() => changeView(isOpen ? "collapsed" : "partial")}
-        >
-          {t(isOpen ? "updates.less" : "updates.expand")}
-        </button>
       </div>
       <div
         id="recent-updates-content"

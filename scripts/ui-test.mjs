@@ -656,7 +656,7 @@ try {
     "徽章 " + kneeBadges().length,
   );
 
-  const updatesToggle = document.querySelector(".recent-updates__toggle");
+  const updatesToggle = document.querySelector(".recent-updates__title-toggle");
   const updatesContent = document.getElementById("recent-updates-content");
   const addedUpdates = new Set(recentUpdates.events.filter((event) => event.kind === "added").map((event) => event.modelId)).size;
   const changedUpdates = new Set(recentUpdates.events.filter((event) => event.kind === "updated").map((event) => event.modelId)).size;
