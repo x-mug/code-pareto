@@ -1631,7 +1631,8 @@ export function ModelExplorer({ initialCatalog }: ModelExplorerProps) {
             handleSelectModel(id);
             setActiveCreators(new Set());
             setOpenOnly(false);
-            document.querySelector(".selected-model")?.scrollIntoView?.({ behavior: "smooth", block: "center" });
+            const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+            document.querySelector(".selected-model")?.scrollIntoView?.({ behavior: reduceMotion ? "auto" : "smooth", block: "center" });
           }}
         />
 

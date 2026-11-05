@@ -1,6 +1,8 @@
 "use client";
 
-import { useLayoutEffect, useMemo, useRef, useState } from "react";
+import { motion } from "motion/react";
+import { useMemo, useState, useSyncExternalStore } from "react";
+import useMeasure from "react-use-measure";
 
 import type { Locale, TranslationKey, Translator } from "@/lib/i18n";
 import type { ModelPoint } from "@/lib/models";
@@ -37,25 +39,16 @@ const FIELD_LABELS: Record<UpdateField, TranslationKey> = {
   outputPrice: "updates.outputPrice",
 };
 
-function formatObservedAt(value: string, locale: Locale): string {
+function formatObservedAt(value: string, formatter: Intl.DateTimeFormat): string {
   const date = new Date(value);
-  if (Number.isNaN(date.getTime())) return "—";
-  return new Intl.DateTimeFormat(locale, {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: false,
-    timeZone: "Asia/Shanghai",
-  }).format(date);
+  return Number.isNaN(date.getTime()) ? "—" : formatter.format(date);
 }
 
-function formatChangeValue(field: UpdateField, value: number | null, locale: Locale): string {
+function formatChangeValue(field: UpdateField, value: number | null, formatter: Intl.NumberFormat): string {
   if (value === null || !Number.isFinite(value)) return "—";
   if (field === "intelligence") return value.toFixed(1);
   if (field === "costPerTask") return "$" + value.toFixed(value < 0.1 ? 3 : 2);
-  return "$" + new Intl.NumberFormat(locale, { maximumFractionDigits: 4 }).format(value);
+  return "$" + formatter.format(value);
 }
 
 function updatesByKind(events: RecentModelUpdate[], kind: RecentModelUpdate["kind"]) {
@@ -70,112 +63,115 @@ function updatesByKind(events: RecentModelUpdate[], kind: RecentModelUpdate["kin
     });
 }
 
+function subscribeToViewport(onChange: () => void) {
+  window.addEventListener("resize", onChange);
+  return () => window.removeEventListener("resize", onChange);
+}
+
+function getViewportHeight() {
+  return window.innerHeight;
+}
+
+function subscribeToReducedMotion(onChange: () => void) {
+  const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
+  preference.addEventListener("change", onChange);
+  return () => preference.removeEventListener("change", onChange);
+}
+
+function getReducedMotion() {
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+
 type UpdatesView = "collapsed" | "partial" | "full";
 
 export function RecentModelUpdates({ events, models, locale, t, onSelect }: RecentModelUpdatesProps) {
   const [view, setView] = useState<UpdatesView>("collapsed");
+  const [groupsRef, groupsBounds] = useMeasure();
+  const [partialRef, partialBounds] = useMeasure();
+  const viewportHeight = useSyncExternalStore(subscribeToViewport, getViewportHeight, () => 0);
+  const reduceMotion = useSyncExternalStore(subscribeToReducedMotion, getReducedMotion, () => false);
   const availableIds = useMemo(() => new Set(models.map((model) => model.id)), [models]);
   const added = useMemo(() => updatesByKind(events, "added"), [events]);
   const changed = useMemo(() => updatesByKind(events, "updated"), [events]);
+  const dateFormatter = useMemo(() => new Intl.DateTimeFormat(locale, {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+    timeZone: "Asia/Shanghai",
+  }), [locale]);
+  const numberFormatter = useMemo(() => new Intl.NumberFormat(locale, { maximumFractionDigits: 4 }), [locale]);
   const limit = view === "full" ? undefined : VISIBLE_BY_DEFAULT;
-  const hasMore =
-    added.length > VISIBLE_BY_DEFAULT || changed.length > VISIBLE_BY_DEFAULT;
+  const hasMore = added.length > VISIBLE_BY_DEFAULT || changed.length > VISIBLE_BY_DEFAULT;
   const isOpen = view !== "collapsed";
-  const groupsViewportRef = useRef<HTMLDivElement>(null);
-  const animateGroupsRef = useRef(false);
+  const isFull = view === "full";
+  const partialHeight = partialBounds.height || 0;
+  const fullHeight = viewportHeight > 0
+    ? Math.max(partialHeight + Math.min(96, viewportHeight * 0.2), viewportHeight * 0.6)
+    : partialHeight;
+  const groupHeight = isFull
+    ? groupsBounds.height > 0 && fullHeight > 0
+      ? Math.min(groupsBounds.height, fullHeight)
+      : "auto"
+    : partialHeight || "auto";
+  const transition = reduceMotion
+    ? { duration: 0 }
+    : { duration: 0.26, ease: [0.22, 0.61, 0.36, 1] as [number, number, number, number] };
 
-  const changeView = (nextView: UpdatesView) => {
-    const viewport = groupsViewportRef.current;
-    if (viewport && (view === "full") !== (nextView === "full")) {
-      viewport.style.height = viewport.getBoundingClientRect().height + "px";
-      viewport.classList.add("is-animating");
-      viewport.getBoundingClientRect();
-      animateGroupsRef.current = true;
-    }
-    setView(nextView);
-  };
-
-  useLayoutEffect(() => {
-    const viewport = groupsViewportRef.current;
-    if (!viewport || !animateGroupsRef.current) return;
-    animateGroupsRef.current = false;
-
-    const contentHeight = viewport.firstElementChild?.getBoundingClientRect().height ?? 0;
-    const targetHeight = view === "full" ? Math.min(contentHeight, window.innerHeight * 0.6) : contentHeight;
-    const startHeight = viewport.getBoundingClientRect().height;
-    const finish = () => {
-      viewport.style.height = "";
-      viewport.classList.remove("is-animating");
-    };
-    if (Math.abs(targetHeight - startHeight) < 0.5 || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      finish();
-      return;
-    }
-
-    const onTransitionEnd = (event: TransitionEvent) => {
-      if (event.target !== viewport || event.propertyName !== "height") return;
-      window.clearTimeout(fallback);
-      viewport.removeEventListener("transitionend", onTransitionEnd);
-      finish();
-    };
-    const fallback = window.setTimeout(() => {
-      viewport.removeEventListener("transitionend", onTransitionEnd);
-      finish();
-    }, 400);
-    viewport.addEventListener("transitionend", onTransitionEnd);
-    viewport.style.height = targetHeight + "px";
-
-    return () => {
-      window.clearTimeout(fallback);
-      viewport.removeEventListener("transitionend", onTransitionEnd);
-    };
-  }, [view]);
-
-  const renderGroup = (label: string, items: RecentModelUpdate[]) => (
+  const renderGroup = (label: string, items: RecentModelUpdate[], maxItems = limit, measuring = false) => (
     <div className="recent-updates__group">
       <h4>{label}</h4>
       {items.length === 0 ? (
         <p className="recent-updates__empty">{t("updates.empty")}</p>
       ) : (
         <ol className="recent-updates__list">
-          {items.slice(0, limit).map((event) => (
-            <li className="recent-updates__item" key={event.modelId + event.observedAt}>
-              <div className="recent-updates__item-head">
-                {availableIds.has(event.modelId) ? (
+          {items.slice(0, maxItems).map((event) => {
+            const content = (
+              <>
+                <span className="recent-updates__item-head">
+                  <strong className="recent-updates__model-name">{event.name}</strong>
+                  <time dateTime={event.observedAt}>{formatObservedAt(event.observedAt, dateFormatter)}</time>
+                </span>
+                <span className="recent-updates__meta">{event.creator}</span>
+                <span className="recent-updates__values">
+                  <span className="recent-updates__values-label">
+                    {t(event.kind === "added" ? "updates.addedValues" : "updates.changedValues")}
+                  </span>
+                  {event.changes.length === 0 ? (
+                    <span>{t("updates.noDetails")}</span>
+                  ) : (
+                    event.changes.map((change) => (
+                      <span className="recent-updates__value" key={change.field}>
+                        {t(FIELD_LABELS[change.field])}{" "}
+                        {event.kind === "updated"
+                          ? formatChangeValue(change.field, change.before, numberFormatter) + " → "
+                          : ""}
+                        {formatChangeValue(change.field, change.after, numberFormatter)}
+                      </span>
+                    ))
+                  )}
+                </span>
+              </>
+            );
+            return (
+              <li className="recent-updates__item" key={event.modelId + event.observedAt}>
+                {availableIds.has(event.modelId) && !measuring ? (
                   <button
                     type="button"
-                    className="recent-updates__model"
-                    aria-label={t("updates.select", { model: event.name })}
+                    className="recent-updates__item-button"
+                    title={t("updates.select", { model: event.name })}
                     onClick={() => onSelect(event.modelId)}
                   >
-                    {event.name}
+                    {content}
                   </button>
                 ) : (
-                  <strong className="recent-updates__model-name">{event.name}</strong>
+                  <div className="recent-updates__item-unavailable">{content}</div>
                 )}
-                <time dateTime={event.observedAt}>{formatObservedAt(event.observedAt, locale)}</time>
-              </div>
-              <div className="recent-updates__meta">{event.creator}</div>
-              <div className="recent-updates__values">
-                <span className="recent-updates__values-label">
-                  {t(event.kind === "added" ? "updates.addedValues" : "updates.changedValues")}
-                </span>
-                {event.changes.length === 0 ? (
-                  <span>{t("updates.noDetails")}</span>
-                ) : (
-                  event.changes.map((change) => (
-                    <span className="recent-updates__value" key={change.field}>
-                      {t(FIELD_LABELS[change.field])}{" "}
-                      {event.kind === "updated"
-                        ? formatChangeValue(change.field, change.before, locale) + " → "
-                        : ""}
-                      {formatChangeValue(change.field, change.after, locale)}
-                    </span>
-                  ))
-                )}
-              </div>
-            </li>
-          ))}
+              </li>
+            );
+          })}
         </ol>
       )}
     </div>
@@ -183,49 +179,65 @@ export function RecentModelUpdates({ events, models, locale, t, onSelect }: Rece
 
   return (
     <section
-      className={"recent-updates" + (isOpen ? " is-open" : "") + (view === "full" ? " is-full" : "")}
+      className={"recent-updates" + (isOpen ? " is-open" : "") + (isFull ? " is-full" : "")}
       aria-labelledby="recent-updates-title"
     >
-      <div className="recent-updates__heading">
-        <div className="recent-updates__heading-copy">
-          <h3 id="recent-updates-title">
-            <button
-              type="button"
-              className="recent-updates__title-toggle"
-              aria-expanded={isOpen}
-              aria-controls="recent-updates-content"
-              onClick={() => changeView(isOpen ? "collapsed" : "partial")}
-            >
-              {t("updates.title")}
-              <svg
-                className="recent-updates__chevron"
-                viewBox="0 0 12 12"
-                aria-hidden="true"
-                focusable="false"
-              >
-                <path d="m3 4.5 3 3 3-3" />
-              </svg>
-            </button>
-          </h3>
-          {!isOpen && (
-            <p className="recent-updates__summary">
-              {t("updates.summary", { added: added.length, changed: changed.length })}
-            </p>
-          )}
-        </div>
-      </div>
-      <div
+      <h3 className="recent-updates__heading" id="recent-updates-title">
+        <button
+          type="button"
+          className="recent-updates__title-toggle"
+          aria-expanded={isOpen}
+          aria-controls="recent-updates-content"
+          onClick={() => setView(isOpen ? "collapsed" : "partial")}
+        >
+          <span className="recent-updates__heading-copy">
+            <span className="recent-updates__heading-title">{t("updates.title")}</span>
+            {!isOpen && (
+              <span className="recent-updates__summary">
+                {t("updates.summary", { added: added.length, changed: changed.length })}
+              </span>
+            )}
+          </span>
+          <motion.svg
+            className="recent-updates__chevron"
+            viewBox="0 0 12 12"
+            aria-hidden="true"
+            focusable="false"
+            initial={false}
+            animate={{ rotate: isOpen ? 180 : 0 }}
+            transition={transition}
+          >
+            <path d="m3 4.5 3 3 3-3" />
+          </motion.svg>
+        </button>
+      </h3>
+      <motion.div
         id="recent-updates-content"
         className="recent-updates__content"
         aria-hidden={!isOpen}
         inert={!isOpen}
+        initial={false}
+        animate={{ height: isOpen ? "auto" : 0, opacity: isOpen ? 1 : 0 }}
+        transition={transition}
       >
         <div className="recent-updates__content-inner">
           <p className="recent-updates__description">{t("updates.description")}</p>
-          <div className="recent-updates__groups-viewport" ref={groupsViewportRef}>
-            <div className="recent-updates__groups" id="recent-updates-groups">
+          <motion.div
+            className="recent-updates__groups-viewport"
+            initial={false}
+            animate={{ height: groupHeight }}
+            transition={transition}
+            style={{ maxHeight: isFull && (groupsBounds.height === 0 || fullHeight === 0) ? "60vh" : undefined }}
+          >
+            <div className="recent-updates__groups" id="recent-updates-groups" ref={groupsRef}>
               {renderGroup(t("updates.added"), added)}
               {renderGroup(t("updates.changed"), changed)}
+            </div>
+          </motion.div>
+          <div className="recent-updates__measure" aria-hidden="true" inert>
+            <div className="recent-updates__groups" ref={partialRef}>
+              {renderGroup(t("updates.added"), added, VISIBLE_BY_DEFAULT, true)}
+              {renderGroup(t("updates.changed"), changed, VISIBLE_BY_DEFAULT, true)}
             </div>
           </div>
           {hasMore && (
@@ -233,16 +245,28 @@ export function RecentModelUpdates({ events, models, locale, t, onSelect }: Rece
               <button
                 type="button"
                 className="recent-updates__more"
-                aria-expanded={view === "full"}
+                aria-label={t(isFull ? "updates.partial" : "updates.more")}
+                title={t(isFull ? "updates.partial" : "updates.more")}
+                aria-expanded={isFull}
                 aria-controls="recent-updates-groups"
-                onClick={() => changeView(view === "full" ? "partial" : "full")}
+                onClick={() => setView(isFull ? "partial" : "full")}
               >
-                {t(view === "full" ? "updates.partial" : "updates.more")}
+                <motion.svg
+                  className="recent-updates__more-chevron"
+                  viewBox="0 0 12 12"
+                  aria-hidden="true"
+                  focusable="false"
+                  initial={false}
+                  animate={{ rotate: isFull ? 180 : 0 }}
+                  transition={transition}
+                >
+                  <path d="m3 4.5 3 3 3-3" />
+                </motion.svg>
               </button>
             </div>
           )}
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }

@@ -658,6 +658,7 @@ try {
 
   const updatesToggle = document.querySelector(".recent-updates__title-toggle");
   const updatesContent = document.getElementById("recent-updates-content");
+  const updateItems = () => q(".recent-updates__groups-viewport .recent-updates__item");
   const addedUpdates = new Set(recentUpdates.events.filter((event) => event.kind === "added").map((event) => event.modelId)).size;
   const changedUpdates = new Set(recentUpdates.events.filter((event) => event.kind === "updated").map((event) => event.modelId)).size;
   const partialUpdates = Math.min(3, addedUpdates) + Math.min(3, changedUpdates);
@@ -668,40 +669,44 @@ try {
       document.querySelector(".recent-updates__summary") !== null,
   );
   if (updatesToggle) {
-    click(updatesToggle);
+    const summary = updatesToggle.querySelector(".recent-updates__summary");
+    check("更新摘要属于可点击的整行标题", summary !== null);
+    click(summary ?? updatesToggle);
     await waitFor(() => updatesToggle.getAttribute("aria-expanded") === "true", 5000);
     check(
       "近期更新先展开部分记录",
-      updatesContent?.getAttribute("aria-hidden") === "false" && q(".recent-updates__item").length === partialUpdates,
+      updatesContent?.getAttribute("aria-hidden") === "false" && updateItems().length === partialUpdates,
     );
-    const updateGroups = q(".recent-updates__group");
+    const updateGroups = q(".recent-updates__groups-viewport .recent-updates__group");
     check(
       "近期更新分为新收录和数据变化",
       updateGroups.length === 2 &&
         updateGroups[0].textContent.includes("新收录") &&
         updateGroups[1].textContent.includes("数据变化"),
     );
-    const visibleUpdateTimes = q(".recent-updates__item time").map((item) => item.getAttribute("datetime"));
+    const visibleUpdateTimes = q(".recent-updates__groups-viewport .recent-updates__item time").map((item) => item.getAttribute("datetime"));
     check(
       "更新记录显示实际快照观察时间",
       visibleUpdateTimes.every((time) => recentUpdates.events.some((event) => event.observedAt === time)),
     );
     const showAll = document.querySelector(".recent-updates__more");
     if (allUpdates > partialUpdates) {
-      check("可以展开全部记录", showAll !== null);
+      check("可以用底部箭头展开全部记录", showAll?.getAttribute("aria-label") === "展开全部" && showAll.querySelector("svg") !== null);
       if (showAll) {
-        click(showAll);
+        click(showAll.querySelector("svg") ?? showAll);
         await waitFor(() => showAll.getAttribute("aria-expanded") === "true", 5000);
-        check("全部展开显示所有记录", q(".recent-updates__item").length === allUpdates);
+        check("全部展开显示所有记录", updateItems().length === allUpdates && showAll.getAttribute("aria-label") === "只看部分");
         click(showAll);
         await waitFor(() => showAll.getAttribute("aria-expanded") === "false", 5000);
-        check("可以返回部分记录", q(".recent-updates__item").length === partialUpdates);
+        check("可以返回部分记录", updateItems().length === partialUpdates && showAll.getAttribute("aria-label") === "展开全部");
       }
     }
-    const updateModel = document.querySelector(".recent-updates__model");
+    const updateModel = document.querySelector(".recent-updates__item-button");
     if (updateModel) {
-      const modelName = updateModel.textContent.trim();
-      click(updateModel);
+      const modelName = updateModel.querySelector(".recent-updates__model-name")?.textContent.trim();
+      const rowInterior = updateModel.querySelector(".recent-updates__meta");
+      check("模型信息属于可点击的整条记录", rowInterior !== null);
+      click(rowInterior ?? updateModel);
       const selectedFromUpdate = await waitFor(
         () => document.querySelector(".selected-model__name > span:first-child")?.textContent.trim() === modelName,
         5000,
