@@ -9,6 +9,7 @@ import {
 import katex from "katex";
 import { Moon, Sun, SunMoon } from "lucide-react";
 import {
+  useCallback,
   useEffect,
   useId,
   useMemo,
@@ -22,7 +23,7 @@ import {
 import { ModelTable } from "@/components/model-table";
 import { RecentModelUpdates, type RecentModelUpdateData } from "@/components/recent-model-updates";
 import recentModelUpdates from "@/data/recent-model-updates.json";
-import { getCreatorStyle } from "@/lib/creator-style";
+import { getCreatorStyle, type CreatorTheme } from "@/lib/creator-style";
 import {
   chartableModels,
   creatorsFromModels,
@@ -758,16 +759,178 @@ function ViewSwitch({
   );
 }
 
+function CreatorFilter({
+  creators,
+  creatorCounts,
+  activeCreators,
+  onChange,
+  theme,
+  t,
+}: {
+  creators: readonly string[];
+  creatorCounts: Map<string, number>;
+  activeCreators: Set<string>;
+  onChange: (next: Set<string>) => void;
+  theme: CreatorTheme;
+  t: Translator;
+}) {
+  const [isOpen, setIsOpen] = useState(false);
+  const [opensUp, setOpensUp] = useState(false);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+
+  const updatePlacement = useCallback(() => {
+    const rect = triggerRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    const below = window.innerHeight - rect.bottom;
+    setOpensUp(below < 300 && rect.top > below);
+  }, []);
+
+  useEffect(() => {
+    if (!isOpen) {
+      return;
+    }
+    const onKeyDown = (event: globalThis.KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setIsOpen(false);
+        triggerRef.current?.focus();
+      }
+    };
+    window.addEventListener("keydown", onKeyDown);
+    window.addEventListener("scroll", updatePlacement, true);
+    window.addEventListener("resize", updatePlacement);
+    return () => {
+      window.removeEventListener("keydown", onKeyDown);
+      window.removeEventListener("scroll", updatePlacement, true);
+      window.removeEventListener("resize", updatePlacement);
+    };
+  }, [isOpen, updatePlacement]);
+
+  const toggleCreator = (creator: string) => {
+    const next = new Set(activeCreators);
+    if (next.has(creator)) {
+      next.delete(creator);
+    } else {
+      next.add(creator);
+    }
+    onChange(next);
+  };
+
+  const summary =
+    activeCreators.size === 0
+      ? t("creatorFilter.all")
+      : t("creatorFilter.selected", { count: activeCreators.size });
+
+  return (
+    <div
+      className={`creator-filter${isOpen ? " is-open" : ""}${opensUp ? " is-above" : ""}`}
+      onBlur={(event) => {
+        if (event.relatedTarget && !event.currentTarget.contains(event.relatedTarget)) {
+          setIsOpen(false);
+        }
+      }}
+    >
+      <button
+        ref={triggerRef}
+        type="button"
+        className={
+          activeCreators.size > 0
+            ? "creator-filter__trigger is-active"
+            : "creator-filter__trigger"
+        }
+        aria-expanded={isOpen}
+        aria-controls="creator-filter-panel"
+        aria-label={`${t("creatorFilter.label")}: ${summary}`}
+        onClick={() => {
+          if (!isOpen) updatePlacement();
+          setIsOpen((current) => !current);
+        }}
+      >
+        <span className="creator-filter__key">{t("creatorFilter.trigger")}</span>
+        <span className="creator-filter__value">{summary}</span>
+        <span className="creator-filter__chevron" aria-hidden="true" />
+      </button>
+      {isOpen ? (
+        <>
+          <div
+            className="creator-filter__backdrop"
+            aria-hidden="true"
+            onClick={() => setIsOpen(false)}
+          />
+          <div
+            id="creator-filter-panel"
+            className="creator-legend creator-filter__panel"
+            role="group"
+            aria-label={t("creatorFilter.label")}
+          >
+            <div className="creator-filter__panel-heading">
+              <strong>{t("creatorFilter.label")}</strong>
+              <button
+                type="button"
+                className="creator-filter__done"
+                onClick={() => {
+                  setIsOpen(false);
+                  triggerRef.current?.focus();
+                }}
+              >
+                {t("creatorFilter.done")}
+              </button>
+            </div>
+            <button
+              type="button"
+              className={
+                activeCreators.size === 0 ? "legend-chip is-active" : "legend-chip"
+              }
+              aria-pressed={activeCreators.size === 0}
+              onClick={() => onChange(new Set())}
+            >
+              <span className="legend-chip__all">ALL</span>
+              {t("creatorFilter.all")}
+            </button>
+            {creators.map((creator) => {
+              const creatorStyle = getCreatorStyle(creator, theme);
+              return (
+                <button
+                  type="button"
+                  key={creator}
+                  className={
+                    activeCreators.has(creator)
+                      ? "legend-chip is-active"
+                      : "legend-chip"
+                  }
+                  aria-pressed={activeCreators.has(creator)}
+                  onClick={() => toggleCreator(creator)}
+                >
+                  <span
+                    className={"legend-marker legend-marker--" + creatorStyle.shape}
+                    style={{
+                      backgroundColor: creatorStyle.color,
+                      color: creatorStyle.color,
+                    }}
+                  />
+                  {creator}
+                  <small>{creatorCounts.get(creator)}</small>
+                </button>
+              );
+            })}
+          </div>
+        </>
+      ) : null}
+    </div>
+  );
+}
+
 function AxisSwitch({
   axis,
   onAxisChange,
   subsetNotice,
+  filter,
   search,
   t,
 }: {
   axis: ChartAxisKey;
   onAxisChange: (axis: ChartAxisKey) => void;
   subsetNotice: string | null;
+  filter: ReactNode;
   /** 搜索框放在同一排的右端 */
   search: ReactNode;
   t: Translator;
@@ -794,6 +957,8 @@ function AxisSwitch({
           {t("axis.chip.speed")}
         </button>
         </div>
+        <span className="axis-switch__divider" aria-hidden="true" />
+        {filter}
         {search}
       </div>
       <p className="axis-switch__hint">
@@ -1184,6 +1349,7 @@ export function ModelExplorer({ initialCatalog }: ModelExplorerProps) {
     ...DEFAULT_CUSTOM_WEIGHTS,
   }));
   const [openOnly, setOpenOnly] = useState(false);
+  const [weightsOpen, setWeightsOpen] = useState(false);
   // null = 跟随视角：综合视角保持原版外观（不画膝点），编程/工程视角默认显示；手动点击后固定
   const [kneeOverride, setKneeOverride] = useState<boolean | null>(null);
   // 链接只在水合后读一次，读完才允许把状态写回地址栏
@@ -1237,6 +1403,7 @@ export function ModelExplorer({ initialCatalog }: ModelExplorerProps) {
     const applyUrlState = () => {
       const next = decodeUrlState(window.location.search, modelIds);
       setView(next.view);
+      if (next.view === "custom") setWeightsOpen(true);
       setOpenOnly(next.openOnly);
       setAxis(next.axis);
       setCustomWeights((current) =>
@@ -1495,11 +1662,24 @@ export function ModelExplorer({ initialCatalog }: ModelExplorerProps) {
             <span className="view-panel__label">{t("view.label")}</span>
             <ViewSwitch
               view={view}
-              onViewChange={setView}
+              onViewChange={(next) => {
+                setView(next);
+                if (next === "custom") setWeightsOpen(true);
+              }}
               openOnly={openOnly}
               onToggleOpenOnly={() => setOpenOnly((current) => !current)}
               t={t}
             />
+            <button
+              type="button"
+              className={"view-panel__disclosure" + (weightsOpen ? " is-open" : "")}
+              aria-expanded={weightsOpen}
+              aria-controls="view-weights-body"
+              onClick={() => setWeightsOpen((current) => !current)}
+            >
+              {t("view.weights.disclosure")}
+              <span className="view-panel__disclosure-chevron" aria-hidden="true" />
+            </button>
           </div>
           <p className="view-switch__hint">
             {/* view-logic 里的 i18n key 表是 string，收窄后交给 t() */}
@@ -1510,75 +1690,26 @@ export function ModelExplorer({ initialCatalog }: ModelExplorerProps) {
               </span>
             ) : null}
           </p>
-          <ViewWeights
-            weights={displayWeights}
-            locked={view === "intelligence"}
-            note={
-              view === "intelligence" ? t("view.weights.officialNote") : null
-            }
-            modeLabel={
-              view === "intelligence"
-                ? t("view.weights.fixed")
-                : view === "custom"
-                  ? t("view.chip.custom")
-                  : t("view.weights.following", {
-                      view: t(VIEW_I18N_KEYS[view] as TranslationKey),
-                    })
-            }
-            onChange={handleWeightChange}
-            onReset={handleResetWeights}
-            t={t}
-          />
-          <div className="creator-legend" aria-label={t("creatorFilter.label")}>
-            <button
-              type="button"
-              className={
-                activeCreators.size === 0
-                  ? "legend-chip is-active"
-                  : "legend-chip"
+          <div id="view-weights-body" className="view-panel__body" hidden={!weightsOpen}>
+            <ViewWeights
+              weights={displayWeights}
+              locked={view === "intelligence"}
+              note={
+                view === "intelligence" ? t("view.weights.officialNote") : null
               }
-              aria-pressed={activeCreators.size === 0}
-              onClick={() => setActiveCreators(new Set())}
-            >
-              <span className="legend-chip__all">ALL</span>
-              {t("creatorFilter.all")}
-            </button>
-            {creators.map((creator) => {
-              const creatorStyle = getCreatorStyle(creator, resolvedTheme);
-              return (
-                <button
-                  type="button"
-                  key={creator}
-                  className={
-                    activeCreators.has(creator)
-                      ? "legend-chip is-active"
-                      : "legend-chip"
-                  }
-                  aria-pressed={activeCreators.has(creator)}
-                  onClick={() => {
-                    setActiveCreators((current) => {
-                      const next = new Set(current);
-                      if (next.has(creator)) {
-                        next.delete(creator);
-                      } else {
-                        next.add(creator);
-                      }
-                      return next;
-                    });
-                  }}
-                >
-                  <span
-                    className={`legend-marker legend-marker--${creatorStyle.shape}`}
-                    style={{
-                      backgroundColor: creatorStyle.color,
-                      color: creatorStyle.color,
-                    }}
-                  />
-                  {creator}
-                  <small>{creatorCounts.get(creator)}</small>
-                </button>
-              );
-            })}
+              modeLabel={
+                view === "intelligence"
+                  ? t("view.weights.fixed")
+                  : view === "custom"
+                    ? t("view.chip.custom")
+                    : t("view.weights.following", {
+                        view: t(VIEW_I18N_KEYS[view] as TranslationKey),
+                      })
+              }
+              onChange={handleWeightChange}
+              onReset={handleResetWeights}
+              t={t}
+            />
           </div>
         </section>
 
@@ -1642,6 +1773,16 @@ export function ModelExplorer({ initialCatalog }: ModelExplorerProps) {
             axis === "speed" && speedChartableCount < chartModels.length
               ? t("axis.subsetNotice", { count: speedChartableCount })
               : null
+          }
+          filter={
+            <CreatorFilter
+              creators={creators}
+              creatorCounts={creatorCounts}
+              activeCreators={activeCreators}
+              onChange={setActiveCreators}
+              theme={resolvedTheme}
+              t={t}
+            />
           }
           search={
             <div className="search-bar">

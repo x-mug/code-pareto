@@ -650,6 +650,58 @@ try {
     "页面 " + heroNumbers.join("/") + "，推导 " + [expected.total, expected.intelligence, expected.creators].join("/"),
   );
   check("推荐卡存在", q(".recommendation-card").length >= 1 && q(".recommendation-card").length <= 5, "实际 " + q(".recommendation-card").length);
+
+  const weightsToggle = document.querySelector(".view-panel__disclosure");
+  const weightsBody = document.getElementById("view-weights-body");
+  check("权重说明默认收起", weightsToggle?.getAttribute("aria-expanded") === "false" && weightsBody?.hidden === true);
+  if (weightsToggle) {
+    click(weightsToggle);
+    await waitFor(() => weightsToggle.getAttribute("aria-expanded") === "true", 5000);
+    check("可以展开权重说明", weightsBody?.hidden === false && (weightsBody.textContent ?? "").includes("AA"));
+    click(weightsToggle);
+    await waitFor(() => weightsToggle.getAttribute("aria-expanded") === "false", 5000);
+    check("可以重新收起权重说明", weightsBody?.hidden === true);
+  }
+
+  const creatorToggle = document.querySelector(".creator-filter__trigger");
+  check("厂商筛选默认收起", creatorToggle?.getAttribute("aria-expanded") === "false" && document.querySelector(".creator-filter__panel") === null);
+  if (creatorToggle) {
+    click(creatorToggle);
+    await waitFor(() => document.querySelectorAll(".creator-filter__panel .legend-chip").length >= 3, 5000);
+    const creatorOptions = q(".creator-filter__panel .legend-chip");
+    const firstCreator = creatorOptions[1];
+    const secondCreator = creatorOptions[2];
+    check("展开厂商筛选显示全部与厂商选项", creatorOptions[0]?.getAttribute("aria-pressed") === "true" && Boolean(firstCreator && secondCreator));
+    if (firstCreator && secondCreator) {
+      click(firstCreator);
+      await waitFor(() => firstCreator.getAttribute("aria-pressed") === "true", 5000);
+      click(secondCreator);
+      await waitFor(() => secondCreator.getAttribute("aria-pressed") === "true", 5000);
+      check("厂商支持多选并汇总已选数量", firstCreator.getAttribute("aria-pressed") === "true" && secondCreator.getAttribute("aria-pressed") === "true" && creatorToggle.textContent.includes("已选 2 家") && creatorToggle.getAttribute("aria-label").includes("已选 2 家"));
+      secondCreator.focus();
+      window.dispatchEvent(new window.KeyboardEvent("keydown", { key: "Escape", bubbles: true }));
+      await waitFor(() => creatorToggle.getAttribute("aria-expanded") === "false", 5000);
+      check("Escape 关闭厂商筛选并返回焦点", document.querySelector(".creator-filter__panel") === null && document.activeElement === creatorToggle);
+      click(creatorToggle);
+      await waitFor(() => document.querySelector(".creator-filter__panel"), 5000);
+      const reopenedOptions = q(".creator-filter__panel .legend-chip");
+      check("重新打开保留厂商选择", reopenedOptions[1]?.getAttribute("aria-pressed") === "true" && reopenedOptions[2]?.getAttribute("aria-pressed") === "true");
+      if (reopenedOptions[0]) click(reopenedOptions[0]);
+      await waitFor(() => creatorToggle.textContent.includes("全部"), 5000);
+      check("选择全部可清空厂商筛选", reopenedOptions[0]?.getAttribute("aria-pressed") === "true" && !creatorToggle.getAttribute("aria-label").includes("已选"));
+      const done = document.querySelector(".creator-filter__done");
+      if (done) click(done);
+      await waitFor(() => creatorToggle.getAttribute("aria-expanded") === "false", 5000);
+      check("完成按钮关闭筛选并返回焦点", done !== null && document.querySelector(".creator-filter__panel") === null && document.activeElement === creatorToggle);
+      click(creatorToggle);
+      await waitFor(() => document.querySelector(".creator-filter__panel"), 5000);
+      const backdrop = document.querySelector(".creator-filter__backdrop");
+      if (backdrop) click(backdrop);
+      await waitFor(() => creatorToggle.getAttribute("aria-expanded") === "false", 5000);
+      check("点击外部可以关闭厂商筛选", document.querySelector(".creator-filter__panel") === null);
+    }
+  }
+
   check(
     "综合视角默认不画膝点（与原版一致）",
     kneeBadges().length === 0 && q(".model-table__row.is-knee").length === 0,
@@ -811,6 +863,7 @@ try {
   if (customChip) click(customChip);
   await waitFor(() => customChip?.classList.contains("is-active") === true, 5000);
   check("自定义视角已激活", customChip?.classList.contains("is-active") === true, "激活的是 " + (activeViewChip()?.textContent.trim() ?? "无"));
+  check("自定义视角自动展开权重", weightsToggle?.getAttribute("aria-expanded") === "true" && weightsBody?.hidden === false);
   check("自定义视角出现 5 支滑杆", weightSliders().length === PILLARS.length, "实际 " + weightSliders().length);
   check(
     "滑杆在自定义视角可交互",
@@ -1092,6 +1145,11 @@ try {
     "?view=custom&w=coding:100 激活自定义 chip",
     customWeightsPage.activeChip()?.textContent.trim() === VIEW_LABELS[4],
     "激活的是 " + (customWeightsPage.activeChip()?.textContent.trim() ?? "无"),
+  );
+  check(
+    "自定义链接自动展开权重",
+    customWeightsPage.document.querySelector(".view-panel__disclosure")?.getAttribute("aria-expanded") === "true" &&
+      customWeightsPage.document.getElementById("view-weights-body")?.hidden === false,
   );
   check(
     "?view=custom&w=coding:100 权重面板显示编程 100%",
