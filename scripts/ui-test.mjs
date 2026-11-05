@@ -978,7 +978,34 @@ try {
 
   console.log("\n=== 语言与主题开关 ===");
   check("主题切换按钮存在", document.querySelector(".theme-toggle") !== null);
-  check("语言切换入口存在", document.querySelector(".locale-switcher__trigger") !== null);
+  const localeTrigger = document.querySelector(".locale-switcher__trigger");
+  check("语言切换入口存在", localeTrigger !== null);
+  if (localeTrigger) {
+    const locales = [
+      ["English", "en", "CODING & ENGINEERING LANDSCAPE"],
+      ["日本語", "ja", "コーディング・エンジニアリングモデルマップ"],
+      ["한국어", "ko", "코딩과 엔지니어링 모델 지도"],
+      ["繁體中文", "zh-TW", "編程與工程模型版圖"],
+      ["中文", "zh-CN", "编程与工程模型版图"],
+    ];
+    for (const [label, locale, tagline] of locales) {
+      click(localeTrigger);
+      await waitFor(() => document.querySelector(".locale-switcher__option") !== null, 5000);
+      const option = q(".locale-switcher__option").find((item) => item.textContent.trim() === label);
+      if (option) click(option);
+      const changed = await waitFor(
+        () => document.documentElement.lang === locale && document.querySelector(".brand small")?.textContent.trim() === tagline,
+        5000,
+      );
+      check(
+        "页头随语言切换 " + locale,
+        changed && document.querySelector(".brand strong")?.textContent.trim() === "Code Pareto" &&
+          document.querySelector(".brand small")?.textContent.trim() === tagline &&
+          document.querySelector(".brand")?.getAttribute("aria-label")?.startsWith("Code Pareto") &&
+          document.title.startsWith("Code Pareto"),
+      );
+    }
+  }
 
   console.log("\n=== URL 状态 ===");
   // 每种链接参数都独立加载一次产物，避免上一个场景的交互污染下一个场景
