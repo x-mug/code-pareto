@@ -1314,7 +1314,10 @@ export function ModelExplorer({ initialCatalog }: ModelExplorerProps) {
   const visibleModels = useMemo(
     () =>
       openOnly
-        ? viewModels.filter((model) => model.dimensions?.openWeights === true)
+        ? viewModels.filter(
+            (model) => !model.aaStale &&
+              (model.dimensions?.openWeights === true || model.aaOpenWeights === true),
+          )
         : viewModels,
     [openOnly, viewModels],
   );
@@ -1755,6 +1758,11 @@ export function ModelExplorer({ initialCatalog }: ModelExplorerProps) {
             <div className="decision-card__heading selected-model__heading">
               <h4 className="selected-model__name">
                 <span>{selected?.name ?? t("selection.placeholder")}</span>
+                {selected?.catalogIdentity?.source === "aa-only" && (
+                  <span className="selected-model__source" title={t(selected.aaStale ? "selection.aaStale" : "selection.aaSource")}>
+                    {t(selected.aaStale ? "selection.aaStale" : "selection.aaSource")}
+                  </span>
+                )}
               </h4>
               {selected && (
                 <span className="selected-model__watermark">{selected.creator}</span>

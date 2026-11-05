@@ -41,6 +41,9 @@ export interface ModelPoint {
   blendedPrice: number | null;
   outputSpeed: number | null;
   latency: number | null;
+  aaStale?: boolean;
+  aaOpenWeights?: boolean;
+  catalogIdentity?: { source: "aa-only" | "parallax"; aaId: string; parallaxId?: string };
   /** 扩展数据：只有 AA 完整跑完 9 项评测的模型才有 */
   dimensions?: ModelViewDimensions | null;
 }
@@ -65,6 +68,7 @@ export function isChartableModel(
   model: ModelPoint,
 ): model is ModelPoint & { intelligence: number; costPerTask: number } {
   return (
+    !model.aaStale &&
     typeof model.intelligence === "number" &&
     Number.isFinite(model.intelligence) &&
     typeof model.costPerTask === "number" &&

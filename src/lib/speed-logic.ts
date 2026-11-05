@@ -16,6 +16,7 @@ export interface SpeedKneeRecommendation extends SpeedChartableModel {
 /** 能力有限且输出速度有限为正的模型才能上速度图 */
 export function hasOutputSpeed(model: ModelPoint): model is SpeedChartableModel {
   return (
+    !model.aaStale &&
     typeof model.intelligence === "number" &&
     Number.isFinite(model.intelligence) &&
     typeof model.outputSpeed === "number" &&

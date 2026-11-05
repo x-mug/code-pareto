@@ -101,6 +101,7 @@ function applyView(models, view, customWeights) {
 
 function isChartable(model) {
   return (
+    !model.aaStale &&
     typeof model.intelligence === "number" &&
     Number.isFinite(model.intelligence) &&
     typeof model.costPerTask === "number" &&
@@ -114,7 +115,7 @@ function countRows(models, view, weights) {
 }
 
 function openOnlyRows(models, view, weights) {
-  const openModels = models.filter((model) => model.dimensions?.openWeights === true);
+  const openModels = models.filter((model) => !model.aaStale && (model.dimensions?.openWeights === true || model.aaOpenWeights === true));
   return countRows(openModels, view, weights);
 }
 
@@ -182,6 +183,7 @@ if (models.length === 0) {
 // 能力有限且输出速度有限为正的模型才能上速度图
 function hasOutputSpeed(model) {
   return (
+    !model.aaStale &&
     typeof model.intelligence === "number" &&
     Number.isFinite(model.intelligence) &&
     typeof model.outputSpeed === "number" &&
@@ -684,10 +686,48 @@ try {
     const modelName = updateModel.textContent.trim();
     click(updateModel);
     const selectedFromUpdate = await waitFor(
-      () => document.querySelector(".selected-model__name")?.textContent.trim() === modelName,
+      () => document.querySelector(".selected-model__name > span:first-child")?.textContent.trim() === modelName,
       5000,
     );
     check("点击更新记录可查看模型", selectedFromUpdate, modelName);
+  }
+
+  const aaCandidate = models.find(
+    (model) => model.catalogIdentity?.source === "aa-only" &&
+      !model.aaStale && model.costPerTask === null &&
+      model.dimensions?.pillars && !model.dimensions.pillarCosts,
+  );
+  if (aaCandidate && searchInput) {
+    searchInput.focus();
+    setRangeValue(searchInput, aaCandidate.slug);
+    const resultVisible = await waitFor(
+      () => q(".model-search__result strong").some((item) => item.textContent.trim() === aaCandidate.name),
+      5000,
+    );
+    check("AA 补充模型可通过搜索找到", resultVisible, aaCandidate.name);
+    const result = q(".model-search__result").find(
+      (item) => item.querySelector("strong")?.textContent.trim() === aaCandidate.name,
+    );
+    if (result) click(result);
+    const selected = await waitFor(
+      () => document.querySelector(".selected-model__name > span:first-child")?.textContent.trim() === aaCandidate.name,
+      5000,
+    );
+    check(
+      "AA 补充模型可查看来源与真实空成本",
+      selected && document.querySelector(".selected-model__source")?.textContent.includes("AA") && metricValues()[1] === "—",
+    );
+    const coding = viewChips().find((chip) => chip.textContent.trim() === VIEW_LABELS[1]);
+    if (coding) click(coding);
+    const hasCodingScore = await waitFor(
+      () => metricValues()[0] === aaCandidate.dimensions.pillars.coding.toFixed(1),
+      5000,
+    );
+    check("缺成本时仍显示已知的编程评分", hasCodingScore && metricValues()[1] === "—");
+    if (viewChips()[0]) click(viewChips()[0]);
+    await waitFor(() => rowCount() === expected.intelligence, 8000);
+    const clearSearch = document.querySelector(".model-search__clear");
+    if (clearSearch) click(clearSearch);
   }
 
   console.log("\n=== 切到纯编程 ===");
@@ -731,7 +771,7 @@ try {
   const targetRow = rows().find((row) => rowName(row) === (dragTarget?.name ?? "")) ?? rows()[0];
   check("拖拽目标模型出现在表格中", targetRow !== undefined, "目标 " + (dragTarget?.name ?? "无"));
   if (targetRow) click(targetRow);
-  await waitFor(() => document.querySelector(".selected-model__name")?.textContent.trim() === rowName(targetRow), 5000);
+  await waitFor(() => document.querySelector(".selected-model__name > span:first-child")?.textContent.trim() === rowName(targetRow), 5000);
   const beforeScore = metricValues()[0];
   const beforeCost = metricValues()[1];
   check(

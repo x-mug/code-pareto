@@ -1,4 +1,4 @@
-import type { ModelPoint, PillarKey, ViewKey } from "@/lib/models";
+import { isChartableModel, type ModelPoint, type PillarKey, type ViewKey } from "@/lib/models";
 
 export const PILLARS: PillarKey[] = [
   "coding",
@@ -106,31 +106,24 @@ export function applyView(
   const weights = weightsForView(view, customWeights);
   if (!weights) return models;
 
-  return models.map((model) => {
-    const dimensions = model.dimensions;
-    if (!dimensions || !dimensions.pillars || !dimensions.pillarCosts) {
-      return { ...model, intelligence: null, costPerTask: null };
-    }
-    let score = 0;
-    let cost = 0;
+  const weightedValue = (values: Record<PillarKey, number> | null | undefined) => {
+    if (!values) return null;
+    let total = 0;
     for (const pillar of PILLARS) {
       const weight = weights[pillar];
       if (weight <= 0) continue;
-      const pillarScore = dimensions.pillars[pillar];
-      const pillarCost = dimensions.pillarCosts[pillar];
-      if (
-        typeof pillarScore !== "number" ||
-        typeof pillarCost !== "number" ||
-        !Number.isFinite(pillarScore) ||
-        !Number.isFinite(pillarCost)
-      ) {
-        return { ...model, intelligence: null, costPerTask: null };
-      }
-      score += weight * pillarScore;
-      cost += weight * pillarCost;
+      const value = values[pillar];
+      if (typeof value !== "number" || !Number.isFinite(value)) return null;
+      total += weight * value;
     }
-    return { ...model, intelligence: score, costPerTask: cost };
-  });
+    return total;
+  };
+
+  return models.map((model) => ({
+    ...model,
+    intelligence: weightedValue(model.dimensions?.pillars),
+    costPerTask: weightedValue(model.dimensions?.pillarCosts),
+  }));
 }
 
 /** 某视角下有多少模型可上散点图（有得分、有正成本） */
@@ -139,14 +132,7 @@ export function countChartableForView(
   view: ViewKey,
   customWeights: PillarWeights,
 ): number {
-  return applyView(models, view, customWeights).filter(
-    (model) =>
-      typeof model.intelligence === "number" &&
-      Number.isFinite(model.intelligence) &&
-      typeof model.costPerTask === "number" &&
-      Number.isFinite(model.costPerTask) &&
-      model.costPerTask > 0,
-  ).length;
+  return applyView(models, view, customWeights).filter(isChartableModel).length;
 }
 
 /** 视角是否只覆盖部分模型（编程/工程视角只有 AA 完整评测的模型） */

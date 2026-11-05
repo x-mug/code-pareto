@@ -2878,3 +2878,13 @@ a {
     gap: 16px;
   }
 }
+
+.selected-model__name > .selected-model__source {
+  margin-top: 3px;
+  color: var(--ink-soft);
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: normal;
+  line-height: 1.3;
+}
