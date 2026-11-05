@@ -43,7 +43,13 @@ jobs:
           fi
 
       - name: Generate catalog data
+        id: catalog
+        continue-on-error: true
         run: npm run data:build
+
+      - name: Report catalog refresh failure
+        if: steps.catalog.outcome == 'failure'
+        run: echo "::warning::AA refresh failed, deploying the last committed catalog instead"
 
       - name: Validate catalog data
         run: npm run data:check
