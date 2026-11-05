@@ -1,6 +1,39 @@
 {
   "events": [
     {
+      "modelId": "b8fc61f7-5e9a-49e6-8547-6ac56db24627",
+      "name": "Claude Opus 5 (Max)",
+      "creator": "Anthropic",
+      "kind": "updated",
+      "observedAt": "2026-11-05T08:17:45.183Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": null,
+          "after": 44.2
+        },
+        {
+          "field": "costPerTask",
+          "before": null,
+          "after": 11.8215
+        }
+      ]
+    },
+    {
+      "modelId": "cd26a386-4873-46ff-b853-d239050025a2",
+      "name": "Gemma 4 31B (Reasoning)",
+      "creator": "Google",
+      "kind": "updated",
+      "observedAt": "2026-11-05T08:17:45.183Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": null,
+          "after": 4.4
+        }
+      ]
+    },
+    {
       "modelId": "38a98e3d-779b-49ec-b005-230a3a72088a",
       "name": "Muse Wonder (High)",
       "creator": "Meta",
