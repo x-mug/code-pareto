@@ -656,40 +656,58 @@ try {
     "徽章 " + kneeBadges().length,
   );
 
-  const updateGroups = q(".recent-updates__group");
-  check(
-    "近期更新分为新收录和数据变化",
-    updateGroups.length === 2 &&
-      updateGroups[0].textContent.includes("新收录") &&
-      updateGroups[1].textContent.includes("数据变化"),
-  );
-  const visibleUpdateTimes = q(".recent-updates__item time").map((item) => item.getAttribute("datetime"));
-  check(
-    "更新记录显示实际快照观察时间",
-    visibleUpdateTimes.every((time) => recentUpdates.events.some((event) => event.observedAt === time)),
-  );
   const updatesToggle = document.querySelector(".recent-updates__toggle");
+  const updatesContent = document.getElementById("recent-updates-content");
+  const addedUpdates = new Set(recentUpdates.events.filter((event) => event.kind === "added").map((event) => event.modelId)).size;
+  const changedUpdates = new Set(recentUpdates.events.filter((event) => event.kind === "updated").map((event) => event.modelId)).size;
+  const partialUpdates = Math.min(3, addedUpdates) + Math.min(3, changedUpdates);
+  const allUpdates = addedUpdates + changedUpdates;
+  check(
+    "近期更新默认收起为摘要",
+    updatesToggle?.getAttribute("aria-expanded") === "false" && updatesContent?.hidden &&
+      document.querySelector(".recent-updates__summary") !== null && q(".recent-updates__item").length === 0,
+  );
   if (updatesToggle) {
-    const beforeExpanded = q(".recent-updates__item").length;
     click(updatesToggle);
     await waitFor(() => updatesToggle.getAttribute("aria-expanded") === "true", 5000);
+    check("近期更新先展开部分记录", !updatesContent?.hidden && q(".recent-updates__item").length === partialUpdates);
+    const updateGroups = q(".recent-updates__group");
     check(
-      "近期更新可展开查看更多",
-      updatesToggle.getAttribute("aria-expanded") === "true" && q(".recent-updates__item").length > beforeExpanded,
+      "近期更新分为新收录和数据变化",
+      updateGroups.length === 2 &&
+        updateGroups[0].textContent.includes("新收录") &&
+        updateGroups[1].textContent.includes("数据变化"),
     );
+    const visibleUpdateTimes = q(".recent-updates__item time").map((item) => item.getAttribute("datetime"));
+    check(
+      "更新记录显示实际快照观察时间",
+      visibleUpdateTimes.every((time) => recentUpdates.events.some((event) => event.observedAt === time)),
+    );
+    const showAll = document.querySelector(".recent-updates__more");
+    if (allUpdates > partialUpdates) {
+      check("可以展开全部记录", showAll !== null);
+      if (showAll) {
+        click(showAll);
+        await waitFor(() => showAll.getAttribute("aria-expanded") === "true", 5000);
+        check("全部展开显示所有记录", q(".recent-updates__item").length === allUpdates);
+        click(showAll);
+        await waitFor(() => showAll.getAttribute("aria-expanded") === "false", 5000);
+        check("可以返回部分记录", q(".recent-updates__item").length === partialUpdates);
+      }
+    }
+    const updateModel = document.querySelector(".recent-updates__model");
+    if (updateModel) {
+      const modelName = updateModel.textContent.trim();
+      click(updateModel);
+      const selectedFromUpdate = await waitFor(
+        () => document.querySelector(".selected-model__name > span:first-child")?.textContent.trim() === modelName,
+        5000,
+      );
+      check("点击更新记录可查看模型", selectedFromUpdate, modelName);
+    }
     click(updatesToggle);
     await waitFor(() => updatesToggle.getAttribute("aria-expanded") === "false", 5000);
-    check("近期更新可收起", q(".recent-updates__item").length === beforeExpanded);
-  }
-  const updateModel = document.querySelector(".recent-updates__model");
-  if (updateModel) {
-    const modelName = updateModel.textContent.trim();
-    click(updateModel);
-    const selectedFromUpdate = await waitFor(
-      () => document.querySelector(".selected-model__name > span:first-child")?.textContent.trim() === modelName,
-      5000,
-    );
-    check("点击更新记录可查看模型", selectedFromUpdate, modelName);
+    check("近期更新可直接收起", updatesContent?.hidden && q(".recent-updates__item").length === 0);
   }
 
   const aaCandidate = models.find(

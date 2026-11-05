@@ -28,9 +28,7 @@ interface RecentModelUpdatesProps {
   onSelect: (id: string) => void;
 }
 
-/** 收起与展开时每栏最多显示的条数，数据变化可能积累几十条 */
 const VISIBLE_BY_DEFAULT = 3;
-const VISIBLE_WHEN_EXPANDED = 20;
 
 const FIELD_LABELS: Record<UpdateField, TranslationKey> = {
   intelligence: "updates.score",
@@ -60,11 +58,10 @@ function formatChangeValue(field: UpdateField, value: number | null, locale: Loc
   return "$" + new Intl.NumberFormat(locale, { maximumFractionDigits: 4 }).format(value);
 }
 
-function latestByModel(events: RecentModelUpdate[], kind: RecentModelUpdate["kind"]) {
+function updatesByKind(events: RecentModelUpdate[], kind: RecentModelUpdate["kind"]) {
   const seen = new Set<string>();
   return events
     .filter((event) => event.kind === kind)
-    .slice()
     .sort((a, b) => b.observedAt.localeCompare(a.observedAt))
     .filter((event) => {
       if (seen.has(event.modelId)) return false;
@@ -73,14 +70,17 @@ function latestByModel(events: RecentModelUpdate[], kind: RecentModelUpdate["kin
     });
 }
 
+type UpdatesView = "collapsed" | "partial" | "full";
+
 export function RecentModelUpdates({ events, models, locale, t, onSelect }: RecentModelUpdatesProps) {
-  const [expanded, setExpanded] = useState(false);
+  const [view, setView] = useState<UpdatesView>("collapsed");
   const availableIds = useMemo(() => new Set(models.map((model) => model.id)), [models]);
-  const added = useMemo(() => latestByModel(events, "added"), [events]);
-  const changed = useMemo(() => latestByModel(events, "updated"), [events]);
-  const limit = expanded ? VISIBLE_WHEN_EXPANDED : VISIBLE_BY_DEFAULT;
+  const added = useMemo(() => updatesByKind(events, "added"), [events]);
+  const changed = useMemo(() => updatesByKind(events, "updated"), [events]);
+  const limit = view === "full" ? undefined : VISIBLE_BY_DEFAULT;
   const hasMore =
     added.length > VISIBLE_BY_DEFAULT || changed.length > VISIBLE_BY_DEFAULT;
+  const isOpen = view !== "collapsed";
 
   const renderGroup = (label: string, items: RecentModelUpdate[]) => (
     <div className="recent-updates__group">
@@ -133,21 +133,52 @@ export function RecentModelUpdates({ events, models, locale, t, onSelect }: Rece
   );
 
   return (
-    <section className="recent-updates" aria-labelledby="recent-updates-title">
+    <section
+      className={"recent-updates" + (isOpen ? " is-open" : "") + (view === "full" ? " is-full" : "")}
+      aria-labelledby="recent-updates-title"
+    >
       <div className="recent-updates__heading">
-        <div>
+        <div className="recent-updates__heading-copy">
           <h3 id="recent-updates-title">{t("updates.title")}</h3>
-          <p>{t("updates.description")}</p>
+          {!isOpen && (
+            <p className="recent-updates__summary">
+              {t("updates.summary", { added: added.length, changed: changed.length })}
+            </p>
+          )}
         </div>
-        {hasMore && (
-          <button type="button" className="recent-updates__toggle" aria-expanded={expanded} aria-controls="recent-updates-groups" onClick={() => setExpanded((value) => !value)}>
-            {t(expanded ? "updates.less" : "updates.more")}
-          </button>
-        )}
+        <button
+          type="button"
+          className="recent-updates__toggle"
+          aria-expanded={isOpen}
+          aria-controls="recent-updates-content"
+          onClick={() => setView(isOpen ? "collapsed" : "partial")}
+        >
+          {t(isOpen ? "updates.less" : "updates.expand")}
+        </button>
       </div>
-      <div className="recent-updates__groups" id="recent-updates-groups">
-        {renderGroup(t("updates.added"), added)}
-        {renderGroup(t("updates.changed"), changed)}
+      <div id="recent-updates-content" hidden={!isOpen}>
+        {isOpen && (
+          <>
+            <p className="recent-updates__description">{t("updates.description")}</p>
+            <div className="recent-updates__groups" id="recent-updates-groups">
+              {renderGroup(t("updates.added"), added)}
+              {renderGroup(t("updates.changed"), changed)}
+            </div>
+            {hasMore && (
+              <div className="recent-updates__actions">
+                <button
+                  type="button"
+                  className="recent-updates__more"
+                  aria-expanded={view === "full"}
+                  aria-controls="recent-updates-groups"
+                  onClick={() => setView(view === "full" ? "partial" : "full")}
+                >
+                  {t(view === "full" ? "updates.partial" : "updates.more")}
+                </button>
+              </div>
+            )}
+          </>
+        )}
       </div>
     </section>
   );

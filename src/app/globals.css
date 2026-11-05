@@ -2740,26 +2740,40 @@ a {
 
 .recent-updates__heading {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   gap: 16px;
 }
 
+.recent-updates__heading-copy {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
 .recent-updates__heading h3 {
+  flex: 0 0 auto;
   margin: 0;
   color: var(--ink);
   font-size: 16px;
   font-weight: 700;
+  white-space: nowrap;
 }
 
-.recent-updates__heading p {
-  margin: 6px 0 0;
+.recent-updates__summary,
+.recent-updates__description {
   color: var(--ink-soft);
   font-size: 11px;
   line-height: 1.6;
 }
 
-.recent-updates__toggle {
+.recent-updates__description {
+  margin: 8px 0 0;
+}
+
+.recent-updates__toggle,
+.recent-updates__more {
   flex: 0 0 auto;
   padding: 5px 8px;
   border: 1px solid var(--line);
@@ -2770,9 +2784,40 @@ a {
   cursor: pointer;
 }
 
-.recent-updates__toggle:hover {
+.recent-updates__toggle:hover,
+.recent-updates__more:hover {
   border-color: var(--line-strong);
   color: var(--ink);
+}
+
+.recent-updates:not(.is-open) {
+  margin: 12px 0 10px;
+  padding: 9px 16px;
+}
+
+.recent-updates:not(.is-open) .recent-updates__heading {
+  align-items: center;
+}
+
+.recent-updates__summary {
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+  font-variant-numeric: tabular-nums;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.recent-updates__actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 12px;
+}
+
+.recent-updates.is-full .recent-updates__groups {
+  max-height: 60vh;
+  overflow-y: auto;
+  padding-right: 6px;
 }
 
 .recent-updates__groups {
