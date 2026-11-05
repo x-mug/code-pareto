@@ -171,6 +171,7 @@ try {
   process.exit(1);
 }
 
+const recentUpdates = JSON.parse(await readFile(path.join(ROOT, "src/data/recent-model-updates.json"), "utf8"));
 const models = Array.isArray(catalog.models) ? catalog.models : [];
 if (models.length === 0) {
   console.log("catalog.json 里没有模型，无法推导期望值。");
@@ -652,6 +653,42 @@ try {
     kneeBadges().length === 0 && q(".model-table__row.is-knee").length === 0,
     "徽章 " + kneeBadges().length,
   );
+
+  const updateGroups = q(".recent-updates__group");
+  check(
+    "近期更新分为新收录和数据变化",
+    updateGroups.length === 2 &&
+      updateGroups[0].textContent.includes("新收录") &&
+      updateGroups[1].textContent.includes("数据变化"),
+  );
+  const visibleUpdateTimes = q(".recent-updates__item time").map((item) => item.getAttribute("datetime"));
+  check(
+    "更新记录显示实际快照观察时间",
+    visibleUpdateTimes.every((time) => recentUpdates.events.some((event) => event.observedAt === time)),
+  );
+  const updatesToggle = document.querySelector(".recent-updates__toggle");
+  if (updatesToggle) {
+    const beforeExpanded = q(".recent-updates__item").length;
+    click(updatesToggle);
+    await waitFor(() => updatesToggle.getAttribute("aria-expanded") === "true", 5000);
+    check(
+      "近期更新可展开查看更多",
+      updatesToggle.getAttribute("aria-expanded") === "true" && q(".recent-updates__item").length > beforeExpanded,
+    );
+    click(updatesToggle);
+    await waitFor(() => updatesToggle.getAttribute("aria-expanded") === "false", 5000);
+    check("近期更新可收起", q(".recent-updates__item").length === beforeExpanded);
+  }
+  const updateModel = document.querySelector(".recent-updates__model");
+  if (updateModel) {
+    const modelName = updateModel.textContent.trim();
+    click(updateModel);
+    const selectedFromUpdate = await waitFor(
+      () => document.querySelector(".selected-model__name")?.textContent.trim() === modelName,
+      5000,
+    );
+    check("点击更新记录可查看模型", selectedFromUpdate, modelName);
+  }
 
   console.log("\n=== 切到纯编程 ===");
   const codingChip = viewChips().find((chip) => chip.textContent.trim() === VIEW_LABELS[1]);

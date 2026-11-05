@@ -20,6 +20,8 @@ import {
 } from "react";
 
 import { ModelTable } from "@/components/model-table";
+import { RecentModelUpdates, type RecentModelUpdateData } from "@/components/recent-model-updates";
+import recentModelUpdates from "@/data/recent-model-updates.json";
 import { getCreatorStyle } from "@/lib/creator-style";
 import {
   chartableModels,
@@ -1620,6 +1622,19 @@ export function ModelExplorer({ initialCatalog }: ModelExplorerProps) {
             </div>
           </section>
         ) : null}
+
+        <RecentModelUpdates
+          events={(recentModelUpdates as RecentModelUpdateData).events}
+          models={catalog.models}
+          locale={locale}
+          t={t}
+          onSelect={(id) => {
+            handleSelectModel(id);
+            setActiveCreators(new Set());
+            setOpenOnly(false);
+            document.querySelector(".selected-model")?.scrollIntoView?.({ behavior: "smooth", block: "center" });
+          }}
+        />
 
         <AxisSwitch
           axis={axis}
