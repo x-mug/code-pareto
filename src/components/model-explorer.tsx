@@ -1529,59 +1529,58 @@ export function ModelExplorer({ initialCatalog }: ModelExplorerProps) {
             onReset={handleResetWeights}
             t={t}
           />
-        </section>
-
-        <div className="creator-legend" aria-label={t("creatorFilter.label")}>
-          <button
-            type="button"
-            className={
-              activeCreators.size === 0
-                ? "legend-chip is-active"
-                : "legend-chip"
-            }
-            aria-pressed={activeCreators.size === 0}
-            onClick={() => setActiveCreators(new Set())}
-          >
-            <span className="legend-chip__all">ALL</span>
-            {t("creatorFilter.all")}
-          </button>
-          {creators.map((creator) => {
-            const creatorStyle = getCreatorStyle(creator, resolvedTheme);
-            return (
-              <button
-                type="button"
-                key={creator}
-                className={
-                  activeCreators.has(creator)
-                    ? "legend-chip is-active"
-                    : "legend-chip"
-                }
-                aria-pressed={activeCreators.has(creator)}
-                onClick={() => {
-                  setActiveCreators((current) => {
-                    const next = new Set(current);
-                    if (next.has(creator)) {
-                      next.delete(creator);
-                    } else {
-                      next.add(creator);
-                    }
-                    return next;
-                  });
-                }}
-              >
-                <span
-                  className={`legend-marker legend-marker--${creatorStyle.shape}`}
-                  style={{
-                    backgroundColor: creatorStyle.color,
-                    color: creatorStyle.color,
+          <div className="creator-legend" aria-label={t("creatorFilter.label")}>
+            <button
+              type="button"
+              className={
+                activeCreators.size === 0
+                  ? "legend-chip is-active"
+                  : "legend-chip"
+              }
+              aria-pressed={activeCreators.size === 0}
+              onClick={() => setActiveCreators(new Set())}
+            >
+              <span className="legend-chip__all">ALL</span>
+              {t("creatorFilter.all")}
+            </button>
+            {creators.map((creator) => {
+              const creatorStyle = getCreatorStyle(creator, resolvedTheme);
+              return (
+                <button
+                  type="button"
+                  key={creator}
+                  className={
+                    activeCreators.has(creator)
+                      ? "legend-chip is-active"
+                      : "legend-chip"
+                  }
+                  aria-pressed={activeCreators.has(creator)}
+                  onClick={() => {
+                    setActiveCreators((current) => {
+                      const next = new Set(current);
+                      if (next.has(creator)) {
+                        next.delete(creator);
+                      } else {
+                        next.add(creator);
+                      }
+                      return next;
+                    });
                   }}
-                />
-                {creator}
-                <small>{creatorCounts.get(creator)}</small>
-              </button>
-            );
-          })}
-        </div>
+                >
+                  <span
+                    className={`legend-marker legend-marker--${creatorStyle.shape}`}
+                    style={{
+                      backgroundColor: creatorStyle.color,
+                      color: creatorStyle.color,
+                    }}
+                  />
+                  {creator}
+                  <small>{creatorCounts.get(creator)}</small>
+                </button>
+              );
+            })}
+          </div>
+        </section>
 
         {recommendedModels.length > 0 ? (
           <section
