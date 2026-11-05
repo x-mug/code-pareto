@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useLayoutEffect, useMemo, useRef, useState } from "react";
 
 import type { Locale, TranslationKey, Translator } from "@/lib/i18n";
 import type { ModelPoint } from "@/lib/models";
@@ -81,6 +81,55 @@ export function RecentModelUpdates({ events, models, locale, t, onSelect }: Rece
   const hasMore =
     added.length > VISIBLE_BY_DEFAULT || changed.length > VISIBLE_BY_DEFAULT;
   const isOpen = view !== "collapsed";
+  const groupsViewportRef = useRef<HTMLDivElement>(null);
+  const animateGroupsRef = useRef(false);
+
+  const changeView = (nextView: UpdatesView) => {
+    const viewport = groupsViewportRef.current;
+    if (viewport && (view === "full") !== (nextView === "full")) {
+      viewport.style.height = viewport.getBoundingClientRect().height + "px";
+      viewport.classList.add("is-animating");
+      viewport.getBoundingClientRect();
+      animateGroupsRef.current = true;
+    }
+    setView(nextView);
+  };
+
+  useLayoutEffect(() => {
+    const viewport = groupsViewportRef.current;
+    if (!viewport || !animateGroupsRef.current) return;
+    animateGroupsRef.current = false;
+
+    const contentHeight = viewport.firstElementChild?.getBoundingClientRect().height ?? 0;
+    const targetHeight = view === "full" ? Math.min(contentHeight, window.innerHeight * 0.6) : contentHeight;
+    const startHeight = viewport.getBoundingClientRect().height;
+    const finish = () => {
+      viewport.style.height = "";
+      viewport.classList.remove("is-animating");
+    };
+    if (Math.abs(targetHeight - startHeight) < 0.5 || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      finish();
+      return;
+    }
+
+    const onTransitionEnd = (event: TransitionEvent) => {
+      if (event.target !== viewport || event.propertyName !== "height") return;
+      window.clearTimeout(fallback);
+      viewport.removeEventListener("transitionend", onTransitionEnd);
+      finish();
+    };
+    const fallback = window.setTimeout(() => {
+      viewport.removeEventListener("transitionend", onTransitionEnd);
+      finish();
+    }, 400);
+    viewport.addEventListener("transitionend", onTransitionEnd);
+    viewport.style.height = targetHeight + "px";
+
+    return () => {
+      window.clearTimeout(fallback);
+      viewport.removeEventListener("transitionend", onTransitionEnd);
+    };
+  }, [view]);
 
   const renderGroup = (label: string, items: RecentModelUpdate[]) => (
     <div className="recent-updates__group">
@@ -151,7 +200,7 @@ export function RecentModelUpdates({ events, models, locale, t, onSelect }: Rece
           className="recent-updates__toggle"
           aria-expanded={isOpen}
           aria-controls="recent-updates-content"
-          onClick={() => setView(isOpen ? "collapsed" : "partial")}
+          onClick={() => changeView(isOpen ? "collapsed" : "partial")}
         >
           {t(isOpen ? "updates.less" : "updates.expand")}
         </button>
@@ -164,9 +213,11 @@ export function RecentModelUpdates({ events, models, locale, t, onSelect }: Rece
       >
         <div className="recent-updates__content-inner">
           <p className="recent-updates__description">{t("updates.description")}</p>
-          <div className="recent-updates__groups" id="recent-updates-groups">
-            {renderGroup(t("updates.added"), added)}
-            {renderGroup(t("updates.changed"), changed)}
+          <div className="recent-updates__groups-viewport" ref={groupsViewportRef}>
+            <div className="recent-updates__groups" id="recent-updates-groups">
+              {renderGroup(t("updates.added"), added)}
+              {renderGroup(t("updates.changed"), changed)}
+            </div>
           </div>
           {hasMore && (
             <div className="recent-updates__actions">
@@ -175,7 +226,7 @@ export function RecentModelUpdates({ events, models, locale, t, onSelect }: Rece
                 className="recent-updates__more"
                 aria-expanded={view === "full"}
                 aria-controls="recent-updates-groups"
-                onClick={() => setView(view === "full" ? "partial" : "full")}
+                onClick={() => changeView(view === "full" ? "partial" : "full")}
               >
                 {t(view === "full" ? "updates.partial" : "updates.more")}
               </button>
