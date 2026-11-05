@@ -2933,3 +2933,48 @@ a {
   letter-spacing: normal;
   line-height: 1.3;
 }
+
+.model-table__tools {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.model-table__search {
+  width: 220px;
+  min-width: 0;
+  padding: 7px 9px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--surface);
+  color: var(--ink);
+  font: inherit;
+  font-size: 11px;
+}
+
+.model-table__search:focus-visible {
+  outline: 2px solid var(--accent-muted);
+  outline-offset: 2px;
+}
+
+.model-table__stale {
+  flex: 0 0 auto;
+  color: var(--ink-faint);
+  font-size: 10px;
+}
+
+@media (max-width: 600px) {
+  .model-table__heading {
+    flex-wrap: wrap;
+  }
+
+  .model-table__tools {
+    width: 100%;
+  }
+
+  .model-table__search {
+    flex: 1;
+    width: auto;
+  }
+}

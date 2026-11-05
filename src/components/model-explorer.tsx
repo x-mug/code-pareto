@@ -1322,10 +1322,6 @@ export function ModelExplorer({ initialCatalog }: ModelExplorerProps) {
     [openOnly, viewModels],
   );
   // 全部模型口径仍按原始 catalog 判定，避免视角与筛选改变空状态
-  const catalogChartModels = useMemo(
-    () => chartableModels(catalog.models),
-    [catalog.models],
-  );
   // 选中模型的身份仍来自 catalog；指标用所选视角下的同一模型
   const selected = getSelectedModel(catalog, selectedId);
   const viewSelected = useMemo(
@@ -1415,7 +1411,7 @@ export function ModelExplorer({ initialCatalog }: ModelExplorerProps) {
         : "chart.xScale.linearCost",
   );
 
-  if (catalogChartModels.length === 0) {
+  if (catalog.models.length === 0) {
     return (
       <main className="site-shell empty-state">
         <h1>{t("empty.noModels")}</h1>
@@ -1933,9 +1929,8 @@ export function ModelExplorer({ initialCatalog }: ModelExplorerProps) {
           </aside>
         </div>
 
-        {/* 表格只列当前视角下可比（有得分、有正成本）的模型，空表时退回 table.empty */}
         <ModelTable
-          models={chartModels}
+          models={visibleModels}
           officialModels={catalog.models}
           kneeIds={kneeIds}
           selectedId={selectedId}

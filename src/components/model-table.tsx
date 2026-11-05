@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 
 import { useLocale } from "@/lib/i18n";
+import { searchModels } from "@/lib/model-logic";
 import type { ModelPoint } from "@/lib/models";
 
 type SortKey =
@@ -31,6 +32,7 @@ interface ModelTableRow {
   id: string;
   name: string;
   creator: string;
+  stale: boolean;
   rank: number | null;
   score: number | null;
   cost: number | null;
@@ -106,14 +108,20 @@ export function ModelTable({
   const { locale, t } = useLocale();
   const [sortKey, setSortKey] = useState<SortKey>("rank");
   const [sortDirection, setSortDirection] = useState<SortDirection>("asc");
+  const [query, setQuery] = useState("");
 
   const rows = useMemo(() => {
     const officialById = new Map(
       officialModels.map((model) => [model.id, model]),
     );
-    const viewRanks = buildRankMap(models, (model) => model.intelligence);
+    const rankableModels = models.filter(
+      (model) => !model.aaStale && isFiniteNumber(model.intelligence) &&
+        isFiniteNumber(officialById.get(model.id)?.intelligence) &&
+        !officialById.get(model.id)?.aaStale,
+    );
+    const viewRanks = buildRankMap(rankableModels, (model) => model.intelligence);
     const officialRanks = buildRankMap(
-      models,
+      rankableModels,
       (model) => officialById.get(model.id)?.intelligence ?? null,
     );
 
@@ -131,6 +139,7 @@ export function ModelTable({
         id: model.id,
         name: model.name,
         creator: model.creator,
+        stale: model.aaStale === true,
         rank,
         score,
         cost,
@@ -146,13 +155,17 @@ export function ModelTable({
   }, [models, officialModels]);
 
   const kneeIdSet = useMemo(() => new Set(kneeIds), [kneeIds]);
+  const matchingIds = useMemo(
+    () => query.trim() ? new Set(searchModels(models, query).map((model) => model.id)) : null,
+    [models, query],
+  );
 
   const sortedRows = useMemo(() => {
     const direction = sortDirection === "asc" ? 1 : -1;
     const byName = (a: ModelTableRow, b: ModelTableRow) =>
       a.name.localeCompare(b.name, locale);
 
-    return [...rows].sort((a, b) => {
+    return rows.filter((row) => matchingIds === null || matchingIds.has(row.id)).sort((a, b) => {
       if (sortKey === "name") return byName(a, b) * direction;
 
       const left = a[sortKey];
@@ -162,7 +175,7 @@ export function ModelTable({
       if (right === null) return -1;
       return left === right ? byName(a, b) : (left - right) * direction;
     });
-  }, [locale, rows, sortDirection, sortKey]);
+  }, [locale, matchingIds, rows, sortDirection, sortKey]);
 
   const handleSort = (nextKey: SortKey) => {
     if (nextKey === sortKey) {
@@ -191,10 +204,20 @@ export function ModelTable({
           <h3 id="model-table-title">{t("table.title")}</h3>
           <p className="model-table__subtitle">{t("table.subtitle")}</p>
         </div>
-        <span className="model-table__count">{rows.length}</span>
+        <div className="model-table__tools">
+          <input
+            className="model-table__search"
+            type="search"
+            value={query}
+            placeholder={t("table.searchPlaceholder")}
+            aria-label={t("table.searchLabel")}
+            onChange={(event) => setQuery(event.target.value)}
+          />
+          <span className="model-table__count">{sortedRows.length}</span>
+        </div>
       </div>
 
-      {rows.length === 0 ? (
+      {sortedRows.length === 0 ? (
         <p className="model-table__empty">{t("table.empty")}</p>
       ) : (
         <div className="model-table__scroll">
@@ -263,6 +286,11 @@ export function ModelTable({
                         <span className="model-table__creator">
                           {row.creator}
                         </span>
+                        {row.stale && (
+                          <span className="model-table__stale" title={t("selection.aaStale")}>
+                            {t("table.stale")}
+                          </span>
+                        )}
                       </span>
                     </td>
                     <td className="model-table__num">{formatNumber(row.score)}</td>

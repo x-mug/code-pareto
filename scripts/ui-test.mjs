@@ -247,6 +247,7 @@ function speedKneeIds(list, limit) {
 const chartableAll = applyView(models, "intelligence", DEFAULT_CUSTOM_WEIGHTS).filter(isChartable);
 const expected = {
   total: models.length,
+  openTotal: models.filter((model) => !model.aaStale && (model.dimensions?.openWeights === true || model.aaOpenWeights === true)).length,
   intelligence: countRows(models, "intelligence", DEFAULT_CUSTOM_WEIGHTS),
   coding: countRows(models, "coding", DEFAULT_CUSTOM_WEIGHTS),
   codingEngineering: countRows(models, "codingEngineering", DEFAULT_CUSTOM_WEIGHTS),
@@ -285,13 +286,12 @@ const dragTargetAfterMath = dragTarget
   ? applyView([dragTarget], "custom", DRAG_WEIGHTS).filter(isChartable)[0] ?? null
   : null;
 
-// 速度轴期望：可上图数、顶部膝点推荐数、这些膝点里有多少能落进价格轴表格
+// 速度轴期望包含可绘制模型和膝点推荐。
 const speedKneeTopIds = speedKneeIds(models, 5);
-const costChartableIds = new Set(chartableAll.map((model) => model.id));
 const speedExpected = {
   rows: models.filter(hasOutputSpeed).length,
   recommendations: speedKneeTopIds.length,
-  kneeTableRows: speedKneeTopIds.slice(0, 2).filter((id) => costChartableIds.has(id)).length,
+  kneeTableRows: speedKneeTopIds.slice(0, 2).length,
 };
 
 console.log("catalog: " + expected.total + " 个模型（syncedAt " + catalog.syncedAt + "）");
@@ -632,9 +632,9 @@ try {
     "激活的是 " + (activeViewChip()?.textContent.trim() ?? "无"),
   );
   check(
-    "表格行数等于该视角可比较模型数",
-    rowCount() === expected.intelligence,
-    rowsDetail(expected.intelligence),
+    "完整名单包含全部已收录模型",
+    rowCount() === expected.total,
+    rowsDetail(expected.total),
   );
   check(
     "表格计数徽章与行数一致",
@@ -715,6 +715,35 @@ try {
       !model.aaStale && model.costPerTask === null &&
       model.dimensions?.pillars && !model.dimensions.pillarCosts,
   );
+  const rosterSearch = document.querySelector(".model-table__search");
+  check("完整名单有独立搜索框", rosterSearch !== null);
+  if (aaCandidate && rosterSearch) {
+    const initialRow = rows().find((row) => rowName(row) === aaCandidate.name);
+    const initialRank = initialRow?.children[0]?.textContent.trim();
+    setRangeValue(rosterSearch, aaCandidate.slug);
+    const found = await waitFor(() => rowCount() < expected.total && rows().some((row) => rowName(row) === aaCandidate.name), 5000);
+    const filteredRow = rows().find((row) => rowName(row) === aaCandidate.name);
+    check(
+      "名单可搜索缺成本的 AA 模型并显示未知成本",
+      found && rowCount() < expected.total && filteredRow?.children[3]?.textContent.trim() === "—" &&
+        filteredRow?.children[2]?.textContent.trim() === aaCandidate.intelligence.toFixed(1),
+      aaCandidate.name,
+    );
+    check("名单搜索不改变模型排名", filteredRow?.children[0]?.textContent.trim() === initialRank);
+    if (filteredRow) click(filteredRow);
+    const rowSelected = await waitFor(
+      () => document.querySelector(".selected-model__name > span:first-child")?.textContent.trim() === aaCandidate.name,
+      5000,
+    );
+    check("点击无成本模型可查看详情", rowSelected && metricValues()[1] === "—");
+    check(
+      "无成本模型不会给出替代建议",
+      document.querySelector(".alternatives-section h4")?.textContent.includes("缺少比较数据") === true,
+    );
+    setRangeValue(rosterSearch, "");
+    await waitFor(() => rowCount() === expected.total, 8000);
+    check("清空名单搜索恢复全部模型", rowCount() === expected.total);
+  }
   if (aaCandidate && searchInput) {
     searchInput.focus();
     setRangeValue(searchInput, aaCandidate.slug);
@@ -743,7 +772,7 @@ try {
     );
     check("缺成本时仍显示已知的编程评分", hasCodingScore && metricValues()[1] === "—");
     if (viewChips()[0]) click(viewChips()[0]);
-    await waitFor(() => rowCount() === expected.intelligence, 8000);
+    await waitFor(() => activeViewChip()?.textContent.trim() === VIEW_LABELS[0], 8000);
     const clearSearch = document.querySelector(".model-search__clear");
     if (clearSearch) click(clearSearch);
   }
@@ -752,12 +781,12 @@ try {
   const codingChip = viewChips().find((chip) => chip.textContent.trim() === VIEW_LABELS[1]);
   check("找到纯编程 chip", codingChip !== undefined);
   if (codingChip) click(codingChip);
-  await waitFor(() => rowCount() === expected.coding, 8000);
+  await waitFor(() => codingChip?.classList.contains("is-active") === true, 8000);
   check("纯编程视角已激活", codingChip?.classList.contains("is-active") === true, "激活的是 " + (activeViewChip()?.textContent.trim() ?? "无"));
   check(
-    "纯编程行数按推导值收敛",
-    rowCount() === expected.coding,
-    rowsDetail(expected.coding),
+    "纯编程视角保留完整名单",
+    rowCount() === expected.total,
+    rowsDetail(expected.total),
   );
   check(
     "子集提示出现且数字正确",
@@ -816,9 +845,9 @@ try {
     document.querySelector(".view-weights__mode")?.textContent ?? "无",
   );
   check(
-    "拖动后行数按推导值",
-    rowCount() === expected.customDrag,
-    rowsDetail(expected.customDrag),
+    "拖动后保留完整名单",
+    rowCount() === expected.total,
+    rowsDetail(expected.total),
   );
   if (dragTargetAfterMath && targetRow && rowName(targetRow) === dragTarget.name) {
     const derivedScore = Number.parseFloat(afterScore);
@@ -845,22 +874,22 @@ try {
   check("仅开源权重已开启", toggle?.getAttribute("aria-pressed") === "true");
   check(
     "开源筛选后行数下降且等于推导值",
-    rowCount() === expected.openCustomDrag && rowCount() < expected.customDrag,
-    rowsDetail(expected.openCustomDrag) + "（筛选前 " + expected.customDrag + "）",
+    rowCount() === expected.openTotal && rowCount() < expected.total,
+    rowsDetail(expected.openTotal) + "（筛选前 " + expected.total + "）",
   );
   if (toggle) click(toggle);
   await waitFor(() => toggle?.getAttribute("aria-pressed") === "false", 5000);
-  check("关闭筛选后行数回到筛选前", rowCount() === expected.customDrag, rowsDetail(expected.customDrag));
+  check("关闭筛选后行数回到筛选前", rowCount() === expected.total, rowsDetail(expected.total));
 
   console.log("\n=== 切回综合智能 ===");
   const intelligenceChip = viewChips().find((chip) => chip.textContent.trim() === VIEW_LABELS[0]);
   check("找到综合智能 chip", intelligenceChip !== undefined);
   if (intelligenceChip) click(intelligenceChip);
-  await waitFor(() => rowCount() === expected.intelligence, 8000);
+  await waitFor(() => intelligenceChip?.classList.contains("is-active") === true, 8000);
   check(
     "切回综合视角行数复原",
-    rowCount() === expected.intelligence,
-    rowsDetail(expected.intelligence),
+    rowCount() === expected.total,
+    rowsDetail(expected.total),
   );
   check("综合视角无子集提示", subsetNotice() === null);
   const officialNote = document.querySelector(".view-weights__note");
@@ -900,6 +929,19 @@ try {
   check("成本列可按表头定位", costColumnIndex >= 0, "index=" + costColumnIndex);
   const costColumn = () => rows().map((row) => parseMoney(row.children[costColumnIndex].textContent));
   const sortState = () => tableHeaders()[costColumnIndex]?.closest("th")?.getAttribute("aria-sort") ?? "";
+  const costsInOrder = (values, descending) => {
+    let sawMissing = false;
+    let previous;
+    for (const value of values) {
+      if (!Number.isFinite(value)) {
+        sawMissing = true;
+        continue;
+      }
+      if (sawMissing || (previous !== undefined && (descending ? previous < value : previous > value))) return false;
+      previous = value;
+    }
+    return true;
+  };
   const clickCostHeader = () => {
     const header = tableHeaders()[costColumnIndex];
     if (header) click(header);
@@ -909,7 +951,7 @@ try {
   const descendingCosts = costColumn();
   check(
     "点成本列头进入降序",
-    sortState() === "descending" && descendingCosts.every((value, index) => index === 0 || descendingCosts[index - 1] >= value),
+    sortState() === "descending" && costsInOrder(descendingCosts, true),
     "aria-sort=" + sortState() + "，首/末 " + descendingCosts[0] + " / " + descendingCosts[descendingCosts.length - 1],
   );
   clickCostHeader();
@@ -917,7 +959,7 @@ try {
   const ascendingCosts = costColumn();
   check(
     "再点切换升序",
-    sortState() === "ascending" && ascendingCosts.every((value, index) => index === 0 || ascendingCosts[index - 1] <= value),
+    sortState() === "ascending" && costsInOrder(ascendingCosts, false),
     "aria-sort=" + sortState() + "，首/末 " + ascendingCosts[0] + " / " + ascendingCosts[ascendingCosts.length - 1],
   );
   check(
@@ -975,16 +1017,16 @@ try {
 
   // 1. 链接指定视角：?view=coding 必须直接进入纯编程
   const codingViewPage = await openPage("?view=coding");
-  await waitFor(() => codingViewPage.ready() && codingViewPage.rowCount() === expected.coding, 30000);
+  await waitFor(() => codingViewPage.ready() && codingViewPage.rowCount() === expected.total, 30000);
   check(
     "?view=coding 激活纯编程 chip",
     codingViewPage.activeChip()?.textContent.trim() === VIEW_LABELS[1],
     "激活的是 " + (codingViewPage.activeChip()?.textContent.trim() ?? "无"),
   );
   check(
-    "?view=coding 行数=推导纯编程可比数",
-    codingViewPage.rowCount() === expected.coding,
-    "实际 " + codingViewPage.rowCount() + "，推导 " + expected.coding,
+    "?view=coding 保留完整名单",
+    codingViewPage.rowCount() === expected.total,
+    "实际 " + codingViewPage.rowCount() + "，推导 " + expected.total,
   );
 
   // 2. 链接打开仅开源权重：?open=1
@@ -998,11 +1040,11 @@ try {
     openOnlyPage.openToggle()?.getAttribute("aria-pressed") === "true",
     "aria-pressed=" + openOnlyPage.openToggle()?.getAttribute("aria-pressed"),
   );
-  await waitFor(() => openOnlyPage.rowCount() === expected.openIntelligence, 5000);
+  await waitFor(() => openOnlyPage.rowCount() === expected.openTotal, 5000);
   check(
-    "?open=1 行数=推导开源可比数且少于综合视角",
-    openOnlyPage.rowCount() === expected.openIntelligence && openOnlyPage.rowCount() < expected.intelligence,
-    "实际 " + openOnlyPage.rowCount() + "，推导 " + expected.openIntelligence + "（综合视角 " + expected.intelligence + "）",
+    "?open=1 名单只包含开源模型",
+    openOnlyPage.rowCount() === expected.openTotal && openOnlyPage.rowCount() < expected.total,
+    "实际 " + openOnlyPage.rowCount() + "，推导 " + expected.openTotal + "（全部 " + expected.total + "）",
   );
 
   // 3. 链接携带自定义权重：?view=custom&w=coding:100
@@ -1054,7 +1096,7 @@ try {
 
   // 6. 非法参数容错：未知视角、负数权重、不存在的模型都必须回落到默认
   const bogusPage = await openPage("?view=__bogus__&w=coding:-5&m=ghost");
-  await waitFor(() => bogusPage.ready() && bogusPage.rowCount() === expected.intelligence, 30000);
+  await waitFor(() => bogusPage.ready() && bogusPage.rowCount() === expected.total, 30000);
   check(
     "非法参数回落到综合视角",
     bogusPage.activeChip()?.textContent.trim() === VIEW_LABELS[0],
@@ -1062,8 +1104,8 @@ try {
   );
   check(
     "非法参数下落回默认行数",
-    bogusPage.rowCount() === expected.intelligence,
-    "实际 " + bogusPage.rowCount() + "，推导 " + expected.intelligence,
+    bogusPage.rowCount() === expected.total,
+    "实际 " + bogusPage.rowCount() + "，推导 " + expected.total,
   );
   check(
     "非法参数不导致页面崩溃",
@@ -1101,7 +1143,7 @@ try {
   const speedAxisChip = axisChip(AXIS_LABELS.speed);
   check("找到能力/速度 chip", speedAxisChip !== undefined);
   if (speedAxisChip) click(speedAxisChip);
-  await waitFor(() => isActiveAxis(AXIS_LABELS.speed) && rowCount() === expected.intelligence, 8000);
+  await waitFor(() => isActiveAxis(AXIS_LABELS.speed) && rowCount() === expected.total, 8000);
   check(
     "点击能力/速度后切换对照轴",
     isActiveAxis(AXIS_LABELS.speed) && !isActiveAxis(AXIS_LABELS.cost),
@@ -1114,8 +1156,8 @@ try {
   );
   check(
     "速度轴下表格行数不变",
-    rowCount() === expected.intelligence,
-    rowsDetail(expected.intelligence) + "（速度轴可比 " + speedExpected.rows + "）",
+    rowCount() === expected.total,
+    rowsDetail(expected.total) + "（速度轴可比 " + speedExpected.rows + "）",
   );
   check(
     "速度轴下推荐卡数量=推导值",
@@ -1165,9 +1207,9 @@ try {
     "激活的是 " + pageAxisLabel(speedAxisPage),
   );
   check(
-    "?axis=speed 表格行数=价格轴可比数",
-    speedAxisPage.rowCount() === expected.intelligence,
-    "实际 " + speedAxisPage.rowCount() + "，推导 " + expected.intelligence,
+    "?axis=speed 保留完整名单",
+    speedAxisPage.rowCount() === expected.total,
+    "实际 " + speedAxisPage.rowCount() + "，推导 " + expected.total,
   );
   if (speedIsSubset) {
     const speedPageSubset = speedAxisPage.document.querySelector(".axis-switch__subset");

@@ -181,7 +181,10 @@ const zhCN = {
   "chart.axis.codingScore": "编程得分",
   "chart.axis.taskCost": "每任务成本（USD）",
   "table.title": "完整名单",
-  "table.subtitle": "得分与成本按当前视角实时计算",
+  "table.subtitle": "包含全部收录模型；得分与成本随视角变化，— 表示暂无数据。",
+  "table.searchLabel": "搜索完整名单",
+  "table.searchPlaceholder": "搜索模型、厂商或标识",
+  "table.stale": "上次数据",
   "table.rank": "#",
   "table.model": "模型",
   "table.score": "本视角得分",
@@ -189,7 +192,7 @@ const zhCN = {
   "table.value": "每美元得分",
   "table.aaIndex": "AA 综合 v5",
   "table.rankDelta": "排名变化",
-  "table.empty": "当前筛选下没有可比模型",
+  "table.empty": "没有符合条件的模型",
 } as const;
 
 export type TranslationKey = keyof typeof zhCN;
@@ -366,7 +369,10 @@ const en: Record<TranslationKey, string> = {
   "chart.axis.codingScore": "Coding score",
   "chart.axis.taskCost": "Cost per task (USD)",
   "table.title": "Full roster",
-  "table.subtitle": "Scores and costs recalculated live for the current view",
+  "table.subtitle": "All listed models; scores and costs follow the current view. — means unavailable.",
+  "table.searchLabel": "Search the full roster",
+  "table.searchPlaceholder": "Search models, creators, or slugs",
+  "table.stale": "Previous data",
   "table.rank": "#",
   "table.model": "Model",
   "table.score": "View score",
@@ -374,7 +380,7 @@ const en: Record<TranslationKey, string> = {
   "table.value": "Score per dollar",
   "table.aaIndex": "AA Index v5",
   "table.rankDelta": "Rank change",
-  "table.empty": "No comparable models under the current filters",
+  "table.empty": "No models match the current filters",
 };
 
 const ja: Record<TranslationKey, string> = {
@@ -544,7 +550,10 @@ const ja: Record<TranslationKey, string> = {
   "chart.axis.codingScore": "コーディングスコア",
   "chart.axis.taskCost": "タスク単価（USD）",
   "table.title": "モデル一覧",
-  "table.subtitle": "スコアとコストは現在の視点でリアルタイムに算出されます",
+  "table.subtitle": "掲載モデルの一覧です。スコアとコストは視点に応じて変わり、— はデータなしを示します。",
+  "table.searchLabel": "モデル一覧を検索",
+  "table.searchPlaceholder": "モデル・提供元・識別子を検索",
+  "table.stale": "前回データ",
   "table.rank": "#",
   "table.model": "モデル",
   "table.score": "視点スコア",
@@ -552,7 +561,7 @@ const ja: Record<TranslationKey, string> = {
   "table.value": "1 ドルあたりのスコア",
   "table.aaIndex": "AA 総合 v5",
   "table.rankDelta": "順位変動",
-  "table.empty": "現在の絞り込み条件で比較できるモデルはありません",
+  "table.empty": "条件に一致するモデルはありません",
 };
 
 const zhTW: Record<TranslationKey, string> = {
@@ -722,7 +731,10 @@ const zhTW: Record<TranslationKey, string> = {
   "chart.axis.codingScore": "編程得分",
   "chart.axis.taskCost": "每任務成本（USD）",
   "table.title": "完整名單",
-  "table.subtitle": "得分與成本依目前視角即時計算",
+  "table.subtitle": "包含全部收錄模型；得分與成本隨視角變化，— 表示暫無數據。",
+  "table.searchLabel": "搜尋完整名單",
+  "table.searchPlaceholder": "搜尋模型、廠商或標識",
+  "table.stale": "上次數據",
   "table.rank": "#",
   "table.model": "模型",
   "table.score": "本視角得分",
@@ -730,7 +742,7 @@ const zhTW: Record<TranslationKey, string> = {
   "table.value": "每美元得分",
   "table.aaIndex": "AA 綜合 v5",
   "table.rankDelta": "排名變化",
-  "table.empty": "目前篩選下沒有可比模型",
+  "table.empty": "沒有符合條件的模型",
 };
 
 const ko: Record<TranslationKey, string> = {
@@ -900,7 +912,10 @@ const ko: Record<TranslationKey, string> = {
   "chart.axis.codingScore": "코딩 점수",
   "chart.axis.taskCost": "작업당 비용(USD)",
   "table.title": "전체 목록",
-  "table.subtitle": "점수와 비용은 현재 관점 기준으로 실시간 계산됩니다",
+  "table.subtitle": "수록된 모든 모델입니다. 점수와 비용은 관점에 따라 바뀌며 —는 데이터 없음을 뜻합니다.",
+  "table.searchLabel": "전체 목록 검색",
+  "table.searchPlaceholder": "모델, 제공사 또는 식별자 검색",
+  "table.stale": "이전 데이터",
   "table.rank": "#",
   "table.model": "모델",
   "table.score": "관점 점수",
@@ -908,7 +923,7 @@ const ko: Record<TranslationKey, string> = {
   "table.value": "1달러당 점수",
   "table.aaIndex": "AA 종합 v5",
   "table.rankDelta": "순위 변동",
-  "table.empty": "현재 필터 조건에 비교 가능한 모델이 없습니다",
+  "table.empty": "조건에 맞는 모델이 없습니다",
 };
 
 const messages: Record<Locale, Record<TranslationKey, string>> = {
