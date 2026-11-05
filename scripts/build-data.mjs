@@ -14,9 +14,10 @@
  * 幂等：输入不变时输出逐字节相同；任何一步失败都不会覆盖已有文件。
  * 用法: node scripts/build-data.mjs
  */
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, readFile } from "node:fs/promises";
 import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
+import { buildModelUpdates, persistSnapshotFiles } from "./model-updates.mjs";
 
 const USER_AGENT =
   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/131.0 Safari/537.36";
@@ -30,6 +31,9 @@ const SOURCES = {
 
 const OUTPUT_PATH = fileURLToPath(
   new URL("../src/data/catalog.json", import.meta.url),
+);
+const UPDATES_PATH = fileURLToPath(
+  new URL("../src/data/recent-model-updates.json", import.meta.url),
 );
 
 const PILLARS = ["coding", "akw", "science", "reasoning", "knowledge"];
@@ -440,22 +444,42 @@ async function main() {
       " / 开源权重 " + openWeights + "），综合视角可比较 " + comparable + " 个模型",
   );
 
-  let previous = null;
-  try {
-    previous = await readFile(OUTPUT_PATH, "utf8");
-  } catch {
-    // 首次生成
+  async function readIfPresent(path) {
+    try {
+      return await readFile(path, "utf8");
+    } catch (error) {
+      if (error.code === "ENOENT") return null;
+      throw error;
+    }
   }
-  if (previous === serialized) {
-    log("catalog.json 内容未变化，跳过写入");
+
+  const [previous, previousUpdatesText] = await Promise.all([
+    readIfPresent(OUTPUT_PATH),
+    readIfPresent(UPDATES_PATH),
+  ]);
+  const previousCatalog = previous === null ? null : JSON.parse(previous);
+  const previousUpdates = previousUpdatesText === null ? { events: [] } : JSON.parse(previousUpdatesText);
+  const nextUpdates = buildModelUpdates(previousCatalog, nextCatalog, previousUpdates, new Date().toISOString());
+  const updatesSerialized = nextUpdates === previousUpdates && previousUpdatesText !== null
+    ? previousUpdatesText
+    : JSON.stringify(nextUpdates, null, 2) + "\n";
+  const files = [];
+  if (previousUpdatesText !== updatesSerialized) {
+    files.push({ path: UPDATES_PATH, previous: previousUpdatesText, content: updatesSerialized });
+  }
+  if (previous !== serialized) {
+    files.push({ path: OUTPUT_PATH, previous, content: serialized });
+  }
+  if (files.length === 0) {
+    log("目录和变更记录均未变化，跳过写入");
     return;
   }
 
   await mkdir(dirname(OUTPUT_PATH), { recursive: true });
-  await writeFile(OUTPUT_PATH, serialized, "utf8");
-  log(
-    "写入 " + OUTPUT_PATH + "（" + (Buffer.byteLength(serialized) / 1024).toFixed(1) + " KB）",
-  );
+  await persistSnapshotFiles(files);
+  for (const file of files) {
+    log("写入 " + file.path + "（" + (Buffer.byteLength(file.content) / 1024).toFixed(1) + " KB）");
+  }
 }
 
 main().catch((error) => {
