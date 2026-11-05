@@ -664,13 +664,16 @@ try {
   const allUpdates = addedUpdates + changedUpdates;
   check(
     "近期更新默认收起为摘要",
-    updatesToggle?.getAttribute("aria-expanded") === "false" && updatesContent?.hidden &&
-      document.querySelector(".recent-updates__summary") !== null && q(".recent-updates__item").length === 0,
+    updatesToggle?.getAttribute("aria-expanded") === "false" && updatesContent?.getAttribute("aria-hidden") === "true" &&
+      document.querySelector(".recent-updates__summary") !== null,
   );
   if (updatesToggle) {
     click(updatesToggle);
     await waitFor(() => updatesToggle.getAttribute("aria-expanded") === "true", 5000);
-    check("近期更新先展开部分记录", !updatesContent?.hidden && q(".recent-updates__item").length === partialUpdates);
+    check(
+      "近期更新先展开部分记录",
+      updatesContent?.getAttribute("aria-hidden") === "false" && q(".recent-updates__item").length === partialUpdates,
+    );
     const updateGroups = q(".recent-updates__group");
     check(
       "近期更新分为新收录和数据变化",
@@ -707,7 +710,7 @@ try {
     }
     click(updatesToggle);
     await waitFor(() => updatesToggle.getAttribute("aria-expanded") === "false", 5000);
-    check("近期更新可直接收起", updatesContent?.hidden && q(".recent-updates__item").length === 0);
+    check("近期更新可直接收起", updatesContent?.getAttribute("aria-hidden") === "true");
   }
 
   const aaCandidate = models.find(

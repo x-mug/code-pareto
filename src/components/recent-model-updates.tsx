@@ -156,29 +156,32 @@ export function RecentModelUpdates({ events, models, locale, t, onSelect }: Rece
           {t(isOpen ? "updates.less" : "updates.expand")}
         </button>
       </div>
-      <div id="recent-updates-content" hidden={!isOpen}>
-        {isOpen && (
-          <>
-            <p className="recent-updates__description">{t("updates.description")}</p>
-            <div className="recent-updates__groups" id="recent-updates-groups">
-              {renderGroup(t("updates.added"), added)}
-              {renderGroup(t("updates.changed"), changed)}
+      <div
+        id="recent-updates-content"
+        className="recent-updates__content"
+        aria-hidden={!isOpen}
+        inert={!isOpen}
+      >
+        <div className="recent-updates__content-inner">
+          <p className="recent-updates__description">{t("updates.description")}</p>
+          <div className="recent-updates__groups" id="recent-updates-groups">
+            {renderGroup(t("updates.added"), added)}
+            {renderGroup(t("updates.changed"), changed)}
+          </div>
+          {hasMore && (
+            <div className="recent-updates__actions">
+              <button
+                type="button"
+                className="recent-updates__more"
+                aria-expanded={view === "full"}
+                aria-controls="recent-updates-groups"
+                onClick={() => setView(view === "full" ? "partial" : "full")}
+              >
+                {t(view === "full" ? "updates.partial" : "updates.more")}
+              </button>
             </div>
-            {hasMore && (
-              <div className="recent-updates__actions">
-                <button
-                  type="button"
-                  className="recent-updates__more"
-                  aria-expanded={view === "full"}
-                  aria-controls="recent-updates-groups"
-                  onClick={() => setView(view === "full" ? "partial" : "full")}
-                >
-                  {t(view === "full" ? "updates.partial" : "updates.more")}
-                </button>
-              </div>
-            )}
-          </>
-        )}
+          )}
+        </div>
       </div>
     </section>
   );
