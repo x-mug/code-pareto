@@ -4,10 +4,9 @@ import { JSDOM } from "jsdom";
 import { describe, expect, it } from "vitest";
 
 import { RecentModelUpdates } from "../src/components/recent-model-updates.tsx";
-import catalogData from "../src/data/catalog.json";
 import { translate } from "../src/lib/i18n.ts";
 
-const model = catalogData.models[0];
+const model = { id: "available-model", name: "Available Model", creator: "Example" };
 const t = (key, params) => translate("zh-CN", key, params);
 
 function event(modelId, name) {

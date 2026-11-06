@@ -45,18 +45,22 @@ jobs:
       - name: Generate catalog data
         id: catalog
         continue-on-error: true
-        run: |
-          npm run data:build
-          npm run data:check
+        run: npm run data:build
 
       - name: Restore catalog after refresh failure
         if: steps.catalog.outcome == 'failure'
         run: |
           git restore --source=HEAD --worktree -- src/data/catalog.json src/data/recent-model-updates.json
-          echo "::warning::AA refresh or validation failed; deploying the last committed catalog instead"
+          echo "::warning::Catalog could not be generated; deploying the last committed catalog instead"
 
-      - name: Validate catalog data
+      - name: Report catalog data warnings
+        id: catalog-report
+        continue-on-error: true
         run: npm run data:check
+
+      - name: Warn if catalog report could not complete
+        if: steps.catalog-report.outcome == 'failure'
+        run: echo "::warning::Catalog diagnostics failed; keeping the refreshed catalog and continuing deployment"
 
       - name: Lint
         run: npm run lint

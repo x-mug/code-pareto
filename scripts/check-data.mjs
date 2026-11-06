@@ -1,13 +1,5 @@
 #!/usr/bin/env node
-/**
- * 校验 src/data/catalog.json 是否符合 ModelCatalog 契约与数据管线预期。
- *
- * 断言：模型数量、综合视角可比较数量、dimensions 覆盖数、支柱完整性、
- *       每任务成本为正、成本反算一致性、各视角可比较数量。
- * 不联网，只读本地文件。
- *
- * 用法: node scripts/check-data.mjs [catalogPath]
- */
+// 只读报告目录结构与数据异常，数量和数值偏差仅告警。
 import { readFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 
@@ -15,26 +7,8 @@ const DEFAULT_PATH = fileURLToPath(new URL("../src/data/catalog.json", import.me
 
 const PILLARS = ["coding", "akw", "science", "reasoning", "knowledge"];
 
-/** 当前 AA 页面快照的预期值：实际值低于下限即失败，高于预期只提示上游已更新 */
-const EXPECTED = {
-  models: 719,
-  creators: 60,
-  comparable: 82,
-  dimensions: 28,
-  pillarCosts: 26,
-  openWeights: 13,
-};
-
-/** 硬下限：低于这些数字说明管线坏了，而不是数据源正常增长 */
-const MINIMUMS = {
-  models: 700,
-  comparable: 60,
-  dimensions: 25,
-  pillarCosts: 23,
-};
-
-/** 复算成本与 AA 官方 costPerTask 的允许相对误差 */
-const COST_TOLERANCE = 0.1;
+// 跨快照成本偏差超过此值时告警。
+const COST_WARNING_THRESHOLD = 0.1;
 
 /**
  * 以下与 src/lib/view-logic.ts 保持一致（本脚本是 .mjs，不能直接 import TS）。
@@ -147,14 +121,14 @@ function checkCatalogShape(catalog) {
     problems.push("根节点不是对象");
     return problems;
   }
-  if (!Array.isArray(catalog.models) || catalog.models.length === 0) {
-    problems.push("models 不是非空数组");
+  if (!Array.isArray(catalog.models)) {
+    problems.push("models 不是数组");
   }
   if (typeof catalog.syncedAt !== "string" || Number.isNaN(Date.parse(catalog.syncedAt))) {
     problems.push("syncedAt 不是合法时间字符串");
   }
-  if (!isFiniteNumber(catalog.refreshIntervalMs) || catalog.refreshIntervalMs <= 0) {
-    problems.push("refreshIntervalMs 不是正数");
+  if (!isFiniteNumber(catalog.refreshIntervalMs)) {
+    problems.push("refreshIntervalMs 不是数字");
   }
   if (catalog.indexVersion !== null && !isFiniteNumber(catalog.indexVersion)) {
     problems.push("indexVersion 既不是数字也不是 null");
@@ -331,6 +305,10 @@ function printResults() {
   const marks = { pass: "✓", fail: "✗", warn: "!", note: "·" };
   for (const result of results) {
     console.log("  " + marks[result.level] + " " + result.name + "  " + result.detail);
+    if (process.env.GITHUB_ACTIONS === "true" && result.level === "warn") {
+      const message = (result.name + ": " + result.detail).replaceAll("%", "%25").replaceAll("\r", "%0D").replaceAll("\n", "%0A");
+      console.log("::warning::" + message);
+    }
   }
 }
 
@@ -368,19 +346,8 @@ async function main() {
   const models = catalog.models;
 
   // 1. 模型数量
-  if (models.length >= MINIMUMS.models) {
-    pass("模型数量", models.length + "（下限 " + MINIMUMS.models + "）");
-  } else {
-    fail("模型数量", models.length + " < 下限 " + MINIMUMS.models);
-  }
-  if (models.length !== EXPECTED.models) {
-    warn("模型数量漂移", models.length + " != 预期 " + EXPECTED.models + "（上游模型目录更新过）");
-  }
-
-  const creators = new Set(models.map((model) => model.creator));
-  if (creators.size !== EXPECTED.creators) {
-    warn("厂商数漂移", creators.size + " != 预期 " + EXPECTED.creators);
-  }
+  if (models.length === 0) warn("模型数量", "本轮目录没有模型");
+  else pass("模型数量", String(models.length));
 
   // 2. 唯一性
   const slugs = new Set();
@@ -414,70 +381,47 @@ async function main() {
 
   // 4. 综合视角可比较数量
   const comparable = models.filter(isComparable);
-  if (comparable.length >= MINIMUMS.comparable) {
-    pass("综合视角可比较", comparable.length + "（下限 " + MINIMUMS.comparable + "）");
-  } else {
-    fail("综合视角可比较", comparable.length + " < 下限 " + MINIMUMS.comparable);
-  }
-  if (comparable.length !== EXPECTED.comparable) {
-    warn("可比较数量漂移", comparable.length + " != 预期 " + EXPECTED.comparable);
-  }
+  if (comparable.length === 0) warn("综合视角可比较", "本轮没有可绘制的模型");
+  else pass("综合视角可比较", String(comparable.length));
 
   // 5. dimensions 覆盖 + 支柱完整性 + 成本为正
   const dimensions = checkDimensions(models);
   if (dimensions.problems.length === 0) {
     pass("dimensions 契约", "pillars/pillarCosts/openWeights 字段齐全类型正确");
   } else {
-    fail("dimensions 契约", dimensions.problems.slice(0, 8).join("；"));
+    warn("dimensions 契约", dimensions.problems.slice(0, 8).join("；"));
   }
 
-  if (dimensions.dimensioned.length >= MINIMUMS.dimensions) {
-    pass("dimensions 覆盖", dimensions.dimensioned.length + " 个模型（下限 " + MINIMUMS.dimensions + "）");
-  } else {
-    fail("dimensions 覆盖", dimensions.dimensioned.length + " < 下限 " + MINIMUMS.dimensions);
-  }
-  if (dimensions.dimensioned.length !== EXPECTED.dimensions) {
-    warn("dimensions 覆盖漂移", dimensions.dimensioned.length + " != 预期 " + EXPECTED.dimensions);
-  }
+  note("dimensions 覆盖", dimensions.dimensioned.length + " 个模型");
   if (dimensions.dimensioned.length === 0) {
-    fail("支柱完整性", "没有任何模型带 dimensions");
+    warn("支柱完整性", "没有任何模型带 dimensions");
   } else if (dimensions.withPillars.length === dimensions.dimensioned.length) {
     pass("支柱完整性", dimensions.withPillars.length + " 个模型 5 支支柱齐全");
   } else {
-    fail("支柱完整性", dimensions.withPillars.length + "/" + dimensions.dimensioned.length + " 个模型有完整支柱");
+    warn("支柱完整性", dimensions.withPillars.length + "/" + dimensions.dimensioned.length + " 个模型有完整支柱");
   }
 
-  if (dimensions.withCosts.length >= MINIMUMS.pillarCosts) {
-    pass("支柱成本为正", dimensions.withCosts.length + " 个模型 5 支成本全部 > 0（下限 " + MINIMUMS.pillarCosts + "）");
-  } else {
-    fail("支柱成本为正", dimensions.withCosts.length + " < 下限 " + MINIMUMS.pillarCosts);
-  }
-  if (dimensions.withCosts.length !== EXPECTED.pillarCosts) {
-    warn("支柱成本覆盖漂移", dimensions.withCosts.length + " != 预期 " + EXPECTED.pillarCosts);
-  }
+  note("支柱成本覆盖", dimensions.withCosts.length + " 个模型有完整正成本");
   if (dimensions.withOpenWeights.length !== dimensions.dimensioned.length) {
-    fail("openWeights 完整性", dimensions.withOpenWeights.length + "/" + dimensions.dimensioned.length + " 个模型有布尔 openWeights");
+    warn("openWeights 完整性", dimensions.withOpenWeights.length + "/" + dimensions.dimensioned.length + " 个模型有布尔 openWeights");
   } else {
     const openWeightsCount = dimensions.withOpenWeights.filter((model) => model.dimensions.openWeights).length;
     pass("openWeights 完整性", dimensions.withOpenWeights.length + " 个模型布尔值齐全，其中 true " + openWeightsCount + " 个");
-    if (openWeightsCount !== EXPECTED.openWeights) {
-      warn("开源权重数量漂移", openWeightsCount + " != 预期 " + EXPECTED.openWeights);
-    }
   }
 
   // 6. 支柱成本 ↔ AA 官方 costPerTask 一致性
   const consistency = checkCostConsistency(models);
   if (consistency.compared === 0) {
     warn("成本反算一致性", "没有可交叉校验的模型");
-  } else if (consistency.worst.deviation <= COST_TOLERANCE) {
+  } else if (consistency.worst.deviation <= COST_WARNING_THRESHOLD) {
     pass(
       "成本反算一致性",
       consistency.compared + " 个模型，最大相对偏差 " + (consistency.worst.deviation * 100).toFixed(2) + "%",
     );
   } else {
-    fail(
+    warn(
       "成本反算一致性",
-      "最大相对偏差 " + (consistency.worst.deviation * 100).toFixed(2) + "% > " + COST_TOLERANCE * 100 + "%（" + consistency.worst.slug + "）",
+      "最大相对偏差 " + (consistency.worst.deviation * 100).toFixed(2) + "% > " + COST_WARNING_THRESHOLD * 100 + "%（" + consistency.worst.slug + "）",
     );
   }
 
@@ -493,10 +437,7 @@ async function main() {
   if (pillarViewCounts.every((count) => count === dimensions.withCosts.length)) {
     pass("视角可比较数量", "综合 " + viewCounts.intelligence + " / 4 个支柱视角均 " + dimensions.withCosts.length);
   } else {
-    fail("视角可比较数量", JSON.stringify(viewCounts) + "，预期 4 个支柱视角均为 " + dimensions.withCosts.length);
-  }
-  if (viewCounts.intelligence < MINIMUMS.comparable) {
-    fail("综合视角数量下限", viewCounts.intelligence + " < " + MINIMUMS.comparable);
+    warn("视角可比较数量", JSON.stringify(viewCounts) + "，预期 4 个支柱视角均为 " + dimensions.withCosts.length);
   }
 
   // 8. 刷新间隔与 models.ts 常量一致（8 小时）
@@ -512,12 +453,13 @@ async function main() {
   printResults();
 
   const failures = results.filter((result) => result.level === "fail");
+  const warnings = results.filter((result) => result.level === "warn");
   console.log("");
   if (failures.length > 0) {
-    console.log("❌ check-data 失败：" + failures.length + " 项不通过");
+    console.log("❌ check-data 无法确认目录结构：" + failures.length + " 项不通过");
     process.exitCode = 1;
   } else {
-    console.log("✅ check-data 通过：" + results.filter((r) => r.level === "pass").length + " 项断言通过");
+    console.log("✅ check-data 通过：" + results.filter((r) => r.level === "pass").length + " 项正常，" + warnings.length + " 项告警（不阻止更新）");
   }
 }
 

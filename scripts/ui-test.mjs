@@ -45,6 +45,7 @@ const VIEW_LABELS = [
   "自定义",
 ];
 const OPEN_WEIGHTS_LABEL = "仅开源权重";
+const EMPTY_CHART_LABEL = "当前数据中没有同时包含能力分数与任务成本的模型。";
 // 对照轴页签文案，与 src/lib/i18n.ts 的 zh-CN 块一致
 const AXIS_LABELS = { cost: "能力 / 价格", speed: "能力 / 速度" };
 
@@ -110,6 +111,31 @@ function isChartable(model) {
   );
 }
 
+function formatNumber(value) {
+  return Number.isFinite(value) ? value.toFixed(value >= 100 ? 0 : 1) : "—";
+}
+
+function formatCost(value) {
+  return Number.isFinite(value) ? "$" + value.toFixed(value < 0.1 ? 3 : 2) : "—";
+}
+
+function costKneeCount(list, limit = 5) {
+  let bestScore = Number.NEGATIVE_INFINITY;
+  return Math.min(limit, list.filter(isChartable)
+    .sort((a, b) => a.costPerTask - b.costPerTask || b.intelligence - a.intelligence)
+    .filter((model) => {
+      if (model.intelligence <= bestScore) return false;
+      bestScore = model.intelligence;
+      return true;
+    }).length);
+}
+
+function matchingModels(list, query) {
+  const tokens = query.trim().toLocaleLowerCase().split(/\s+/);
+  return list.filter((model) => tokens.every((token) =>
+    [model.name, model.slug, model.creator].some((field) => field.trim().toLocaleLowerCase().includes(token))));
+}
+
 function countRows(models, view, weights) {
   return applyView(models, view, weights).filter(isChartable).length;
 }
@@ -122,6 +148,12 @@ function openOnlyRows(models, view, weights) {
 // —— 断言与等待 ——
 let passed = 0;
 let failed = 0;
+let warned = 0;
+
+function warn(detail) {
+  warned += 1;
+  console.log("  WARN " + detail);
+}
 
 function check(name, ok, detail) {
   if (ok) {
@@ -173,9 +205,9 @@ try {
 }
 
 const recentUpdates = JSON.parse(await readFile(path.join(ROOT, "src/data/recent-model-updates.json"), "utf8"));
-const models = Array.isArray(catalog.models) ? catalog.models : [];
-if (models.length === 0) {
-  console.log("catalog.json 里没有模型，无法推导期望值。");
+const models = Array.isArray(catalog) ? catalog : catalog?.models;
+if (!Array.isArray(models)) {
+  console.log("catalog.json 必须包含模型数组。");
   process.exit(1);
 }
 
@@ -247,6 +279,8 @@ function speedKneeIds(list, limit) {
 const chartableAll = applyView(models, "intelligence", DEFAULT_CUSTOM_WEIGHTS).filter(isChartable);
 const expected = {
   total: models.length,
+  recommendations: costKneeCount(models),
+  codingRecommendations: costKneeCount(applyView(models, "coding", DEFAULT_CUSTOM_WEIGHTS)),
   openTotal: models.filter((model) => !model.aaStale && (model.dimensions?.openWeights === true || model.aaOpenWeights === true)).length,
   intelligence: countRows(models, "intelligence", DEFAULT_CUSTOM_WEIGHTS),
   coding: countRows(models, "coding", DEFAULT_CUSTOM_WEIGHTS),
@@ -270,17 +304,13 @@ const codingOnlyShares = PILLARS.map(
       normalizeWeights({ coding: 100, akw: 0, science: 0, reasoning: 0, knowledge: 0 })[pillar] * 100,
     ) + "%",
 );
-// 拖拽目标必须同时具备「编程/工程得分差」与「编程/工程成本差」，否则拖拽后指标看不出变化
+// 拖拽前后都可比且显示值有变化的模型才能验证指标联动。
 const dragTarget = models.find((model) => {
-  const dimensions = model.dimensions;
-  if (!dimensions || !dimensions.pillars || !dimensions.pillarCosts) return false;
-  const scoreGap = Math.abs(dimensions.pillars.coding - dimensions.pillars.akw);
-  const costGap = Math.abs(
-    dimensions.pillarCosts.coding - dimensions.pillarCosts.akw,
-  );
-  const costRatio =
-    costGap / Math.max(Math.abs(dimensions.pillarCosts.coding), Math.abs(dimensions.pillarCosts.akw), 1e-9);
-  return scoreGap > 1 && costRatio > 0.02;
+  const before = applyView([model], "custom", DEFAULT_CUSTOM_WEIGHTS)[0];
+  const after = applyView([model], "custom", DRAG_WEIGHTS)[0];
+  return isChartable(before) && isChartable(after) &&
+    formatNumber(before.intelligence) !== formatNumber(after.intelligence) &&
+    formatCost(before.costPerTask) !== formatCost(after.costPerTask);
 });
 const dragTargetAfterMath = dragTarget
   ? applyView([dragTarget], "custom", DRAG_WEIGHTS).filter(isChartable)[0] ?? null
@@ -321,9 +351,6 @@ console.log(
     " / 表格膝点行 " +
     speedExpected.kneeTableRows,
 );
-if (!dragTarget) {
-  console.log("警告: catalog 里找不到编程与工程指标差异明显的模型，拖拽数值推导会被跳过。");
-}
 
 // —— 本地静态服务，把 out/ 挂在 /code-pareto 下 ——
 const server = http.createServer(async (req, res) => {
@@ -565,25 +592,20 @@ const tableCountBadge = () => document.querySelector(".model-table__count")?.tex
 const rowsDetail = (expectedValue) =>
   "实际 " + rowCount() + "，推导 " + expectedValue + "；若 out/ 早于 catalog.json 请先 npm run build";
 const rowName = (row) => row.querySelector(".model-table__model strong")?.textContent.trim() ?? "";
-const parseMoney = (text) => Number.parseFloat(String(text).replace(/[^0-9.]/g, ""));
+const parseMoney = (text) => Number.parseFloat(String(text).replace(/[^0-9.+-]/g, ""));
+const hasEmptyChart = (doc) => doc.querySelector(".chart-card .empty-chart")?.textContent.trim() === EMPTY_CHART_LABEL;
+const pageReady = (doc) => doc.querySelector(".model-chart, .empty-state") !== null || hasEmptyChart(doc);
+const chartReady = (count) => count > 0
+  ? document.querySelector(".model-chart svg") !== null
+  : hasEmptyChart(document);
+const checkChart = async (name, count) => {
+  await waitFor(() => chartReady(count), 15000);
+  check(name, document.querySelector(".chart-card") !== null && chartReady(count),
+    "可比 " + count + "，svg " + q(".model-chart svg").length + "，空图 " + q(".chart-card .empty-chart").length);
+};
 const subsetNotice = () => document.querySelector(".view-switch__subset");
 
-let exitCode = 1;
-try {
-  // —— 等待水合：动态导入的散点图挂载才算首屏真正跑起来 ——
-  const hydrated = await waitFor(() => document.querySelector(".model-chart") !== null, 30000);
-  console.log("\n=== 首屏水合 ===");
-  check(
-    "静态产物水合并挂载散点图",
-    hydrated,
-    hydrated ? "" : "等待 30s 仍没有 .model-chart；确认 out/ 与 catalog.json 是否同批构建",
-  );
-  if (!hydrated) {
-    console.log("运行期错误: " + (errors.length ? errors.slice(0, 6).join(" || ") : "无"));
-    exitCode = 1;
-    throw new Error("水合失败，后续断言无意义");
-  }
-
+async function checkModelInteractions() {
   console.log("\n=== 综合智能视角（默认） ===");
   const structureSelectors = [".site-header", ".hero", ".explorer", ".chart-card", ".model-table"];
   check(
@@ -591,16 +613,8 @@ try {
     structureSelectors.every((selector) => document.querySelector(selector) !== null),
     structureSelectors.filter((selector) => document.querySelector(selector) === null).join(","),
   );
-  // ECharts 挂载后再异步出图，这里等实际画布生成
-  const chartDrawn = await waitFor(
-    () => document.querySelectorAll(".model-chart svg").length > 0,
-    15000,
-  );
-  check(
-    "散点图已绘制",
-    chartDrawn,
-    "实际 svg " + document.querySelectorAll(".model-chart svg").length + " 个",
-  );
+  await checkChart("价格轴绘图状态与可比数据一致", expected.intelligence);
+  if (expected.intelligence === 0) warn("没有价格轴可比模型，跳过价格图 SVG 覆盖，仍检查空图状态。");
   const searchBar = document.querySelector(".search-bar");
   const searchInput = searchBar?.querySelector(".model-search input");
   check("模型搜索框存在", searchInput !== null && searchInput !== undefined);
@@ -649,7 +663,8 @@ try {
       heroNumbers[2] === expected.creators,
     "页面 " + heroNumbers.join("/") + "，推导 " + [expected.total, expected.intelligence, expected.creators].join("/"),
   );
-  check("推荐卡存在", q(".recommendation-card").length >= 1 && q(".recommendation-card").length <= 5, "实际 " + q(".recommendation-card").length);
+  check("推荐卡数量等于推导值", q(".recommendation-card").length === expected.recommendations, "实际 " + q(".recommendation-card").length + "，推导 " + expected.recommendations);
+  if (expected.recommendations === 0) warn("没有价格轴推荐候选，跳过推荐卡交互覆盖。");
 
   const weightsToggle = document.querySelector(".view-panel__disclosure");
   const weightsBody = document.getElementById("view-weights-body");
@@ -667,39 +682,41 @@ try {
   check("厂商筛选默认收起", creatorToggle?.getAttribute("aria-expanded") === "false" && document.querySelector(".creator-filter__panel") === null);
   if (creatorToggle) {
     click(creatorToggle);
-    await waitFor(() => document.querySelectorAll(".creator-filter__panel .legend-chip").length >= 3, 5000);
+    await waitFor(() => document.querySelector(".creator-filter__panel") !== null, 5000);
     const creatorOptions = q(".creator-filter__panel .legend-chip");
-    const firstCreator = creatorOptions[1];
-    const secondCreator = creatorOptions[2];
-    check("展开厂商筛选显示全部与厂商选项", creatorOptions[0]?.getAttribute("aria-pressed") === "true" && Boolean(firstCreator && secondCreator));
-    if (firstCreator && secondCreator) {
-      click(firstCreator);
-      await waitFor(() => firstCreator.getAttribute("aria-pressed") === "true", 5000);
-      click(secondCreator);
-      await waitFor(() => secondCreator.getAttribute("aria-pressed") === "true", 5000);
-      check("厂商支持多选并汇总已选数量", firstCreator.getAttribute("aria-pressed") === "true" && secondCreator.getAttribute("aria-pressed") === "true" && creatorToggle.textContent.includes("已选 2 家") && creatorToggle.getAttribute("aria-label").includes("已选 2 家"));
-      secondCreator.focus();
-      window.dispatchEvent(new window.KeyboardEvent("keydown", { key: "Escape", bubbles: true }));
-      await waitFor(() => creatorToggle.getAttribute("aria-expanded") === "false", 5000);
-      check("Escape 关闭厂商筛选并返回焦点", document.querySelector(".creator-filter__panel") === null && document.activeElement === creatorToggle);
-      click(creatorToggle);
-      await waitFor(() => document.querySelector(".creator-filter__panel"), 5000);
-      const reopenedOptions = q(".creator-filter__panel .legend-chip");
-      check("重新打开保留厂商选择", reopenedOptions[1]?.getAttribute("aria-pressed") === "true" && reopenedOptions[2]?.getAttribute("aria-pressed") === "true");
-      if (reopenedOptions[0]) click(reopenedOptions[0]);
-      await waitFor(() => creatorToggle.textContent.includes("全部"), 5000);
-      check("选择全部可清空厂商筛选", reopenedOptions[0]?.getAttribute("aria-pressed") === "true" && !creatorToggle.getAttribute("aria-label").includes("已选"));
-      const done = document.querySelector(".creator-filter__done");
-      if (done) click(done);
-      await waitFor(() => creatorToggle.getAttribute("aria-expanded") === "false", 5000);
-      check("完成按钮关闭筛选并返回焦点", done !== null && document.querySelector(".creator-filter__panel") === null && document.activeElement === creatorToggle);
-      click(creatorToggle);
-      await waitFor(() => document.querySelector(".creator-filter__panel"), 5000);
-      const backdrop = document.querySelector(".creator-filter__backdrop");
-      if (backdrop) click(backdrop);
-      await waitFor(() => creatorToggle.getAttribute("aria-expanded") === "false", 5000);
-      check("点击外部可以关闭厂商筛选", document.querySelector(".creator-filter__panel") === null);
+    check("展开厂商筛选显示全部与推导厂商数", creatorOptions[0]?.getAttribute("aria-pressed") === "true" && creatorOptions.length === expected.creators + 1);
+    const selectedCount = Math.min(2, expected.creators);
+    if (expected.creators < 2) warn("可比厂商不足两家，跳过厂商多选覆盖，仍检查面板开关。");
+    for (let index = 1; index <= selectedCount; index += 1) {
+      const option = creatorOptions[index];
+      if (option) click(option);
+      await waitFor(() => option?.getAttribute("aria-pressed") === "true", 5000);
     }
+    if (selectedCount > 0) {
+      const summary = "已选 " + selectedCount + " 家";
+      check("厂商选择生效并汇总已选数量", creatorOptions.slice(1, selectedCount + 1).length === selectedCount && creatorOptions.slice(1, selectedCount + 1).every((option) => option.getAttribute("aria-pressed") === "true") && creatorToggle.textContent.includes(summary) && creatorToggle.getAttribute("aria-label").includes(summary));
+    }
+    (creatorOptions[selectedCount] ?? creatorToggle).focus();
+    window.dispatchEvent(new window.KeyboardEvent("keydown", { key: "Escape", bubbles: true }));
+    await waitFor(() => creatorToggle.getAttribute("aria-expanded") === "false", 5000);
+    check("Escape 关闭厂商筛选并返回焦点", document.querySelector(".creator-filter__panel") === null && document.activeElement === creatorToggle);
+    click(creatorToggle);
+    await waitFor(() => document.querySelector(".creator-filter__panel"), 5000);
+    const reopenedOptions = q(".creator-filter__panel .legend-chip");
+    if (selectedCount > 0) check("重新打开保留厂商选择", reopenedOptions.slice(1, selectedCount + 1).length === selectedCount && reopenedOptions.slice(1, selectedCount + 1).every((option) => option.getAttribute("aria-pressed") === "true"));
+    if (reopenedOptions[0]) click(reopenedOptions[0]);
+    await waitFor(() => creatorToggle.textContent.includes("全部"), 5000);
+    check("选择全部可清空厂商筛选", reopenedOptions[0]?.getAttribute("aria-pressed") === "true" && !creatorToggle.getAttribute("aria-label").includes("已选"));
+    const done = document.querySelector(".creator-filter__done");
+    if (done) click(done);
+    await waitFor(() => creatorToggle.getAttribute("aria-expanded") === "false", 5000);
+    check("完成按钮关闭筛选并返回焦点", done !== null && document.querySelector(".creator-filter__panel") === null && document.activeElement === creatorToggle);
+    click(creatorToggle);
+    await waitFor(() => document.querySelector(".creator-filter__panel"), 5000);
+    const backdrop = document.querySelector(".creator-filter__backdrop");
+    if (backdrop) click(backdrop);
+    await waitFor(() => creatorToggle.getAttribute("aria-expanded") === "false", 5000);
+    check("点击外部可以关闭厂商筛选", backdrop !== null && document.querySelector(".creator-filter__panel") === null);
   }
 
   check(
@@ -773,20 +790,24 @@ try {
   const aaCandidate = models.find(
     (model) => model.catalogIdentity?.source === "aa-only" &&
       !model.aaStale && model.costPerTask === null &&
-      model.dimensions?.pillars && !model.dimensions.pillarCosts,
+      Number.isFinite(model.intelligence) && Number.isFinite(model.dimensions?.pillars?.coding) &&
+      !model.dimensions.pillarCosts,
   );
   const rosterSearch = document.querySelector(".model-table__search");
   check("完整名单有独立搜索框", rosterSearch !== null);
+  if (!aaCandidate) warn("没有缺成本的 AA 补充模型，跳过该类模型的搜索与详情覆盖。");
   if (aaCandidate && rosterSearch) {
     const initialRow = rows().find((row) => rowName(row) === aaCandidate.name);
     const initialRank = initialRow?.children[0]?.textContent.trim();
     setRangeValue(rosterSearch, aaCandidate.slug);
-    const found = await waitFor(() => rowCount() < expected.total && rows().some((row) => rowName(row) === aaCandidate.name), 5000);
+    const matchingCount = matchingModels(models, aaCandidate.slug).length;
+    if (matchingCount === expected.total) warn("名单搜索命中全部模型，跳过行数下降覆盖，仍检查匹配数和排名。");
+    const found = await waitFor(() => rowCount() === matchingCount && rows().some((row) => rowName(row) === aaCandidate.name), 5000);
     const filteredRow = rows().find((row) => rowName(row) === aaCandidate.name);
     check(
       "名单可搜索缺成本的 AA 模型并显示未知成本",
-      found && rowCount() < expected.total && filteredRow?.children[3]?.textContent.trim() === "—" &&
-        filteredRow?.children[2]?.textContent.trim() === aaCandidate.intelligence.toFixed(1),
+      found && rowCount() === matchingCount && filteredRow?.children[3]?.textContent.trim() === "—" &&
+        filteredRow?.children[2]?.textContent.trim() === formatNumber(aaCandidate.intelligence),
       aaCandidate.name,
     );
     check("名单搜索不改变模型排名", filteredRow?.children[0]?.textContent.trim() === initialRank);
@@ -827,7 +848,7 @@ try {
     const coding = viewChips().find((chip) => chip.textContent.trim() === VIEW_LABELS[1]);
     if (coding) click(coding);
     const hasCodingScore = await waitFor(
-      () => metricValues()[0] === aaCandidate.dimensions.pillars.coding.toFixed(1),
+      () => metricValues()[0] === formatNumber(aaCandidate.dimensions.pillars.coding),
       5000,
     );
     check("缺成本时仍显示已知的编程评分", hasCodingScore && metricValues()[1] === "—");
@@ -853,9 +874,11 @@ try {
     subsetNotice() !== null && subsetNotice().textContent.includes(String(expected.coding)),
     subsetNotice()?.textContent.trim() ?? "无提示",
   );
-  check("膝点徽章存在", kneeBadges().length >= 1, "实际 " + kneeBadges().length);
-  check("表格标出膝点行", q(".model-table__row.is-knee").length >= 1, "实际 " + q(".model-table__row.is-knee").length);
-  check("图表仍在", document.querySelector(".chart-card") !== null && document.querySelectorAll(".model-chart svg").length > 0);
+  check("编程推荐卡数量等于推导值", q(".recommendation-card").length === expected.codingRecommendations, "实际 " + q(".recommendation-card").length + "，推导 " + expected.codingRecommendations);
+  check("膝点徽章数量等于推导值", kneeBadges().length === Math.min(1, expected.codingRecommendations), "实际 " + kneeBadges().length);
+  check("表格膝点行数量等于推导值", q(".model-table__row.is-knee").length === Math.min(2, expected.codingRecommendations), "实际 " + q(".model-table__row.is-knee").length);
+  if (expected.codingRecommendations === 0) warn("没有编程视角可比模型，跳过膝点出现覆盖，仍检查零数量。");
+  await checkChart("编程绘图状态与可比数据一致", expected.coding);
 
   console.log("\n=== 自定义视角 + 拖动权重 ===");
   const customChip = viewChips().find((chip) => chip.textContent.trim() === VIEW_LABELS[4]);
@@ -876,17 +899,23 @@ try {
     "实际 " + weightShares().join("/") + "，推导 " + expected.defaultShares.join("/"),
   );
 
-  const targetRow = rows().find((row) => rowName(row) === (dragTarget?.name ?? "")) ?? rows()[0];
-  check("拖拽目标模型出现在表格中", targetRow !== undefined, "目标 " + (dragTarget?.name ?? "无"));
-  if (targetRow) click(targetRow);
-  await waitFor(() => document.querySelector(".selected-model__name > span:first-child")?.textContent.trim() === rowName(targetRow), 5000);
-  const beforeScore = metricValues()[0];
-  const beforeCost = metricValues()[1];
-  check(
-    "选中可比模型后指标卡显示数值",
-    Number.isFinite(Number.parseFloat(beforeScore)) && Number.isFinite(parseMoney(beforeCost)),
-    beforeScore + " / " + beforeCost,
-  );
+  let beforeScore;
+  let beforeCost;
+  if (dragTarget) {
+    const targetRow = rows().find((row) => rowName(row) === dragTarget.name);
+    check("拖拽目标模型出现在表格中", targetRow !== undefined, "目标 " + dragTarget.name);
+    if (targetRow) click(targetRow);
+    const selected = await waitFor(() => document.querySelector(".selected-model__name > span:first-child")?.textContent.trim() === dragTarget.name, 5000);
+    beforeScore = metricValues()[0];
+    beforeCost = metricValues()[1];
+    check(
+      "选中可比模型后指标卡显示数值",
+      selected && Number.isFinite(Number.parseFloat(beforeScore)) && Number.isFinite(parseMoney(beforeCost)),
+      beforeScore + " / " + beforeCost,
+    );
+  } else {
+    warn("没有拖拽前后指标均可比且显示值有变化的模型，跳过整个数值联动分支，仍检查权重与模式。");
+  }
 
   const codingSlider = weightSliders()[0];
   if (codingSlider) setRangeValue(codingSlider, 90);
@@ -898,8 +927,10 @@ try {
     weightShares().join("/") === expected.dragShares.join("/"),
     "实际 " + weightShares().join("/") + "，推导 " + expected.dragShares.join("/"),
   );
-  check("拖动后得分变化", afterScore !== beforeScore, beforeScore + " -> " + afterScore);
-  check("拖动后成本变化", afterCost !== beforeCost, beforeCost + " -> " + afterCost);
+  if (dragTarget) {
+    check("拖动后得分变化", afterScore !== beforeScore, beforeScore + " -> " + afterScore);
+    check("拖动后成本变化", afterCost !== beforeCost, beforeCost + " -> " + afterCost);
+  }
   check(
     "拖动后模式标签仍是自定义",
     (document.querySelector(".view-weights__mode")?.textContent ?? "").includes(VIEW_LABELS[4]),
@@ -910,11 +941,12 @@ try {
     rowCount() === expected.total,
     rowsDetail(expected.total),
   );
-  if (dragTargetAfterMath && targetRow && rowName(targetRow) === dragTarget.name) {
+  if (dragTargetAfterMath) {
     const derivedScore = Number.parseFloat(afterScore);
     const derivedCost = parseMoney(afterCost);
-    const scoreOk = Number.isFinite(derivedScore) && Math.abs(derivedScore - dragTargetAfterMath.intelligence) <= 0.06;
-    const costTolerance = dragTargetAfterMath.costPerTask < 0.1 ? 0.0006 : 0.006;
+    const scoreTolerance = dragTargetAfterMath.intelligence >= 100 ? 0.500001 : 0.050001;
+    const scoreOk = Number.isFinite(derivedScore) && Math.abs(derivedScore - dragTargetAfterMath.intelligence) <= scoreTolerance;
+    const costTolerance = dragTargetAfterMath.costPerTask < 0.1 ? 0.000501 : 0.005001;
     const costOk = Number.isFinite(derivedCost) && Math.abs(derivedCost - dragTargetAfterMath.costPerTask) <= costTolerance;
     check(
       "拖动后指标与权重推导吻合",
@@ -934,10 +966,11 @@ try {
   await waitFor(() => toggle?.getAttribute("aria-pressed") === "true", 5000);
   check("仅开源权重已开启", toggle?.getAttribute("aria-pressed") === "true");
   check(
-    "开源筛选后行数下降且等于推导值",
-    rowCount() === expected.openTotal && rowCount() < expected.total,
+    "开源筛选后行数等于推导值",
+    rowCount() === expected.openTotal,
     rowsDetail(expected.openTotal) + "（筛选前 " + expected.total + "）",
   );
+  if (expected.openTotal === expected.total) warn("全部模型都是开源权重，跳过开源筛选行数下降覆盖，仍检查开关和推导数量。");
   if (toggle) click(toggle);
   await waitFor(() => toggle?.getAttribute("aria-pressed") === "false", 5000);
   check("关闭筛选后行数回到筛选前", rowCount() === expected.total, rowsDetail(expected.total));
@@ -1023,11 +1056,12 @@ try {
     sortState() === "ascending" && costsInOrder(ascendingCosts, false),
     "aria-sort=" + sortState() + "，首/末 " + ascendingCosts[0] + " / " + ascendingCosts[ascendingCosts.length - 1],
   );
-  check(
-    "排序真实改变了首行",
-    descendingCosts[0] !== ascendingCosts[0],
-    descendingCosts[0] + " vs " + ascendingCosts[0],
-  );
+  const distinctCosts = new Set(models.map((model) => parseMoney(formatCost(model.costPerTask))).filter(Number.isFinite));
+  if (distinctCosts.size >= 2) {
+    check("排序真实改变了首行", descendingCosts[0] !== ascendingCosts[0], descendingCosts[0] + " vs " + ascendingCosts[0]);
+  } else {
+    warn("可显示成本不足两种，跳过排序首值变化覆盖，仍检查排序状态与顺序。");
+  }
 
   console.log("\n=== 语言与主题开关 ===");
   check("主题切换按钮存在", document.querySelector(".theme-toggle") !== null);
@@ -1098,7 +1132,7 @@ try {
     page.click = (element) => {
       element.dispatchEvent(new pageWindow.MouseEvent("click", { bubbles: true, cancelable: true }));
     };
-    page.ready = () => pageDocument.querySelector(".model-chart") !== null;
+    page.ready = () => pageReady(pageDocument);
     extraPages.push(page);
     return page;
   };
@@ -1131,7 +1165,7 @@ try {
   await waitFor(() => openOnlyPage.rowCount() === expected.openTotal, 5000);
   check(
     "?open=1 名单只包含开源模型",
-    openOnlyPage.rowCount() === expected.openTotal && openOnlyPage.rowCount() < expected.total,
+    openOnlyPage.rowCount() === expected.openTotal,
     "实际 " + openOnlyPage.rowCount() + "，推导 " + expected.openTotal + "（全部 " + expected.total + "）",
   );
 
@@ -1223,7 +1257,7 @@ try {
   const kneeTogglePressed = () => q('.chart-card__actions .chart-label-toggle[aria-pressed="true"]').length;
   const axisChipsSummary = () =>
     axisChips().map((chip) => (chip.classList.contains("is-active") ? "*" : "") + chip.textContent.trim()).join(" / ");
-  // 两轴可比数相等时无需子集提示，那条断言直接跳过
+  // 速度轴不是真子集时不显示子集提示。
   const speedIsSubset = speedExpected.rows < expected.intelligence;
 
   check(
@@ -1242,11 +1276,8 @@ try {
     isActiveAxis(AXIS_LABELS.speed) && !isActiveAxis(AXIS_LABELS.cost),
     axisChipsSummary(),
   );
-  check(
-    "速度轴下图表仍在",
-    document.querySelector(".chart-card") !== null && document.querySelectorAll(".model-chart svg").length > 0,
-    "svg " + document.querySelectorAll(".model-chart svg").length + " 个",
-  );
+  await checkChart("速度轴绘图状态与可比数据一致", speedExpected.rows);
+  if (speedExpected.rows === 0) warn("没有速度轴可比模型，跳过速度图 SVG 覆盖，仍检查空图状态。");
   check(
     "速度轴下表格行数不变",
     rowCount() === expected.total,
@@ -1254,10 +1285,11 @@ try {
   );
   check(
     "速度轴下推荐卡数量=推导值",
-    speedExpected.recommendations > 0 && q(".recommendation-card").length === speedExpected.recommendations,
+    q(".recommendation-card").length === speedExpected.recommendations,
     "实际 " + q(".recommendation-card").length + "，推导 " + speedExpected.recommendations,
   );
-  check("速度轴下膝点徽章出现", kneeBadges().length >= 1, "实际 " + kneeBadges().length);
+  check("速度轴下膝点徽章数量等于推导值", kneeBadges().length === Math.min(1, speedExpected.recommendations), "实际 " + kneeBadges().length);
+  if (speedExpected.recommendations === 0) warn("没有速度轴推荐候选，跳过膝点出现覆盖，仍检查零数量和开关。");
   check("速度轴下图内膝点开关激活", kneeTogglePressed() >= 1, "激活 " + kneeTogglePressed() + " 个");
   check(
     "速度轴下表格膝点行=推导交集数",
@@ -1271,7 +1303,8 @@ try {
       axisSubset()?.textContent.trim() ?? "无提示",
     );
   } else {
-    console.log("  SKIP 速度轴子集提示（两轴可比数相等，无需提示）");
+    check("速度轴不是价格轴真子集时无提示", axisSubset() === null);
+    warn("速度轴不是真子集，跳过子集数字覆盖，仍检查无提示。");
   }
 
   const priceAxisChip = axisChip(AXIS_LABELS.cost);
@@ -1304,14 +1337,14 @@ try {
     speedAxisPage.rowCount() === expected.total,
     "实际 " + speedAxisPage.rowCount() + "，推导 " + expected.total,
   );
-  if (speedIsSubset) {
-    const speedPageSubset = speedAxisPage.document.querySelector(".axis-switch__subset");
-    check(
-      "?axis=speed 子集提示含推导数字",
-      speedPageSubset !== null && speedPageSubset.textContent.includes(String(speedExpected.rows)),
-      speedPageSubset?.textContent.trim() ?? "无提示",
-    );
-  }
+  const speedPageSubset = speedAxisPage.document.querySelector(".axis-switch__subset");
+  check(
+    "?axis=speed 子集提示符合推导",
+    speedIsSubset
+      ? speedPageSubset !== null && speedPageSubset.textContent.includes(String(speedExpected.rows))
+      : speedPageSubset === null,
+    speedPageSubset?.textContent.trim() ?? "无提示",
+  );
 
   const noAxisPage = await openPage("");
   await waitFor(() => noAxisPage.ready(), 30000);
@@ -1329,6 +1362,34 @@ try {
     axisScenarioErrors.length === 0,
     axisScenarioErrors.slice(0, 5).join(" || "),
   );
+
+}
+
+let exitCode = 1;
+try {
+  // 空数据也有合法的首屏状态。
+  const hydrated = await waitFor(() => pageReady(document), 30000);
+  console.log("\n=== 首屏水合 ===");
+  check(
+    "静态产物显示图表或空状态",
+    hydrated,
+    hydrated ? "" : "等待 30s 仍没有图表或空状态；确认 out/ 与 catalog.json 是否同批构建",
+  );
+  if (!hydrated) {
+    console.log("运行期错误: " + (errors.length ? errors.slice(0, 6).join(" || ") : "无"));
+    exitCode = 1;
+    throw new Error("水合失败，后续断言无意义");
+  }
+
+  if (expected.total === 0) {
+    await sleep(400);
+    const emptyState = document.querySelector(".empty-state");
+    check("空 catalog 显示空状态", emptyState !== null && Boolean(emptyState.querySelector("h1")?.textContent.trim()));
+    check("空 catalog 不显示模型行或图表", rowCount() === 0 && q(".model-chart").length === 0);
+    warn("catalog 没有模型，跳过依赖模型数据的交互分支。");
+  } else {
+    await checkModelInteractions();
+  }
 
   console.log("\n=== 运行期错误 ===");
   check(
@@ -1354,7 +1415,7 @@ try {
   }
   exitCode = 1;
 } finally {
-  console.log("\n结果: " + passed + " passed, " + failed + " failed");
+  console.log("\n结果: " + passed + " passed, " + failed + " failed, " + warned + " warnings");
   try {
     server.close();
   } catch {

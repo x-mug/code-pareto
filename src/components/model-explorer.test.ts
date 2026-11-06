@@ -3,14 +3,13 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 
 import { ModelExplorer } from "@/components/model-explorer";
-import catalogData from "@/data/catalog.json";
 import type { ModelCatalog, ModelPoint } from "@/lib/models";
 
 describe("model roster", () => {
   it("renders the roster even when no model has a task cost", () => {
-    const catalog = catalogData as ModelCatalog;
     const unpriced: ModelPoint = {
-      ...catalog.models[0],
+      creatorId: null, releaseDate: null, reasoning: false,
+      coding: null, agentic: null, inputPrice: null, outputPrice: null, blendedPrice: null, latency: null,
       id: "unpriced-example",
       slug: "unpriced-example",
       name: "Unpriced Example",
@@ -21,7 +20,10 @@ describe("model roster", () => {
       aaStale: false,
     };
     const html = renderToStaticMarkup(createElement(ModelExplorer, {
-      initialCatalog: { ...catalog, models: [unpriced] },
+      initialCatalog: {
+        models: [unpriced], syncedAt: "2026-01-01T00:00:00Z", refreshIntervalMs: 28800000, indexVersion: 5,
+        source: { provider: "Artificial Analysis", url: "https://artificialanalysis.ai/", tier: "free", mode: "live" },
+      } satisfies ModelCatalog,
     }));
 
     expect(html).toContain('class="model-table__row');

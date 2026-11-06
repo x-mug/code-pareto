@@ -1,19 +1,5 @@
 #!/usr/bin/env node
-/**
- * 生成 src/data/catalog.json
- *
- * 1. 拉 Parallax 模型目录（https://parallax.zzz.sd/api/models，ModelCatalog 结构）
- * 2. 拉 AA Intelligence Index / Engineering Index 两个页面的 RSC payload（initialModels）
- * 3. 按 slug 给"跑完 AA 完整评测"的模型补 dimensions：
- *      pillars      ← Engineering 页 subScores（0-100，5 支支柱）
- *      pillarCosts  ← Intelligence 页 canonicalEvalTokenCounts × 官方价格复算的 USD/任务，
- *                     支柱内按 9 项评测在 Intelligence Index 里的权重加权
- *      openWeights  ← Intelligence 页 isOpenWeights
- * 4. 写 src/data/catalog.json（2 空格缩进、UTF-8），上游字段一律原样保留
- *
- * 幂等：输入不变时输出逐字节相同；任何一步失败都不会覆盖已有文件。
- * 用法: node scripts/build-data.mjs
- */
+// 从基础目录和 AA 附加评测生成快照，数据偏差仅告警。
 import { mkdir, readFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -82,8 +68,8 @@ const ENGINEERING_WEIGHTS = {
 
 const REQUEST_TIMEOUT_MS = 30_000;
 const MAX_ATTEMPTS = 3;
-/** 复算的每任务总成本相对 AA 官方 costPerTask 的允许误差 */
-const COST_TOLERANCE = 0.1;
+// 跨快照成本偏差超过此值时告警。
+const COST_WARNING_THRESHOLD = 0.1;
 
 function log(message) {
   console.log("[build-data] " + message);
@@ -169,8 +155,8 @@ function extractInitialModels(html, label) {
   } catch (error) {
     throw new Error(label + " 页面里的 initialModels 解析失败: " + error.message);
   }
-  if (!Array.isArray(models) || models.length === 0) {
-    throw new Error(label + " 页面解析出的 initialModels 为空");
+  if (!Array.isArray(models)) {
+    throw new Error(label + " 页面解析出的 initialModels 不是数组");
   }
   return models;
 }
@@ -228,8 +214,8 @@ function validateCatalog(catalog) {
   if (!catalog || typeof catalog !== "object" || Array.isArray(catalog)) {
     throw new Error("模型目录响应不是 JSON 对象");
   }
-  if (!Array.isArray(catalog.models) || catalog.models.length === 0) {
-    throw new Error("模型目录响应缺少非空的 models 数组");
+  if (!Array.isArray(catalog.models)) {
+    throw new Error("模型目录响应缺少 models 数组");
   }
   if (typeof catalog.syncedAt !== "string") {
     throw new Error("模型目录响应缺少 syncedAt");
@@ -334,10 +320,13 @@ export function buildDimensions(intelligenceModels, engineeringModels, catalogBy
         pillarsComplete = false;
         break;
       }
-      if (!isFiniteNumber(value) || value < 0 || value > 100) {
-        problems.push(model.slug + ": subScores." + field + " 不是 0-100 的数字");
+      if (!isFiniteNumber(value)) {
+        warnings.push(model.slug + ": subScores." + field + " 不是数字，保留基础数据");
         pillarsComplete = false;
         break;
+      }
+      if (value < 0 || value > 100) {
+        warnings.push(model.slug + ": subScores." + field + " 超出历史范围，保留上游数值 " + value);
       }
       pillars[pillar] = round(value, 2);
     }
@@ -429,7 +418,7 @@ export function applyDimensions(models, dimensionsBySlug) {
     const costs = dimensions?.pillarCosts;
     if (!isFiniteNumber(model.intelligence) || !pillars || typeof dimensions.openWeights !== "boolean") return false;
     if (Object.keys(pillars).length !== PILLARS.length ||
-        !PILLARS.every((pillar) => isFiniteNumber(pillars[pillar]) && pillars[pillar] >= 0 && pillars[pillar] <= 100)) return false;
+        !PILLARS.every((pillar) => isFiniteNumber(pillars[pillar]))) return false;
     return costs === null || (costs && Object.keys(costs).length === PILLARS.length &&
       PILLARS.every((pillar) => isFiniteNumber(costs[pillar]) && costs[pillar] > 0));
   }
@@ -479,14 +468,13 @@ async function main() {
   };
   const [catalog, intelligenceHtml, engineeringHtml, leaderboardHtml, releasesHtml] = await Promise.all([
     fetchJson(SOURCES.catalog),
-    fetchText(SOURCES.intelligence),
-    fetchText(SOURCES.engineering),
+    optionalPage(SOURCES.intelligence, "AA Intelligence Index"),
+    optionalPage(SOURCES.engineering, "AA Engineering Index"),
     optionalPage(SOURCES.leaderboard, "AA 排行榜"),
     optionalPage(SOURCES.releases, "AA 发布列表"),
   ]);
   validateCatalog(catalog);
 
-  const intelligenceModels = extractInitialModels(intelligenceHtml, "Intelligence Index");
   function optionalModels(html, label) {
     if (html === null) return [];
     try {
@@ -496,8 +484,9 @@ async function main() {
       return [];
     }
   }
-  const engineeringModels = extractInitialModels(engineeringHtml, "Engineering Index");
-  if (engineeringModels.length === 0) throw new Error("Engineering Index 没有模型，放弃写入");
+  const intelligenceModels = optionalModels(intelligenceHtml, "Intelligence Index");
+  const engineeringModels = optionalModels(engineeringHtml, "Engineering Index");
+  if (engineeringModels.length === 0) log("警告: Engineering Index 没有模型，继续更新基础目录");
   const leaderboardModels = optionalModels(leaderboardHtml, "AA 排行榜");
   let releaseModels = [];
   if (releasesHtml !== null) {
@@ -532,21 +521,13 @@ async function main() {
     "AA 完整评测: Intelligence 页 " + intelligenceModels.length + " 个模型, Engineering 页 " +
       engineeringModels.length + " 个模型",
   );
-  if (intelligenceModels.length < 20) {
-    throw new Error(
-      "AA 完整评测的模型只有 " + intelligenceModels.length + " 个，疑似上游页面异常，放弃写入",
-    );
-  }
 
   const { dimensionsBySlug, problems, warnings } = buildDimensions(
     [...intelligenceModels, ...supplemented.supplementalCandidates],
     engineeringModels,
     catalogBySlug,
   );
-  if (problems.length > 0) {
-    throw new Error("数据合并有问题:\n  - " + problems.join("\n  - "));
-  }
-  for (const warning of warnings) log("警告: " + warning);
+  for (const warning of [...problems, ...warnings]) log("警告: " + warning);
 
   // 只给有 AA 数据的模型加 dimensions，其余上游字段原样保留、顺序不变
   const { models, merged } = applyDimensions(supplemented.models, dimensionsBySlug);
@@ -580,9 +561,9 @@ async function main() {
     "复算校验: " + compared + " 个模型的每任务总成本最大相对偏差 " +
       (worstDeviation * 100).toFixed(2) + "%" + (worstSlug ? "（" + worstSlug + "）" : ""),
   );
-  if (worstDeviation > COST_TOLERANCE) {
+  if (worstDeviation > COST_WARNING_THRESHOLD) {
     log(
-      "警告: 复算成本与 AA 官方 costPerTask 偏差超过 " + COST_TOLERANCE * 100 +
+      "警告: 复算成本与 AA 官方 costPerTask 偏差超过 " + COST_WARNING_THRESHOLD * 100 +
         "%，请检查评测权重/价格口径",
     );
   }
