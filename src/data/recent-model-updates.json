@@ -1,6 +1,149 @@
 {
   "events": [
     {
+      "modelId": "198b717f-42c8-4ab7-a699-ae9373d669d3",
+      "name": "DeepSeek V3.1 (Reasoning)",
+      "creator": "DeepSeek",
+      "kind": "updated",
+      "observedAt": "2026-11-06T03:31:01.629Z",
+      "changes": [
+        {
+          "field": "inputPrice",
+          "before": 0.58,
+          "after": 0.425
+        },
+        {
+          "field": "outputPrice",
+          "before": 1.68,
+          "after": 1.34
+        }
+      ]
+    },
+    {
+      "modelId": "1e9907e0-ffac-4595-b006-962e4f1da7cf",
+      "name": "North Mini Code",
+      "creator": "Cohere",
+      "kind": "updated",
+      "observedAt": "2026-11-06T03:31:01.629Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": null,
+          "after": 3.4
+        },
+        {
+          "field": "costPerTask",
+          "before": null,
+          "after": 0
+        }
+      ]
+    },
+    {
+      "modelId": "38a98e3d-779b-49ec-b005-230a3a72088a",
+      "name": "Muse Wonder (High)",
+      "creator": "Meta",
+      "kind": "updated",
+      "observedAt": "2026-11-06T03:31:01.629Z",
+      "changes": [
+        {
+          "field": "costPerTask",
+          "before": null,
+          "after": 4.5605
+        }
+      ]
+    },
+    {
+      "modelId": "d274918e-ea82-4951-8b37-8ed9ab898dbc",
+      "name": "Tencent Hy4",
+      "creator": "Tencent",
+      "kind": "updated",
+      "observedAt": "2026-11-06T03:31:01.629Z",
+      "changes": [
+        {
+          "field": "costPerTask",
+          "before": null,
+          "after": 1.0311
+        },
+        {
+          "field": "inputPrice",
+          "before": null,
+          "after": 0.834
+        },
+        {
+          "field": "outputPrice",
+          "before": null,
+          "after": 2.501
+        }
+      ]
+    },
+    {
+      "modelId": "e2ed7885-d46b-4da7-a873-f12f88af0081",
+      "name": "Inkling 2 Small",
+      "creator": "Thinking Machines",
+      "kind": "added",
+      "observedAt": "2026-11-06T03:31:01.629Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": null,
+          "after": 30.6
+        },
+        {
+          "field": "costPerTask",
+          "before": null,
+          "after": 1.1784
+        },
+        {
+          "field": "inputPrice",
+          "before": null,
+          "after": 0.3
+        },
+        {
+          "field": "outputPrice",
+          "before": null,
+          "after": 1
+        }
+      ]
+    },
+    {
+      "modelId": "f9739750-6d42-450f-ba1e-2f76c869b4fe",
+      "name": "Quasar 438B (Max, Based on GLM-5.2)",
+      "creator": "Multiverse Computing",
+      "kind": "updated",
+      "observedAt": "2026-11-06T03:31:01.629Z",
+      "changes": [
+        {
+          "field": "inputPrice",
+          "before": 0.11,
+          "after": null
+        },
+        {
+          "field": "outputPrice",
+          "before": 0.33,
+          "after": null
+        }
+      ]
+    },
+    {
+      "modelId": "fb65266f-5a7d-403c-85d5-ccdf0d1ca838",
+      "name": "DeepSeek V3.1 (Non-reasoning)",
+      "creator": "DeepSeek",
+      "kind": "updated",
+      "observedAt": "2026-11-06T03:31:01.629Z",
+      "changes": [
+        {
+          "field": "inputPrice",
+          "before": 0.56,
+          "after": 0.555
+        },
+        {
+          "field": "outputPrice",
+          "before": 1.68,
+          "after": 1.665
+        }
+      ]
+    },
+    {
       "modelId": "b8fc61f7-5e9a-49e6-8547-6ac56db24627",
       "name": "Claude Opus 5 (Max)",
       "creator": "Anthropic",
