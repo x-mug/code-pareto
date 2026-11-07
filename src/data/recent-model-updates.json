@@ -1,6 +1,77 @@
 {
   "events": [
     {
+      "modelId": "18721247-4e56-4cf7-9a9d-c71cc60c0961",
+      "name": "K-EXAONE 2.0",
+      "creator": "LG AI Research",
+      "kind": "updated",
+      "observedAt": "2026-11-07T06:09:39.877Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": null,
+          "after": 7.6
+        }
+      ]
+    },
+    {
+      "modelId": "22d09131-343b-4adf-8760-533e20a2155f",
+      "name": "MiMo-V2.5",
+      "creator": "Xiaomi",
+      "kind": "updated",
+      "observedAt": "2026-11-07T06:09:39.877Z",
+      "changes": [
+        {
+          "field": "inputPrice",
+          "before": 0.133,
+          "after": 0.181
+        },
+        {
+          "field": "outputPrice",
+          "before": 0.266,
+          "after": 0.362
+        }
+      ]
+    },
+    {
+      "modelId": "e2c0623e-c855-4a61-bb66-be1f1ed43234",
+      "name": "Nemotron 3.5 Super VL",
+      "creator": "NVIDIA",
+      "kind": "updated",
+      "observedAt": "2026-11-07T06:09:39.877Z",
+      "changes": [
+        {
+          "field": "costPerTask",
+          "before": 0.5382,
+          "after": 0.5196
+        },
+        {
+          "field": "inputPrice",
+          "before": 0.2,
+          "after": 0.175
+        }
+      ]
+    },
+    {
+      "modelId": "fb65266f-5a7d-403c-85d5-ccdf0d1ca838",
+      "name": "DeepSeek V3.1 (Non-reasoning)",
+      "creator": "DeepSeek",
+      "kind": "updated",
+      "observedAt": "2026-11-07T06:09:39.877Z",
+      "changes": [
+        {
+          "field": "inputPrice",
+          "before": 0.555,
+          "after": 0.53
+        },
+        {
+          "field": "outputPrice",
+          "before": 1.665,
+          "after": 1.59
+        }
+      ]
+    },
+    {
       "modelId": "198b717f-42c8-4ab7-a699-ae9373d669d3",
       "name": "DeepSeek V3.1 (Reasoning)",
       "creator": "DeepSeek",
