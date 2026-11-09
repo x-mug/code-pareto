@@ -1,6 +1,198 @@
 {
   "events": [
     {
+      "modelId": "0c9b4e05-9259-42cc-b40e-d6acbbeaa7e8",
+      "name": "Claude Fable 5.2 (Medium, Default Fallback)",
+      "creator": "Anthropic",
+      "kind": "added",
+      "observedAt": "2026-11-09T22:29:17.085Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": null,
+          "after": 56.4
+        },
+        {
+          "field": "inputPrice",
+          "before": null,
+          "after": 8
+        },
+        {
+          "field": "outputPrice",
+          "before": null,
+          "after": 40
+        }
+      ]
+    },
+    {
+      "modelId": "593f2d23-247b-41c9-a679-cebd225f0a9a",
+      "name": "Claude Fable 5.2 (Max, Default Fallback)",
+      "creator": "Anthropic",
+      "kind": "added",
+      "observedAt": "2026-11-09T22:29:17.085Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": null,
+          "after": 64.6
+        },
+        {
+          "field": "inputPrice",
+          "before": null,
+          "after": 8
+        },
+        {
+          "field": "outputPrice",
+          "before": null,
+          "after": 40
+        }
+      ]
+    },
+    {
+      "modelId": "76942526-cc96-46b0-bc27-29561c53ed70",
+      "name": "Claude Fable 5.2 (Xhigh, Default Fallback)",
+      "creator": "Anthropic",
+      "kind": "added",
+      "observedAt": "2026-11-09T22:29:17.085Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": null,
+          "after": 62.2
+        },
+        {
+          "field": "inputPrice",
+          "before": null,
+          "after": 8
+        },
+        {
+          "field": "outputPrice",
+          "before": null,
+          "after": 40
+        }
+      ]
+    },
+    {
+      "modelId": "7a64ffc4-36c3-4369-981e-73abdd6ff5e2",
+      "name": "Muse Ember (Xhigh)",
+      "creator": "Meta",
+      "kind": "added",
+      "observedAt": "2026-11-09T22:29:17.085Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": null,
+          "after": 34.1
+        },
+        {
+          "field": "inputPrice",
+          "before": null,
+          "after": 0.1
+        },
+        {
+          "field": "outputPrice",
+          "before": null,
+          "after": 0.5
+        }
+      ]
+    },
+    {
+      "modelId": "cfc7acb1-d903-4858-9b6c-6c7776caf8f9",
+      "name": "Claude Fable 5.2 (Low, Default Fallback)",
+      "creator": "Anthropic",
+      "kind": "added",
+      "observedAt": "2026-11-09T22:29:17.085Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": null,
+          "after": 53.9
+        },
+        {
+          "field": "inputPrice",
+          "before": null,
+          "after": 8
+        },
+        {
+          "field": "outputPrice",
+          "before": null,
+          "after": 40
+        }
+      ]
+    },
+    {
+      "modelId": "d4dd600d-0d8e-4d6e-ad18-0cb8f7d6c4d0",
+      "name": "Agnes 2.5 Pro Theta",
+      "creator": "Sapiens AI",
+      "kind": "updated",
+      "observedAt": "2026-11-09T22:29:17.085Z",
+      "changes": [
+        {
+          "field": "costPerTask",
+          "before": null,
+          "after": 0.5747
+        },
+        {
+          "field": "inputPrice",
+          "before": 0.45,
+          "after": 0.1
+        },
+        {
+          "field": "outputPrice",
+          "before": 0.9,
+          "after": 0.3
+        }
+      ]
+    },
+    {
+      "modelId": "dbf63365-127f-41ee-9e51-81173adb3502",
+      "name": "Muse Ember (Max)",
+      "creator": "Meta",
+      "kind": "added",
+      "observedAt": "2026-11-09T22:29:17.085Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": null,
+          "after": 36
+        },
+        {
+          "field": "inputPrice",
+          "before": null,
+          "after": 0.1
+        },
+        {
+          "field": "outputPrice",
+          "before": null,
+          "after": 0.5
+        }
+      ]
+    },
+    {
+      "modelId": "fdc1913b-9497-45ef-83f7-17dae756f37e",
+      "name": "Claude Fable 5.2 (High, Default Fallback)",
+      "creator": "Anthropic",
+      "kind": "added",
+      "observedAt": "2026-11-09T22:29:17.085Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": null,
+          "after": 61.8
+        },
+        {
+          "field": "inputPrice",
+          "before": null,
+          "after": 8
+        },
+        {
+          "field": "outputPrice",
+          "before": null,
+          "after": 40
+        }
+      ]
+    },
+    {
       "modelId": "d4dd600d-0d8e-4d6e-ad18-0cb8f7d6c4d0",
       "name": "Agnes 2.5 Pro Theta",
       "creator": "Sapiens AI",
