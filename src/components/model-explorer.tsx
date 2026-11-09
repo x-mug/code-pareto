@@ -1596,12 +1596,12 @@ export function ModelExplorer({ initialCatalog }: ModelExplorerProps) {
             <small>{t("brand.tagline")}</small>
           </span>
         </a>
+        <div className="source-status">
+          <time dateTime={catalog.syncedAt}>
+            {formatSyncedAt(catalog.syncedAt, locale)} {t("status.updated")}
+          </time>
+        </div>
         <div className="site-header__actions">
-          <div className="source-status">
-            <span>
-              {formatSyncedAt(catalog.syncedAt, locale)} {t("status.updated")}
-            </span>
-          </div>
           <a
             className="github-link"
             href="https://github.com/x-mug/code-pareto"

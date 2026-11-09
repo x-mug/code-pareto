@@ -3034,7 +3034,7 @@ a {
   }
 }
 
-/* ── 布局整理：页头不折行、首屏收紧、筛选并入视角面板 ─────────────── */
+/* 页头、首屏和筛选面板布局。 */
 
 .brand strong {
   white-space: nowrap;
@@ -3050,9 +3050,10 @@ a {
 
 .source-status {
   min-width: 0;
+  margin-left: auto;
 }
 
-.source-status > span {
+.source-status time {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -3106,11 +3107,37 @@ a {
 @media (max-width: 720px) {
   .site-header {
     min-height: 60px;
-    gap: 10px;
+    flex-wrap: wrap;
+    gap: 8px 10px;
+    padding-block: 10px;
+  }
+
+  .site-header .brand {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .site-header .brand small {
+    white-space: normal;
+  }
+
+  .site-header__actions {
+    flex-shrink: 0;
   }
 
   .source-status {
-    display: none;
+    order: 1;
+    flex-basis: 100%;
+    min-height: 0;
+    margin-left: 0;
+    font-size: 11px;
+    line-height: 1.5;
+  }
+
+  .source-status time {
+    overflow: visible;
+    white-space: normal;
+    text-overflow: clip;
   }
 
   .hero {
