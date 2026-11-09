@@ -1,6 +1,30 @@
 {
   "events": [
     {
+      "modelId": "d4dd600d-0d8e-4d6e-ad18-0cb8f7d6c4d0",
+      "name": "Agnes 2.5 Pro Theta",
+      "creator": "Sapiens AI",
+      "kind": "added",
+      "observedAt": "2026-11-09T06:48:13.442Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": null,
+          "after": 24
+        },
+        {
+          "field": "inputPrice",
+          "before": null,
+          "after": 0.45
+        },
+        {
+          "field": "outputPrice",
+          "before": null,
+          "after": 0.9
+        }
+      ]
+    },
+    {
       "modelId": "18721247-4e56-4cf7-9a9d-c71cc60c0961",
       "name": "K-EXAONE 2.0",
       "creator": "LG AI Research",

@@ -13541,6 +13541,35 @@
       "blendedPrice": null,
       "outputSpeed": null,
       "latency": null
+    },
+    {
+      "id": "d4dd600d-0d8e-4d6e-ad18-0cb8f7d6c4d0",
+      "slug": "agnes-2-5-pro-theta",
+      "name": "Agnes 2.5 Pro Theta",
+      "creator": "Sapiens AI",
+      "creatorId": "5db3af1a-e372-4c62-98bd-f6027eeaf990",
+      "releaseDate": "2026-11-07",
+      "reasoning": true,
+      "intelligence": 24,
+      "coding": null,
+      "agentic": null,
+      "costPerTask": null,
+      "inputPrice": 0.45,
+      "outputPrice": 0.9,
+      "blendedPrice": 0.5625,
+      "outputSpeed": null,
+      "latency": null,
+      "catalogIdentity": {
+        "source": "aa-only",
+        "aaId": "d4dd600d-0d8e-4d6e-ad18-0cb8f7d6c4d0"
+      },
+      "aaOpenWeights": false,
+      "priceDataSource": {
+        "type": "median"
+      },
+      "performanceDataSource": {
+        "type": "median"
+      }
     }
   ],
   "syncedAt": "2026-11-09T00:00:00.000Z",
