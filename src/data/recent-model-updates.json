@@ -4,6 +4,151 @@
       "modelId": "0c9b4e05-9259-42cc-b40e-d6acbbeaa7e8",
       "name": "Claude Fable 5.2 (Medium, Default Fallback)",
       "creator": "Anthropic",
+      "kind": "updated",
+      "observedAt": "2026-11-10T07:28:35.443Z",
+      "changes": [
+        {
+          "field": "costPerTask",
+          "before": null,
+          "after": 3.8026
+        }
+      ]
+    },
+    {
+      "modelId": "29976311-665a-4b2f-ac72-557c33e0758e",
+      "name": "Nemotron 3.5 Lightning",
+      "creator": "NVIDIA",
+      "kind": "updated",
+      "observedAt": "2026-11-10T07:28:35.443Z",
+      "changes": [
+        {
+          "field": "costPerTask",
+          "before": 0.2898,
+          "after": 0.3145
+        }
+      ]
+    },
+    {
+      "modelId": "583f98fb-c4b8-4df3-8d40-60ac0ed69882",
+      "name": "Muse Glimmer (High)",
+      "creator": "Meta",
+      "kind": "updated",
+      "observedAt": "2026-11-10T07:28:35.443Z",
+      "changes": [
+        {
+          "field": "costPerTask",
+          "before": 0.161,
+          "after": 0.1695
+        }
+      ]
+    },
+    {
+      "modelId": "593f2d23-247b-41c9-a679-cebd225f0a9a",
+      "name": "Claude Fable 5.2 (Max, Default Fallback)",
+      "creator": "Anthropic",
+      "kind": "updated",
+      "observedAt": "2026-11-10T07:28:35.443Z",
+      "changes": [
+        {
+          "field": "costPerTask",
+          "before": null,
+          "after": 26.5386
+        }
+      ]
+    },
+    {
+      "modelId": "76942526-cc96-46b0-bc27-29561c53ed70",
+      "name": "Claude Fable 5.2 (Xhigh, Default Fallback)",
+      "creator": "Anthropic",
+      "kind": "updated",
+      "observedAt": "2026-11-10T07:28:35.443Z",
+      "changes": [
+        {
+          "field": "costPerTask",
+          "before": null,
+          "after": 14.8286
+        }
+      ]
+    },
+    {
+      "modelId": "7a64ffc4-36c3-4369-981e-73abdd6ff5e2",
+      "name": "Muse Ember (Xhigh)",
+      "creator": "Meta",
+      "kind": "updated",
+      "observedAt": "2026-11-10T07:28:35.443Z",
+      "changes": [
+        {
+          "field": "costPerTask",
+          "before": null,
+          "after": 0.1162
+        }
+      ]
+    },
+    {
+      "modelId": "cfc7acb1-d903-4858-9b6c-6c7776caf8f9",
+      "name": "Claude Fable 5.2 (Low, Default Fallback)",
+      "creator": "Anthropic",
+      "kind": "updated",
+      "observedAt": "2026-11-10T07:28:35.443Z",
+      "changes": [
+        {
+          "field": "costPerTask",
+          "before": null,
+          "after": 3.0972
+        }
+      ]
+    },
+    {
+      "modelId": "dbf63365-127f-41ee-9e51-81173adb3502",
+      "name": "Muse Ember (Max)",
+      "creator": "Meta",
+      "kind": "updated",
+      "observedAt": "2026-11-10T07:28:35.443Z",
+      "changes": [
+        {
+          "field": "costPerTask",
+          "before": null,
+          "after": 0.1359
+        }
+      ]
+    },
+    {
+      "modelId": "f0083258-8646-45b8-8082-7aaf6c2ea82a",
+      "name": "gpt-oss-120b (High)",
+      "creator": "OpenAI",
+      "kind": "updated",
+      "observedAt": "2026-11-10T07:28:35.443Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": null,
+          "after": 3.8
+        },
+        {
+          "field": "costPerTask",
+          "before": null,
+          "after": 0.3453
+        }
+      ]
+    },
+    {
+      "modelId": "fdc1913b-9497-45ef-83f7-17dae756f37e",
+      "name": "Claude Fable 5.2 (High, Default Fallback)",
+      "creator": "Anthropic",
+      "kind": "updated",
+      "observedAt": "2026-11-10T07:28:35.443Z",
+      "changes": [
+        {
+          "field": "costPerTask",
+          "before": null,
+          "after": 9.0784
+        }
+      ]
+    },
+    {
+      "modelId": "0c9b4e05-9259-42cc-b40e-d6acbbeaa7e8",
+      "name": "Claude Fable 5.2 (Medium, Default Fallback)",
+      "creator": "Anthropic",
       "kind": "added",
       "observedAt": "2026-11-09T22:29:17.085Z",
       "changes": [
