@@ -1,6 +1,63 @@
 {
   "events": [
     {
+      "modelId": "00f1248e-78e3-4230-8dc8-5e13ba8645e2",
+      "name": "MiMo-V2.5-Pro (Reasoning)",
+      "creator": "Xiaomi",
+      "kind": "updated",
+      "observedAt": "2026-11-10T19:51:09.081Z",
+      "changes": [
+        {
+          "field": "inputPrice",
+          "before": 0.435,
+          "after": 0.3915
+        },
+        {
+          "field": "outputPrice",
+          "before": 0.87,
+          "after": 0.783
+        }
+      ]
+    },
+    {
+      "modelId": "22d09131-343b-4adf-8760-533e20a2155f",
+      "name": "MiMo-V2.5",
+      "creator": "Xiaomi",
+      "kind": "updated",
+      "observedAt": "2026-11-10T19:51:09.081Z",
+      "changes": [
+        {
+          "field": "inputPrice",
+          "before": 0.181,
+          "after": 0.112
+        },
+        {
+          "field": "outputPrice",
+          "before": 0.362,
+          "after": 0.224
+        }
+      ]
+    },
+    {
+      "modelId": "4764d31d-f4af-4297-8bd1-e993f26bcb64",
+      "name": "MiMo-V2.5-Pro (Non-reasoning)",
+      "creator": "Xiaomi",
+      "kind": "updated",
+      "observedAt": "2026-11-10T19:51:09.081Z",
+      "changes": [
+        {
+          "field": "inputPrice",
+          "before": 0.674,
+          "after": 0.348
+        },
+        {
+          "field": "outputPrice",
+          "before": 1.848,
+          "after": 0.696
+        }
+      ]
+    },
+    {
       "modelId": "0c9b4e05-9259-42cc-b40e-d6acbbeaa7e8",
       "name": "Claude Fable 5.2 (Medium, Default Fallback)",
       "creator": "Anthropic",
