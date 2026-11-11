@@ -1,6 +1,44 @@
 {
   "events": [
     {
+      "modelId": "08242385-ee91-4de6-be7f-271a6d9780ce",
+      "name": "Apodex 1.1",
+      "creator": "Apodex",
+      "kind": "updated",
+      "observedAt": "2026-11-11T06:39:44.195Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": null,
+          "after": 13.7
+        },
+        {
+          "field": "costPerTask",
+          "before": null,
+          "after": 0.7642
+        }
+      ]
+    },
+    {
+      "modelId": "fe4c0848-e284-4e52-a79d-cdc28392f1a9",
+      "name": "DeepSeek V4 Flash 0731 (Max)",
+      "creator": "DeepSeek",
+      "kind": "updated",
+      "observedAt": "2026-11-11T06:39:44.195Z",
+      "changes": [
+        {
+          "field": "inputPrice",
+          "before": 0.14,
+          "after": 0.135
+        },
+        {
+          "field": "outputPrice",
+          "before": 0.28,
+          "after": 0.275
+        }
+      ]
+    },
+    {
       "modelId": "00f1248e-78e3-4230-8dc8-5e13ba8645e2",
       "name": "MiMo-V2.5-Pro (Reasoning)",
       "creator": "Xiaomi",
