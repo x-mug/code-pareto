@@ -1,6 +1,58 @@
 {
   "events": [
     {
+      "modelId": "15c4cbd7-b9aa-42c8-9ce5-5abbde0e6963",
+      "name": "Solar Pro 4",
+      "creator": "Upstage",
+      "kind": "updated",
+      "observedAt": "2026-11-11T19:42:51.145Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": null,
+          "after": 14.2
+        },
+        {
+          "field": "costPerTask",
+          "before": null,
+          "after": 0.9557
+        }
+      ]
+    },
+    {
+      "modelId": "8c748e53-61ae-48b8-af8d-eb8298b1e9db",
+      "name": "Nemotron 3 Nano Omni 30B A3B Reasoning",
+      "creator": "NVIDIA",
+      "kind": "updated",
+      "observedAt": "2026-11-11T19:42:51.145Z",
+      "changes": [
+        {
+          "field": "inputPrice",
+          "before": 0.5,
+          "after": null
+        },
+        {
+          "field": "outputPrice",
+          "before": 0.9,
+          "after": null
+        }
+      ]
+    },
+    {
+      "modelId": "922c69c7-9037-43c6-8bcf-a1c555e7f3eb",
+      "name": "Llama 4 Maverick",
+      "creator": "Meta",
+      "kind": "updated",
+      "observedAt": "2026-11-11T19:42:51.145Z",
+      "changes": [
+        {
+          "field": "outputPrice",
+          "before": 0.92,
+          "after": 0.97
+        }
+      ]
+    },
+    {
       "modelId": "08242385-ee91-4de6-be7f-271a6d9780ce",
       "name": "Apodex 1.1",
       "creator": "Apodex",
