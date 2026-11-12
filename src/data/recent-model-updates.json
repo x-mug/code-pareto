@@ -1,6 +1,77 @@
 {
   "events": [
     {
+      "modelId": "025ec6b6-df4a-449f-9a03-24e4388d6863",
+      "name": "Gemma 4 12B (Non-reasoning)",
+      "creator": "Google",
+      "kind": "updated",
+      "observedAt": "2026-11-12T07:22:14.040Z",
+      "changes": [
+        {
+          "field": "inputPrice",
+          "before": 0.1,
+          "after": null
+        },
+        {
+          "field": "outputPrice",
+          "before": 0.3,
+          "after": null
+        }
+      ]
+    },
+    {
+      "modelId": "9ac3908c-9eb2-44db-8c01-3ec7da6fc2ae",
+      "name": "Qwen3.8-Flash-Next",
+      "creator": "Alibaba",
+      "kind": "updated",
+      "observedAt": "2026-11-12T07:22:14.040Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": null,
+          "after": 28.6
+        },
+        {
+          "field": "costPerTask",
+          "before": null,
+          "after": 0.5694
+        }
+      ]
+    },
+    {
+      "modelId": "d0aa27aa-4705-4184-9a1d-483b78c9331c",
+      "name": "Gemma 4 31B (Non-reasoning)",
+      "creator": "Google",
+      "kind": "updated",
+      "observedAt": "2026-11-12T07:22:14.040Z",
+      "changes": [
+        {
+          "field": "inputPrice",
+          "before": 0.165,
+          "after": 0.15
+        }
+      ]
+    },
+    {
+      "modelId": "feb02d3b-ff8d-4ed4-b165-13f8d4a7192c",
+      "name": "Gemma 4 12B (Reasoning)",
+      "creator": "Google",
+      "kind": "updated",
+      "observedAt": "2026-11-12T07:22:14.040Z",
+      "changes": [
+        {
+          "field": "inputPrice",
+          "before": 0.1,
+          "after": null
+        },
+        {
+          "field": "outputPrice",
+          "before": 0.3,
+          "after": null
+        }
+      ]
+    },
+    {
       "modelId": "15c4cbd7-b9aa-42c8-9ce5-5abbde0e6963",
       "name": "Solar Pro 4",
       "creator": "Upstage",
