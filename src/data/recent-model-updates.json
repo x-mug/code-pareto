@@ -1,6 +1,116 @@
 {
   "events": [
     {
+      "modelId": "88c68c50-03c1-458a-9292-bd398c27adc5",
+      "name": "Gemini 4 Hydrogen (Low)",
+      "creator": "Google",
+      "kind": "added",
+      "observedAt": "2026-11-12T20:03:28.458Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": null,
+          "after": 26.9
+        },
+        {
+          "field": "inputPrice",
+          "before": null,
+          "after": 1.5
+        },
+        {
+          "field": "outputPrice",
+          "before": null,
+          "after": 7.5
+        }
+      ]
+    },
+    {
+      "modelId": "b268d7c1-5a0b-41c1-9590-1d89e66cf156",
+      "name": "JT-4.1 Flash 236B A21B",
+      "creator": "China Mobile",
+      "kind": "added",
+      "observedAt": "2026-11-12T20:03:28.458Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": null,
+          "after": 19
+        }
+      ]
+    },
+    {
+      "modelId": "dad0e3b1-e3e7-477a-99f9-c14457a91114",
+      "name": "Gemini 4 Hydrogen (Xhigh)",
+      "creator": "Google",
+      "kind": "added",
+      "observedAt": "2026-11-12T20:03:28.458Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": null,
+          "after": 53.9
+        },
+        {
+          "field": "inputPrice",
+          "before": null,
+          "after": 1.5
+        },
+        {
+          "field": "outputPrice",
+          "before": null,
+          "after": 7.5
+        }
+      ]
+    },
+    {
+      "modelId": "dae0262d-26a4-44d1-925a-6f2731cbda6a",
+      "name": "Gemini 4 Hydrogen (High)",
+      "creator": "Google",
+      "kind": "added",
+      "observedAt": "2026-11-12T20:03:28.458Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": null,
+          "after": 50.8
+        },
+        {
+          "field": "inputPrice",
+          "before": null,
+          "after": 1.5
+        },
+        {
+          "field": "outputPrice",
+          "before": null,
+          "after": 7.5
+        }
+      ]
+    },
+    {
+      "modelId": "f0537484-af30-4a8a-bf34-368c552e5cfd",
+      "name": "Gemini 4 Hydrogen (Medium)",
+      "creator": "Google",
+      "kind": "added",
+      "observedAt": "2026-11-12T20:03:28.458Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": null,
+          "after": 41.2
+        },
+        {
+          "field": "inputPrice",
+          "before": null,
+          "after": 1.5
+        },
+        {
+          "field": "outputPrice",
+          "before": null,
+          "after": 7.5
+        }
+      ]
+    },
+    {
       "modelId": "025ec6b6-df4a-449f-9a03-24e4388d6863",
       "name": "Gemma 4 12B (Non-reasoning)",
       "creator": "Google",
