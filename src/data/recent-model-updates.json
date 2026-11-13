@@ -1,6 +1,210 @@
 {
   "events": [
     {
+      "modelId": "0d3eaafd-54ed-4f78-bdd7-05a2db883986",
+      "name": "Gemini 4 Carbon (Medium)",
+      "creator": "Google",
+      "kind": "updated",
+      "observedAt": "2026-11-13T06:54:52.730Z",
+      "changes": [
+        {
+          "field": "costPerTask",
+          "before": 6.5858,
+          "after": 4.6777
+        },
+        {
+          "field": "inputPrice",
+          "before": 4,
+          "after": 2
+        },
+        {
+          "field": "outputPrice",
+          "before": 20,
+          "after": 10
+        }
+      ]
+    },
+    {
+      "modelId": "6e1b44ff-c227-496b-aef4-19b70cd18c76",
+      "name": "Gemma 4 26B A4B (Reasoning)",
+      "creator": "Google",
+      "kind": "updated",
+      "observedAt": "2026-11-13T06:54:52.730Z",
+      "changes": [
+        {
+          "field": "inputPrice",
+          "before": 0.1,
+          "after": 0.09
+        },
+        {
+          "field": "outputPrice",
+          "before": 0.34,
+          "after": 0.32
+        }
+      ]
+    },
+    {
+      "modelId": "70882ec6-914c-41f0-9754-5e8f75005f77",
+      "name": "Gemma 4 26B A4B (Non-reasoning)",
+      "creator": "Google",
+      "kind": "updated",
+      "observedAt": "2026-11-13T06:54:52.730Z",
+      "changes": [
+        {
+          "field": "inputPrice",
+          "before": 0.115,
+          "after": 0.13
+        }
+      ]
+    },
+    {
+      "modelId": "88c68c50-03c1-458a-9292-bd398c27adc5",
+      "name": "Gemini 4 Hydrogen (Low)",
+      "creator": "Google",
+      "kind": "updated",
+      "observedAt": "2026-11-13T06:54:52.730Z",
+      "changes": [
+        {
+          "field": "costPerTask",
+          "before": null,
+          "after": 0.2922
+        }
+      ]
+    },
+    {
+      "modelId": "909ed0ba-bcc5-4f38-8162-08a4e187a772",
+      "name": "Gemini 4 Carbon (High)",
+      "creator": "Google",
+      "kind": "updated",
+      "observedAt": "2026-11-13T06:54:52.730Z",
+      "changes": [
+        {
+          "field": "costPerTask",
+          "before": 7.7555,
+          "after": 5.4848
+        },
+        {
+          "field": "inputPrice",
+          "before": 4,
+          "after": 2
+        },
+        {
+          "field": "outputPrice",
+          "before": 20,
+          "after": 10
+        }
+      ]
+    },
+    {
+      "modelId": "b3866703-a9f7-4ea2-8f3f-b361c90aaf0e",
+      "name": "Gemini 4 Carbon (Low)",
+      "creator": "Google",
+      "kind": "updated",
+      "observedAt": "2026-11-13T06:54:52.730Z",
+      "changes": [
+        {
+          "field": "costPerTask",
+          "before": 7.1866,
+          "after": 5.2214
+        },
+        {
+          "field": "inputPrice",
+          "before": 4,
+          "after": 2
+        },
+        {
+          "field": "outputPrice",
+          "before": 20,
+          "after": 10
+        }
+      ]
+    },
+    {
+      "modelId": "d366dfa1-d940-4788-aa73-d298c45699b3",
+      "name": "Gemini 4 Argon (High)",
+      "creator": "Google",
+      "kind": "updated",
+      "observedAt": "2026-11-13T06:54:52.730Z",
+      "changes": [
+        {
+          "field": "costPerTask",
+          "before": 9.9466,
+          "after": 4.9733
+        },
+        {
+          "field": "inputPrice",
+          "before": 4,
+          "after": 2
+        },
+        {
+          "field": "outputPrice",
+          "before": 20,
+          "after": 10
+        }
+      ]
+    },
+    {
+      "modelId": "dad0e3b1-e3e7-477a-99f9-c14457a91114",
+      "name": "Gemini 4 Hydrogen (Xhigh)",
+      "creator": "Google",
+      "kind": "updated",
+      "observedAt": "2026-11-13T06:54:52.730Z",
+      "changes": [
+        {
+          "field": "costPerTask",
+          "before": null,
+          "after": 3.1602
+        }
+      ]
+    },
+    {
+      "modelId": "dae0262d-26a4-44d1-925a-6f2731cbda6a",
+      "name": "Gemini 4 Hydrogen (High)",
+      "creator": "Google",
+      "kind": "updated",
+      "observedAt": "2026-11-13T06:54:52.730Z",
+      "changes": [
+        {
+          "field": "costPerTask",
+          "before": null,
+          "after": 1.8733
+        }
+      ]
+    },
+    {
+      "modelId": "f0537484-af30-4a8a-bf34-368c552e5cfd",
+      "name": "Gemini 4 Hydrogen (Medium)",
+      "creator": "Google",
+      "kind": "updated",
+      "observedAt": "2026-11-13T06:54:52.730Z",
+      "changes": [
+        {
+          "field": "costPerTask",
+          "before": null,
+          "after": 0.798
+        }
+      ]
+    },
+    {
+      "modelId": "ff9bc5e5-a02f-4270-983e-4b3f834f3363",
+      "name": "Grok 3 mini Reasoning (High)",
+      "creator": "SpaceXAI",
+      "kind": "updated",
+      "observedAt": "2026-11-13T06:54:52.730Z",
+      "changes": [
+        {
+          "field": "inputPrice",
+          "before": 0.3,
+          "after": 0
+        },
+        {
+          "field": "outputPrice",
+          "before": 0.5,
+          "after": 0
+        }
+      ]
+    },
+    {
       "modelId": "88c68c50-03c1-458a-9292-bd398c27adc5",
       "name": "Gemini 4 Hydrogen (Low)",
       "creator": "Google",
