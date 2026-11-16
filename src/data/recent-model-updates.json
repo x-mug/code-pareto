@@ -1,6 +1,240 @@
 {
   "events": [
     {
+      "modelId": "00f1248e-78e3-4230-8dc8-5e13ba8645e2",
+      "name": "MiMo-V2.5-Pro (Reasoning)",
+      "creator": "Xiaomi",
+      "kind": "updated",
+      "observedAt": "2026-11-16T04:14:21.500Z",
+      "changes": [
+        {
+          "field": "inputPrice",
+          "before": 0.3915,
+          "after": 0.348
+        },
+        {
+          "field": "outputPrice",
+          "before": 0.783,
+          "after": 0.696
+        }
+      ]
+    },
+    {
+      "modelId": "48e6f735-f2bc-418f-b99f-3dc5a0ddda77",
+      "name": "Gemini 4 Argon (Medium)",
+      "creator": "Google",
+      "kind": "added",
+      "observedAt": "2026-11-16T04:14:21.500Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": null,
+          "after": 47.6
+        },
+        {
+          "field": "costPerTask",
+          "before": null,
+          "after": 4.3146
+        },
+        {
+          "field": "inputPrice",
+          "before": null,
+          "after": 2
+        },
+        {
+          "field": "outputPrice",
+          "before": null,
+          "after": 10
+        }
+      ]
+    },
+    {
+      "modelId": "583f98fb-c4b8-4df3-8d40-60ac0ed69882",
+      "name": "Muse Glimmer (High)",
+      "creator": "Meta",
+      "kind": "updated",
+      "observedAt": "2026-11-16T04:14:21.500Z",
+      "changes": [
+        {
+          "field": "costPerTask",
+          "before": 0.1695,
+          "after": 0.1782
+        },
+        {
+          "field": "inputPrice",
+          "before": 0.3,
+          "after": 0.325
+        },
+        {
+          "field": "outputPrice",
+          "before": 1.2,
+          "after": 1.35
+        }
+      ]
+    },
+    {
+      "modelId": "5b52def2-ac9b-4465-ad80-91ea8079e253",
+      "name": "Nemotron 3 Ultra 550B A55B (Reasoning)",
+      "creator": "NVIDIA",
+      "kind": "updated",
+      "observedAt": "2026-11-16T04:14:21.500Z",
+      "changes": [
+        {
+          "field": "costPerTask",
+          "before": 2.2257,
+          "after": 2.2103
+        },
+        {
+          "field": "outputPrice",
+          "before": 2.7,
+          "after": 2.4
+        }
+      ]
+    },
+    {
+      "modelId": "b2331108-72ed-415a-82d1-188633875bbc",
+      "name": "Gemini 3.7 Flash (High)",
+      "creator": "Google",
+      "kind": "updated",
+      "observedAt": "2026-11-16T04:14:21.500Z",
+      "changes": [
+        {
+          "field": "inputPrice",
+          "before": 0.75,
+          "after": null
+        },
+        {
+          "field": "outputPrice",
+          "before": 3.75,
+          "after": null
+        }
+      ]
+    },
+    {
+      "modelId": "bf220674-68bd-43cc-a1b8-ce5ed4d2f18d",
+      "name": "DeepSeek V4 Pro 0424 (Max)",
+      "creator": "DeepSeek",
+      "kind": "updated",
+      "observedAt": "2026-11-16T04:14:21.500Z",
+      "changes": [
+        {
+          "field": "inputPrice",
+          "before": 1.31,
+          "after": 1.5016
+        },
+        {
+          "field": "outputPrice",
+          "before": 3.135,
+          "after": 3.2
+        }
+      ]
+    },
+    {
+      "modelId": "dbe7c625-3100-4463-b479-a228c41f75dd",
+      "name": "DeepSeek V4.1 Flash (Max)",
+      "creator": "DeepSeek",
+      "kind": "updated",
+      "observedAt": "2026-11-16T04:14:21.500Z",
+      "changes": [
+        {
+          "field": "inputPrice",
+          "before": 0.29,
+          "after": 0.3
+        }
+      ]
+    },
+    {
+      "modelId": "e2c0623e-c855-4a61-bb66-be1f1ed43234",
+      "name": "Nemotron 3.5 Super VL",
+      "creator": "NVIDIA",
+      "kind": "updated",
+      "observedAt": "2026-11-16T04:14:21.500Z",
+      "changes": [
+        {
+          "field": "costPerTask",
+          "before": 0.5196,
+          "after": 0.5575
+        },
+        {
+          "field": "inputPrice",
+          "before": 0.175,
+          "after": 0.2
+        }
+      ]
+    },
+    {
+      "modelId": "e94c7595-a320-4c88-8f07-d9fd50fc4595",
+      "name": "DeepSeek V4 Pro 0813 (High)",
+      "creator": "DeepSeek",
+      "kind": "added",
+      "observedAt": "2026-11-16T04:14:21.500Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": null,
+          "after": 20.8
+        },
+        {
+          "field": "costPerTask",
+          "before": null,
+          "after": 0.8485
+        },
+        {
+          "field": "inputPrice",
+          "before": null,
+          "after": 1.32
+        },
+        {
+          "field": "outputPrice",
+          "before": null,
+          "after": 3.96
+        }
+      ]
+    },
+    {
+      "modelId": "fe4c0848-e284-4e52-a79d-cdc28392f1a9",
+      "name": "DeepSeek V4 Flash 0731 (Max)",
+      "creator": "DeepSeek",
+      "kind": "updated",
+      "observedAt": "2026-11-16T04:14:21.500Z",
+      "changes": [
+        {
+          "field": "inputPrice",
+          "before": 0.135,
+          "after": 0.14
+        },
+        {
+          "field": "outputPrice",
+          "before": 0.275,
+          "after": 0.28
+        }
+      ]
+    },
+    {
+      "modelId": "fef6625d-9097-45f6-95c0-bcaa06e3d8e1",
+      "name": "Qwen4 Max",
+      "creator": "Alibaba",
+      "kind": "added",
+      "observedAt": "2026-11-16T04:14:21.500Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": null,
+          "after": 42.9
+        },
+        {
+          "field": "inputPrice",
+          "before": null,
+          "after": 1.5
+        },
+        {
+          "field": "outputPrice",
+          "before": null,
+          "after": 4.5
+        }
+      ]
+    },
+    {
       "modelId": "0d3eaafd-54ed-4f78-bdd7-05a2db883986",
       "name": "Gemini 4 Carbon (Medium)",
       "creator": "Google",

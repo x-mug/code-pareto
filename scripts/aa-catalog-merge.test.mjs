@@ -421,3 +421,34 @@ describe("engineering data fallback", () => {
     expect(() => buildDimensions([model], [{ id: "other", slug: model.slug }], new Map([[model.slug, model]]))).toThrow(/冲突/);
   });
 });
+
+// 上游把 slug 收进 release 后，同一个发布的多个变体共用一个 slug。
+const releaseBoard = (id, releaseSlug, name, fields = {}) => ({
+  id, name, release: { slug: releaseSlug, name }, modelCreatorName: "Vendor", ...fields,
+});
+
+describe("AA leaderboard schema drift", () => {
+  it("keeps refreshing when leaderboard variants share a release slug", async () => {
+    const result = await merge({
+      intelligenceModels: [aa("aa-1", "new-model")],
+      leaderboardModels: [releaseBoard("aa-1", "new-model", "New Model"), releaseBoard("aa-2", "new-model", "New Model (High)")],
+    });
+    expect(result.models.map((model) => model.slug)).toContain("new-model");
+  });
+
+  it("skips leaderboard rows without id or slug and keeps the rest", async () => {
+    const result = await merge({
+      intelligenceModels: [aa("aa-1", "new-model")],
+      leaderboardModels: [{ name: "No identity" }, releaseBoard("aa-1", "new-model", "New Model")],
+    });
+    expect(result.warnings.join(" ")).toContain("AA 排行榜跳过 No identity");
+    expect(result.models.map((model) => model.slug)).toContain("new-model");
+  });
+
+  it("does not invent slugs from a shared release slug", async () => {
+    const result = await merge({
+      leaderboardModels: [releaseBoard("aa-x", "shared", "Shared Base"), releaseBoard("aa-y", "shared", "Shared High")],
+    });
+    expect(result.models).toEqual([]);
+  });
+});

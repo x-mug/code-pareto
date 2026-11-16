@@ -76,10 +76,10 @@ function rscValues(html, key) {
 
 export function extractAaReleaseModels(html) {
   const arrays = rscValues(html, "models").filter((value) =>
-    Array.isArray(value) && value.length > 0 && value.every((model) => NONEMPTY(model?.slug)),
+    Array.isArray(value) && value.length > 0 && value.every((model) => NONEMPTY(sourceSlug(model))),
   );
   if (arrays.length !== 1) throw new Error("AA 发布列表缺少唯一的 models 数组");
-  return arrays[0];
+  return arrays[0].map(withSourceSlug);
 }
 
 export function extractAaModelDetails(html, slug) {
@@ -89,6 +89,18 @@ export function extractAaModelDetails(html, slug) {
     .filter(Array.isArray)
     .flat()
     .filter((model) => model?.slug === slug);
+}
+
+// 上游把 slug 收进了 release 对象，这里两种位置都认。
+function sourceSlug(row) {
+  if (!row || typeof row !== "object") return "";
+  if (NONEMPTY(row.slug)) return row.slug;
+  return NONEMPTY(row.release?.slug) ? row.release.slug : "";
+}
+
+function withSourceSlug(row) {
+  const slug = sourceSlug(row);
+  return NONEMPTY(row.slug) ? row : { ...row, slug };
 }
 
 function indexModels(models, label) {
@@ -114,19 +126,33 @@ function indexModels(models, label) {
   return { byId, bySlug };
 }
 
-function indexSource(rows, label, requireId) {
+// 缺身份的行只跳过并告警，避免上游字段变动冻结整次刷新。
+// releaseSlug 为真时才用发布 slug 兜底，变体共用发布 slug 的来源只按 id 匹配。
+function indexSource(rows, label, requireId, warnings = [], releaseSlug = true) {
   if (!Array.isArray(rows)) throw new Error(label + "不是模型数组");
   const bySlug = new Map();
   const byId = new Map();
   for (const row of rows) {
-    if (!row || !NONEMPTY(row.slug) || (requireId && !NONEMPTY(row.id))) {
-      throw new Error(label + "包含缺少身份的模型");
+    if (requireId && !NONEMPTY(row?.id)) {
+      warnings.push(label + "跳过 " + (NONEMPTY(row?.name) ? row.name : "无名称记录") + "：缺少 id");
+      continue;
     }
-    if (bySlug.has(row.slug)) throw new Error(label + "包含重复 slug: " + row.slug);
-    bySlug.set(row.slug, row);
-    if (NONEMPTY(row.id)) {
-      if (byId.has(row.id)) throw new Error(label + "包含重复 id: " + row.id);
-      byId.set(row.id, row);
+    const slug = NONEMPTY(row?.slug) ? row.slug : releaseSlug ? sourceSlug(row) : "";
+    if (!slug) {
+      if (NONEMPTY(row?.id)) {
+        if (byId.has(row.id)) throw new Error(label + "包含重复 id: " + row.id);
+        byId.set(row.id, row);
+      } else {
+        warnings.push(label + "跳过 " + (NONEMPTY(row?.name) ? row.name : "无名称记录") + "：缺少 id 或 slug");
+      }
+      continue;
+    }
+    const entry = withSourceSlug(row);
+    if (bySlug.has(slug)) throw new Error(label + "包含重复 slug: " + slug);
+    bySlug.set(slug, entry);
+    if (NONEMPTY(entry.id)) {
+      if (byId.has(entry.id)) throw new Error(label + "包含重复 id: " + entry.id);
+      byId.set(entry.id, entry);
     }
   }
   return { bySlug, byId };
@@ -191,10 +217,10 @@ function mapAaModel(primary, leaderboard, previous) {
 export async function mergeAaCatalog({ catalogModels, previousModels = [], intelligenceModels, releaseModels, leaderboardModels, fetchDetail, indexVersion, aaIndexMajor }) {
   const current = indexModels(catalogModels, "Parallax 目录");
   indexModels(previousModels, "旧目录");
-  const intelligence = indexSource(intelligenceModels, "AA Intelligence 页", true);
-  const releases = indexSource(releaseModels ?? [], "AA 发布列表", false);
-  const leaderboard = indexSource(leaderboardModels ?? [], "AA 排行榜", false);
   const warnings = [];
+  const intelligence = indexSource(intelligenceModels, "AA Intelligence 页", true, warnings);
+  const releases = indexSource(releaseModels ?? [], "AA 发布列表", false, warnings);
+  const leaderboard = indexSource(leaderboardModels ?? [], "AA 排行榜", false, warnings, false);
   const comparableVersion = Number.isSafeInteger(indexVersion) && Number.isSafeInteger(aaIndexMajor) && indexVersion === aaIndexMajor;
   if (!comparableVersion) {
     warnings.push("AA 智能指数主版本与目录不一致或无法确认，AA 补充模型不参与综合排名");
