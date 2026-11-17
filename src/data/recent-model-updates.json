@@ -1,6 +1,68 @@
 {
   "events": [
     {
+      "modelId": "75c1b0b8-9db3-4c7e-95be-d74e59defee4",
+      "name": "GPT-6.2 Astra (Max)",
+      "creator": "OpenAI",
+      "kind": "added",
+      "observedAt": "2026-11-17T21:02:58.859Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": null,
+          "after": 62.1
+        },
+        {
+          "field": "inputPrice",
+          "before": null,
+          "after": 8
+        },
+        {
+          "field": "outputPrice",
+          "before": null,
+          "after": 40
+        }
+      ]
+    },
+    {
+      "modelId": "8215372b-66ff-457b-855e-e8abeafc9571",
+      "name": "A.X-K2",
+      "creator": "SK Telecom",
+      "kind": "updated",
+      "observedAt": "2026-11-17T21:02:58.859Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": null,
+          "after": 9
+        }
+      ]
+    },
+    {
+      "modelId": "a1a84b18-e8c9-48fb-8e04-6003bd9f6ff4",
+      "name": "GPT-6.2 Sol (Max)",
+      "creator": "OpenAI",
+      "kind": "added",
+      "observedAt": "2026-11-17T21:02:58.859Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": null,
+          "after": 57.3
+        },
+        {
+          "field": "inputPrice",
+          "before": null,
+          "after": 2
+        },
+        {
+          "field": "outputPrice",
+          "before": null,
+          "after": 10
+        }
+      ]
+    },
+    {
       "modelId": "d80eb0f1-f62e-4d31-99d2-7a925eb126b0",
       "name": "Gemma 4 E4B (Reasoning)",
       "creator": "Google",
