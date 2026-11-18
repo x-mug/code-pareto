@@ -1,6 +1,140 @@
 {
   "events": [
     {
+      "modelId": "1dcea4f7-7e8b-49f8-abe2-5860ff9f349e",
+      "name": "Hermes 3 - Llama-3.1 70B",
+      "creator": "Nous Research",
+      "kind": "updated",
+      "observedAt": "2026-11-18T13:45:16.785Z",
+      "changes": [
+        {
+          "field": "inputPrice",
+          "before": 0.7,
+          "after": null
+        },
+        {
+          "field": "outputPrice",
+          "before": 0.7,
+          "after": null
+        }
+      ]
+    },
+    {
+      "modelId": "2b17227e-a229-474f-a86d-0dacb76212ca",
+      "name": "LFM3-VL-2B",
+      "creator": "Liquid AI",
+      "kind": "updated",
+      "observedAt": "2026-11-18T13:45:16.785Z",
+      "changes": [
+        {
+          "field": "costPerTask",
+          "before": null,
+          "after": 0.1237
+        }
+      ]
+    },
+    {
+      "modelId": "5ca91b0e-0e47-4793-ace9-2ca763106e62",
+      "name": "JoyAI-VL-Preview",
+      "creator": "Joy Future Academy",
+      "kind": "added",
+      "observedAt": "2026-11-18T13:45:16.785Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": null,
+          "after": 28
+        },
+        {
+          "field": "inputPrice",
+          "before": null,
+          "after": 0
+        },
+        {
+          "field": "outputPrice",
+          "before": null,
+          "after": 0
+        }
+      ]
+    },
+    {
+      "modelId": "ba83cb41-370c-4331-9e7e-3074d6cc66c4",
+      "name": "Inkling (High)",
+      "creator": "Thinking Machines",
+      "kind": "added",
+      "observedAt": "2026-11-18T13:45:16.785Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": null,
+          "after": 11
+        },
+        {
+          "field": "costPerTask",
+          "before": null,
+          "after": 0.617
+        },
+        {
+          "field": "inputPrice",
+          "before": null,
+          "after": 1
+        },
+        {
+          "field": "outputPrice",
+          "before": null,
+          "after": 4.05
+        }
+      ]
+    },
+    {
+      "modelId": "eb4ba465-3fcd-4065-9fe2-e8225e7b2c6c",
+      "name": "Ring-2.6-1T",
+      "creator": "InclusionAI",
+      "kind": "updated",
+      "observedAt": "2026-11-18T13:45:16.785Z",
+      "changes": [
+        {
+          "field": "inputPrice",
+          "before": 0.3,
+          "after": null
+        },
+        {
+          "field": "outputPrice",
+          "before": 2.5,
+          "after": null
+        }
+      ]
+    },
+    {
+      "modelId": "f586801a-2cff-4e77-8322-577cd57bbdd1",
+      "name": "Inkling Small (High)",
+      "creator": "Thinking Machines",
+      "kind": "added",
+      "observedAt": "2026-11-18T13:45:16.785Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": null,
+          "after": 9.6
+        },
+        {
+          "field": "costPerTask",
+          "before": null,
+          "after": 0.0614
+        },
+        {
+          "field": "inputPrice",
+          "before": null,
+          "after": 0.3
+        },
+        {
+          "field": "outputPrice",
+          "before": null,
+          "after": 1.2
+        }
+      ]
+    },
+    {
       "modelId": "27c326a6-ec9b-415f-a29e-b1f4927484dc",
       "name": "GPT-6.2 Sol (Xhigh)",
       "creator": "OpenAI",
