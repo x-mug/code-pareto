@@ -1,6 +1,385 @@
 {
   "events": [
     {
+      "modelId": "27c326a6-ec9b-415f-a29e-b1f4927484dc",
+      "name": "GPT-6.2 Sol (Xhigh)",
+      "creator": "OpenAI",
+      "kind": "added",
+      "observedAt": "2026-11-18T04:03:07.574Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": null,
+          "after": 55.7
+        },
+        {
+          "field": "costPerTask",
+          "before": null,
+          "after": 0.648
+        },
+        {
+          "field": "inputPrice",
+          "before": null,
+          "after": 2
+        },
+        {
+          "field": "outputPrice",
+          "before": null,
+          "after": 10
+        }
+      ]
+    },
+    {
+      "modelId": "2b17227e-a229-474f-a86d-0dacb76212ca",
+      "name": "LFM3-VL-2B",
+      "creator": "Liquid AI",
+      "kind": "added",
+      "observedAt": "2026-11-18T04:03:07.574Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": null,
+          "after": 1.7
+        },
+        {
+          "field": "inputPrice",
+          "before": null,
+          "after": 0.1
+        },
+        {
+          "field": "outputPrice",
+          "before": null,
+          "after": 0.5
+        }
+      ]
+    },
+    {
+      "modelId": "583498f2-dcb7-42ff-b705-40ce8ef87a88",
+      "name": "Astra for Law 6.2 (Max)",
+      "creator": "OpenAI",
+      "kind": "added",
+      "observedAt": "2026-11-18T04:03:07.574Z",
+      "changes": [
+        {
+          "field": "inputPrice",
+          "before": null,
+          "after": 8
+        },
+        {
+          "field": "outputPrice",
+          "before": null,
+          "after": 40
+        }
+      ]
+    },
+    {
+      "modelId": "592572d5-f789-4106-abbc-fadf2206d10b",
+      "name": "GPT-6.2 Astra (Xhigh)",
+      "creator": "OpenAI",
+      "kind": "added",
+      "observedAt": "2026-11-18T04:03:07.574Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": null,
+          "after": 61.6
+        },
+        {
+          "field": "costPerTask",
+          "before": null,
+          "after": 2.5211
+        },
+        {
+          "field": "inputPrice",
+          "before": null,
+          "after": 8
+        },
+        {
+          "field": "outputPrice",
+          "before": null,
+          "after": 40
+        }
+      ]
+    },
+    {
+      "modelId": "6e1b44ff-c227-496b-aef4-19b70cd18c76",
+      "name": "Gemma 4 26B A4B (Reasoning)",
+      "creator": "Google",
+      "kind": "updated",
+      "observedAt": "2026-11-18T04:03:07.574Z",
+      "changes": [
+        {
+          "field": "inputPrice",
+          "before": 0.09,
+          "after": 0.095
+        }
+      ]
+    },
+    {
+      "modelId": "75c1b0b8-9db3-4c7e-95be-d74e59defee4",
+      "name": "GPT-6.2 Astra (Max)",
+      "creator": "OpenAI",
+      "kind": "updated",
+      "observedAt": "2026-11-18T04:03:07.574Z",
+      "changes": [
+        {
+          "field": "costPerTask",
+          "before": null,
+          "after": 3.9979
+        }
+      ]
+    },
+    {
+      "modelId": "82b37079-56d9-4451-8a1a-22b0a921f4f8",
+      "name": "GPT-6.2 Sol (Medium)",
+      "creator": "OpenAI",
+      "kind": "added",
+      "observedAt": "2026-11-18T04:03:07.574Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": null,
+          "after": 52.7
+        },
+        {
+          "field": "costPerTask",
+          "before": null,
+          "after": 0.4061
+        },
+        {
+          "field": "inputPrice",
+          "before": null,
+          "after": 2
+        },
+        {
+          "field": "outputPrice",
+          "before": null,
+          "after": 10
+        }
+      ]
+    },
+    {
+      "modelId": "8cec011f-c959-4726-8668-2ee2409a6bca",
+      "name": "GPT-6.2 Astra (Medium)",
+      "creator": "OpenAI",
+      "kind": "added",
+      "observedAt": "2026-11-18T04:03:07.574Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": null,
+          "after": 57
+        },
+        {
+          "field": "costPerTask",
+          "before": null,
+          "after": 1.6177
+        },
+        {
+          "field": "inputPrice",
+          "before": null,
+          "after": 8
+        },
+        {
+          "field": "outputPrice",
+          "before": null,
+          "after": 40
+        }
+      ]
+    },
+    {
+      "modelId": "976cc8ad-7904-4056-83c5-960181f47d5f",
+      "name": "Llama 3.3 Instruct 70B",
+      "creator": "Meta",
+      "kind": "updated",
+      "observedAt": "2026-11-18T04:03:07.574Z",
+      "changes": [
+        {
+          "field": "inputPrice",
+          "before": 0.6,
+          "after": 0.65
+        }
+      ]
+    },
+    {
+      "modelId": "a1a84b18-e8c9-48fb-8e04-6003bd9f6ff4",
+      "name": "GPT-6.2 Sol (Max)",
+      "creator": "OpenAI",
+      "kind": "updated",
+      "observedAt": "2026-11-18T04:03:07.574Z",
+      "changes": [
+        {
+          "field": "costPerTask",
+          "before": null,
+          "after": 1.0144
+        }
+      ]
+    },
+    {
+      "modelId": "a77965fb-2117-4e2c-bd8b-80b5579a7e7e",
+      "name": "GPT-6.2 Sol (Low)",
+      "creator": "OpenAI",
+      "kind": "added",
+      "observedAt": "2026-11-18T04:03:07.574Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": null,
+          "after": 40.6
+        },
+        {
+          "field": "costPerTask",
+          "before": null,
+          "after": 0.1836
+        },
+        {
+          "field": "inputPrice",
+          "before": null,
+          "after": 2
+        },
+        {
+          "field": "outputPrice",
+          "before": null,
+          "after": 10
+        }
+      ]
+    },
+    {
+      "modelId": "c76e1f60-9766-4ac5-8717-2837a05924af",
+      "name": "LFM3-1.7B",
+      "creator": "Liquid AI",
+      "kind": "added",
+      "observedAt": "2026-11-18T04:03:07.574Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": null,
+          "after": 6
+        },
+        {
+          "field": "costPerTask",
+          "before": null,
+          "after": 0.1732
+        },
+        {
+          "field": "inputPrice",
+          "before": null,
+          "after": 0.08
+        },
+        {
+          "field": "outputPrice",
+          "before": null,
+          "after": 0.2
+        }
+      ]
+    },
+    {
+      "modelId": "cc93ecfd-845e-455d-9642-6799d7133b7e",
+      "name": "GPT-6.2 Astra (Low)",
+      "creator": "OpenAI",
+      "kind": "added",
+      "observedAt": "2026-11-18T04:03:07.574Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": null,
+          "after": 45.7
+        },
+        {
+          "field": "costPerTask",
+          "before": null,
+          "after": 0.6617
+        },
+        {
+          "field": "inputPrice",
+          "before": null,
+          "after": 8
+        },
+        {
+          "field": "outputPrice",
+          "before": null,
+          "after": 40
+        }
+      ]
+    },
+    {
+      "modelId": "cd85e412-c43f-4535-bf8e-5ba113d97ca3",
+      "name": "GPT-6.2 Sol (High)",
+      "creator": "OpenAI",
+      "kind": "added",
+      "observedAt": "2026-11-18T04:03:07.574Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": null,
+          "after": 54.9
+        },
+        {
+          "field": "costPerTask",
+          "before": null,
+          "after": 0.5636
+        },
+        {
+          "field": "inputPrice",
+          "before": null,
+          "after": 2
+        },
+        {
+          "field": "outputPrice",
+          "before": null,
+          "after": 10
+        }
+      ]
+    },
+    {
+      "modelId": "e2c0623e-c855-4a61-bb66-be1f1ed43234",
+      "name": "Nemotron 3.5 Super VL",
+      "creator": "NVIDIA",
+      "kind": "updated",
+      "observedAt": "2026-11-18T04:03:07.574Z",
+      "changes": [
+        {
+          "field": "costPerTask",
+          "before": 0.5575,
+          "after": 0.4818
+        },
+        {
+          "field": "inputPrice",
+          "before": 0.2,
+          "after": 0.15
+        }
+      ]
+    },
+    {
+      "modelId": "fe959a7a-944c-4ba8-8e41-349712599b39",
+      "name": "GPT-6.2 Astra (High)",
+      "creator": "OpenAI",
+      "kind": "added",
+      "observedAt": "2026-11-18T04:03:07.574Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": null,
+          "after": 60.1
+        },
+        {
+          "field": "costPerTask",
+          "before": null,
+          "after": 2.0739
+        },
+        {
+          "field": "inputPrice",
+          "before": null,
+          "after": 8
+        },
+        {
+          "field": "outputPrice",
+          "before": null,
+          "after": 40
+        }
+      ]
+    },
+    {
       "modelId": "75c1b0b8-9db3-4c7e-95be-d74e59defee4",
       "name": "GPT-6.2 Astra (Max)",
       "creator": "OpenAI",
