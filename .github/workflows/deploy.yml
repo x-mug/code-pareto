@@ -5,8 +5,8 @@ on:
     branches:
       - main
   schedule:
-    # 每 12 小时用最新 AA 数据重建一次站点
-    - cron: "23 */12 * * *"
+    # GitHub 按 UTC 调度，对应北京时间每天 05:00、13:00、21:00。
+    - cron: "0 5,13,21 * * *"
   workflow_dispatch:
 
 permissions:
