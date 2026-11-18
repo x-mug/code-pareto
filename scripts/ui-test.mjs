@@ -587,6 +587,8 @@ const metricValues = () => q(".metric-grid__value").map((element) => element.tex
 const weightShares = () => q(".view-weights__value").map((element) => element.textContent.trim());
 const weightSliders = () => q(".view-weights input[type=range]");
 const kneeBadges = () => q(".knee-badge");
+const kneeToggle = () => document.querySelector('.chart-card__actions button[aria-label="膝点"]');
+const kneeTogglePressed = () => kneeToggle()?.getAttribute("aria-pressed") === "true";
 const tableCountBadge = () => document.querySelector(".model-table__count")?.textContent.trim() ?? "";
 // 行数对不上时先怀疑 out/ 与 catalog.json 不是同批构建
 const rowsDetail = (expectedValue) =>
@@ -720,9 +722,10 @@ async function checkModelInteractions() {
   }
 
   check(
-    "综合视角默认不画膝点（与原版一致）",
-    kneeBadges().length === 0 && q(".model-table__row.is-knee").length === 0,
-    "徽章 " + kneeBadges().length,
+    "综合视角默认显示膝点",
+    kneeTogglePressed() && kneeBadges().length === Math.min(1, expected.recommendations) &&
+      q(".model-table__row.is-knee").length === Math.min(2, expected.recommendations),
+    "徽章 " + kneeBadges().length + "，开关 " + kneeTogglePressed(),
   );
 
   const updatesToggle = document.querySelector(".recent-updates__title-toggle");
@@ -997,7 +1000,7 @@ async function checkModelInteractions() {
     (officialNote?.textContent ?? "").trim().length > 0,
     officialNote ? "有说明" : "缺说明",
   );
-  check("综合视角膝点重新隐藏", kneeBadges().length === 0, "实际 " + kneeBadges().length);
+  check("切回综合视角仍显示膝点", kneeTogglePressed() && kneeBadges().length === Math.min(1, expected.recommendations));
 
   console.log("\n=== 表格列头排序 ===");
   // 列定义来自 src/components/model-table.tsx 的 columns 表：rank/name/score/cost/speed/value/aaIndex/rankDelta 共 8 列
@@ -1254,7 +1257,6 @@ async function checkModelInteractions() {
   const axisChip = (label) => axisChips().find((chip) => chip.textContent.trim() === label);
   const isActiveAxis = (label) => axisChip(label)?.classList.contains("is-active") === true;
   const axisSubset = () => document.querySelector(".axis-switch__subset");
-  const kneeTogglePressed = () => q('.chart-card__actions .chart-label-toggle[aria-pressed="true"]').length;
   const axisChipsSummary = () =>
     axisChips().map((chip) => (chip.classList.contains("is-active") ? "*" : "") + chip.textContent.trim()).join(" / ");
   // 速度轴不是真子集时不显示子集提示。
@@ -1290,7 +1292,7 @@ async function checkModelInteractions() {
   );
   check("速度轴下膝点徽章数量等于推导值", kneeBadges().length === Math.min(1, speedExpected.recommendations), "实际 " + kneeBadges().length);
   if (speedExpected.recommendations === 0) warn("没有速度轴推荐候选，跳过膝点出现覆盖，仍检查零数量和开关。");
-  check("速度轴下图内膝点开关激活", kneeTogglePressed() >= 1, "激活 " + kneeTogglePressed() + " 个");
+  check("速度轴下图内膝点开关激活", kneeTogglePressed());
   check(
     "速度轴下表格膝点行=推导交集数",
     q(".model-table__row.is-knee").length === speedExpected.kneeTableRows,
@@ -1317,10 +1319,16 @@ async function checkModelInteractions() {
   );
   check("点回价格轴后子集提示消失", axisSubset() === null);
   check(
-    "点回价格轴后膝点恢复隐藏",
-    kneeBadges().length === 0 && kneeTogglePressed() === 0,
-    "徽章 " + kneeBadges().length + "，激活开关 " + kneeTogglePressed(),
+    "点回价格轴后膝点仍显示",
+    kneeTogglePressed() && kneeBadges().length === Math.min(1, expected.recommendations),
   );
+  const priceKneeToggle = kneeToggle();
+  if (priceKneeToggle) click(priceKneeToggle);
+  await waitFor(() => kneeToggle()?.getAttribute("aria-pressed") === "false", 5000);
+  check("综合视角可关闭膝点", !kneeTogglePressed() && kneeBadges().length === 0 && q(".model-table__row.is-knee").length === 0);
+  if (priceKneeToggle) click(priceKneeToggle);
+  await waitFor(kneeTogglePressed, 5000);
+  check("综合视角可重新开启膝点", kneeTogglePressed() && kneeBadges().length === Math.min(1, expected.recommendations));
 
   // URL 直达：?axis=speed 必须一进来就是速度轴
   const pageAxisLabel = (page) =>

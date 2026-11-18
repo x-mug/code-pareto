@@ -1350,8 +1350,7 @@ export function ModelExplorer({ initialCatalog }: ModelExplorerProps) {
   }));
   const [openOnly, setOpenOnly] = useState(false);
   const [weightsOpen, setWeightsOpen] = useState(false);
-  // null = 跟随视角：综合视角保持原版外观（不画膝点），编程/工程视角默认显示；手动点击后固定
-  const [kneeOverride, setKneeOverride] = useState<boolean | null>(null);
+  const [showKnee, setShowKnee] = useState(true);
   // 链接只在水合后读一次，读完才允许把状态写回地址栏
   const [urlHydrated, setUrlHydrated] = useState(false);
 
@@ -1524,9 +1523,6 @@ export function ModelExplorer({ initialCatalog }: ModelExplorerProps) {
         : getKneeRecommendations(visibleModels, 5),
     [axis, visibleModels],
   );
-  // 膝点：综合视角默认不画（与原版一致），编程/工程视角默认画，图上有开关可强制切换；速度轴默认画
-  const showKnee =
-    kneeOverride ?? (axis === "speed" || view !== "intelligence");
   // 权重面板展示当前生效的配比：自定义用自定义值，预设视角用预设值，综合视角用默认值占位（禁用）
   const displayWeights =
     view === "custom"
@@ -1819,19 +1815,17 @@ export function ModelExplorer({ initialCatalog }: ModelExplorerProps) {
               <div
                 className={`chart-card__actions ${isChartActionsWrapped ? "is-wrapped" : ""}`}
               >
-                {view === "intelligence" && axis === "cost" ? null : (
                 <button
                   type="button"
                   className={`chart-label-toggle ${showKnee ? "is-active" : ""}`}
                   aria-pressed={showKnee}
                   aria-label={t("chart.knee")}
                   title={t("chart.knee")}
-                  onClick={() => setKneeOverride(!showKnee)}
+                  onClick={() => setShowKnee((current) => !current)}
                 >
                   <span aria-hidden="true" />
                   {t("chart.knee")}
                 </button>
-                )}
                 <button
                   type="button"
                   className={`chart-label-toggle ${showAllLabels ? "is-active" : ""}`}
