@@ -5,8 +5,8 @@ on:
     branches:
       - main
   schedule:
-    # GitHub 按 UTC 调度，对应北京时间每天 05:00、13:00、21:00。
-    - cron: "0 5,13,21 * * *"
+    # 北京时间每天 09:00 抓取，给上游早上 08:00 的数据留一小时。
+    - cron: "0 1 * * *"
   workflow_dispatch:
 
 permissions:
