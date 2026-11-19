@@ -1,6 +1,234 @@
 {
   "events": [
     {
+      "modelId": "09fea5f5-7217-452d-b693-fcca01e07bdf",
+      "name": "Gemini 4 Neon (Low)",
+      "creator": "Google",
+      "kind": "added",
+      "observedAt": "2026-11-19T02:26:41.280Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": null,
+          "after": 44.1
+        },
+        {
+          "field": "costPerTask",
+          "before": null,
+          "after": 0.7452
+        },
+        {
+          "field": "inputPrice",
+          "before": null,
+          "after": 3
+        },
+        {
+          "field": "outputPrice",
+          "before": null,
+          "after": 15
+        }
+      ]
+    },
+    {
+      "modelId": "0d3eaafd-54ed-4f78-bdd7-05a2db883986",
+      "name": "Gemini 4 Carbon (Medium)",
+      "creator": "Google",
+      "kind": "updated",
+      "observedAt": "2026-11-19T02:26:41.280Z",
+      "changes": [
+        {
+          "field": "costPerTask",
+          "before": 4.6777,
+          "after": 4.1567
+        }
+      ]
+    },
+    {
+      "modelId": "122a1fa1-976a-4089-87a2-5a0a13e2a52c",
+      "name": "K2 Horizon 7B",
+      "creator": "Institute of Foundation Models",
+      "kind": "updated",
+      "observedAt": "2026-11-19T02:26:41.280Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": null,
+          "after": 10.6
+        }
+      ]
+    },
+    {
+      "modelId": "2ba1a8f6-e052-4a33-b178-4db1e86157e4",
+      "name": "Gemini 4 Neon (Medium)",
+      "creator": "Google",
+      "kind": "added",
+      "observedAt": "2026-11-19T02:26:41.280Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": null,
+          "after": 54.9
+        },
+        {
+          "field": "costPerTask",
+          "before": null,
+          "after": 1.9046
+        },
+        {
+          "field": "inputPrice",
+          "before": null,
+          "after": 3
+        },
+        {
+          "field": "outputPrice",
+          "before": null,
+          "after": 15
+        }
+      ]
+    },
+    {
+      "modelId": "31da3a71-0773-47d9-8560-9f19f069926b",
+      "name": "K2 Horizon 3.7B",
+      "creator": "Institute of Foundation Models",
+      "kind": "updated",
+      "observedAt": "2026-11-19T02:26:41.280Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": null,
+          "after": 8
+        }
+      ]
+    },
+    {
+      "modelId": "53b9e276-e360-4a39-9076-1a19d72c25fe",
+      "name": "K2 Horizon MoVA 36B A4B",
+      "creator": "Institute of Foundation Models",
+      "kind": "updated",
+      "observedAt": "2026-11-19T02:26:41.280Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": null,
+          "after": 13.8
+        }
+      ]
+    },
+    {
+      "modelId": "7c667f2d-0149-4eb1-864c-7e66c166ad88",
+      "name": "Gemini 4 Neon (Xhigh)",
+      "creator": "Google",
+      "kind": "added",
+      "observedAt": "2026-11-19T02:26:41.280Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": null,
+          "after": 61.4
+        },
+        {
+          "field": "costPerTask",
+          "before": null,
+          "after": 6.4448
+        },
+        {
+          "field": "inputPrice",
+          "before": null,
+          "after": 3
+        },
+        {
+          "field": "outputPrice",
+          "before": null,
+          "after": 15
+        }
+      ]
+    },
+    {
+      "modelId": "9034b7fc-11d6-433e-9b71-ec8520c487dd",
+      "name": "K2 Horizon 32B",
+      "creator": "Institute of Foundation Models",
+      "kind": "added",
+      "observedAt": "2026-11-19T02:26:41.280Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": null,
+          "after": 13.9
+        }
+      ]
+    },
+    {
+      "modelId": "909ed0ba-bcc5-4f38-8162-08a4e187a772",
+      "name": "Gemini 4 Carbon (High)",
+      "creator": "Google",
+      "kind": "updated",
+      "observedAt": "2026-11-19T02:26:41.280Z",
+      "changes": [
+        {
+          "field": "costPerTask",
+          "before": 5.4848,
+          "after": 4.8973
+        }
+      ]
+    },
+    {
+      "modelId": "9b696f5b-b5d2-4b1f-9ed5-7c1446ec8421",
+      "name": "Gemini 4 Neon (High)",
+      "creator": "Google",
+      "kind": "added",
+      "observedAt": "2026-11-19T02:26:41.280Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": null,
+          "after": 59.6
+        },
+        {
+          "field": "costPerTask",
+          "before": null,
+          "after": 3.7427
+        },
+        {
+          "field": "inputPrice",
+          "before": null,
+          "after": 3
+        },
+        {
+          "field": "outputPrice",
+          "before": null,
+          "after": 15
+        }
+      ]
+    },
+    {
+      "modelId": "9e9fb958-87f5-4835-a761-26102ef25898",
+      "name": "K2 Horizon 0.9B",
+      "creator": "Institute of Foundation Models",
+      "kind": "updated",
+      "observedAt": "2026-11-19T02:26:41.280Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": null,
+          "after": 2.7
+        }
+      ]
+    },
+    {
+      "modelId": "b3866703-a9f7-4ea2-8f3f-b361c90aaf0e",
+      "name": "Gemini 4 Carbon (Low)",
+      "creator": "Google",
+      "kind": "updated",
+      "observedAt": "2026-11-19T02:26:41.280Z",
+      "changes": [
+        {
+          "field": "costPerTask",
+          "before": 5.2214,
+          "after": 4.6827
+        }
+      ]
+    },
+    {
       "modelId": "1dcea4f7-7e8b-49f8-abe2-5860ff9f349e",
       "name": "Hermes 3 - Llama-3.1 70B",
       "creator": "Nous Research",
