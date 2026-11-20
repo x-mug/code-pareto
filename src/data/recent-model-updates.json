@@ -1,6 +1,477 @@
 {
   "events": [
     {
+      "modelId": "0d3eaafd-54ed-4f78-bdd7-05a2db883986",
+      "name": "Gemini 4 Carbon (Medium)",
+      "creator": "Google",
+      "kind": "updated",
+      "observedAt": "2026-11-20T08:17:23.146Z",
+      "changes": [
+        {
+          "field": "costPerTask",
+          "before": 4.1567,
+          "after": 6.5858
+        },
+        {
+          "field": "inputPrice",
+          "before": 2,
+          "after": 4
+        },
+        {
+          "field": "outputPrice",
+          "before": 10,
+          "after": 20
+        }
+      ]
+    },
+    {
+      "modelId": "1071dea1-43e7-4fe9-b936-3034bb622b2e",
+      "name": "Granite 4.2 30B",
+      "creator": "IBM",
+      "kind": "updated",
+      "observedAt": "2026-11-20T08:17:23.146Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": null,
+          "after": 5.5
+        }
+      ]
+    },
+    {
+      "modelId": "24ac5b00-5f03-4c47-8e37-522d1195383e",
+      "name": "Mistral Small 3.1",
+      "creator": "Mistral",
+      "kind": "updated",
+      "observedAt": "2026-11-20T08:17:23.146Z",
+      "changes": [
+        {
+          "field": "inputPrice",
+          "before": 0.08,
+          "after": 0.11
+        },
+        {
+          "field": "outputPrice",
+          "before": 0.135,
+          "after": 0.17
+        }
+      ]
+    },
+    {
+      "modelId": "2e8694f9-7782-47a6-a6ba-fdce89d939c8",
+      "name": "NVIDIA Nemotron Nano 9B V2 (Non-reasoning)",
+      "creator": "NVIDIA",
+      "kind": "updated",
+      "observedAt": "2026-11-20T08:17:23.146Z",
+      "changes": [
+        {
+          "field": "inputPrice",
+          "before": 0.05,
+          "after": 0.06
+        },
+        {
+          "field": "outputPrice",
+          "before": 0.195,
+          "after": 0.23
+        }
+      ]
+    },
+    {
+      "modelId": "30c9ba61-d0a1-4794-938e-35865f379d15",
+      "name": "Qwen3.5 4B (Non-reasoning)",
+      "creator": "Alibaba",
+      "kind": "updated",
+      "observedAt": "2026-11-20T08:17:23.146Z",
+      "changes": [
+        {
+          "field": "inputPrice",
+          "before": 0.03,
+          "after": null
+        },
+        {
+          "field": "outputPrice",
+          "before": 0.15,
+          "after": null
+        }
+      ]
+    },
+    {
+      "modelId": "466aecdb-3d96-4191-bc52-b3366db38851",
+      "name": "Llama 3.1 Instruct 70B",
+      "creator": "Meta",
+      "kind": "updated",
+      "observedAt": "2026-11-20T08:17:23.146Z",
+      "changes": [
+        {
+          "field": "inputPrice",
+          "before": 0.56,
+          "after": 0.81
+        },
+        {
+          "field": "outputPrice",
+          "before": 0.56,
+          "after": 0.81
+        }
+      ]
+    },
+    {
+      "modelId": "4a845d7b-a52d-43bb-80b7-b58c7a0c155e",
+      "name": "DeepSeek R1 Distill Llama 70B",
+      "creator": "DeepSeek",
+      "kind": "updated",
+      "observedAt": "2026-11-20T08:17:23.146Z",
+      "changes": [
+        {
+          "field": "outputPrice",
+          "before": 1.1,
+          "after": 1.4
+        }
+      ]
+    },
+    {
+      "modelId": "5303601c-8133-4f52-bc4e-5241ee6b3c10",
+      "name": "Gemma 4 E4B (Non-reasoning)",
+      "creator": "Google",
+      "kind": "updated",
+      "observedAt": "2026-11-20T08:17:23.146Z",
+      "changes": [
+        {
+          "field": "inputPrice",
+          "before": 0.02,
+          "after": null
+        },
+        {
+          "field": "outputPrice",
+          "before": 0.1,
+          "after": null
+        }
+      ]
+    },
+    {
+      "modelId": "5aa1c578-af76-4b91-8699-cdd43582b3af",
+      "name": "GLM-5.1 (Reasoning)",
+      "creator": "Z AI",
+      "kind": "updated",
+      "observedAt": "2026-11-20T08:17:23.146Z",
+      "changes": [
+        {
+          "field": "inputPrice",
+          "before": 1.19,
+          "after": 1.285
+        },
+        {
+          "field": "outputPrice",
+          "before": 3.74,
+          "after": 4.07
+        }
+      ]
+    },
+    {
+      "modelId": "5b52def2-ac9b-4465-ad80-91ea8079e253",
+      "name": "Nemotron 3 Ultra 550B A55B (Reasoning)",
+      "creator": "NVIDIA",
+      "kind": "updated",
+      "observedAt": "2026-11-20T08:17:23.146Z",
+      "changes": [
+        {
+          "field": "costPerTask",
+          "before": 2.2103,
+          "after": 2.1897
+        },
+        {
+          "field": "inputPrice",
+          "before": 0.6,
+          "after": 0.55
+        },
+        {
+          "field": "outputPrice",
+          "before": 2.4,
+          "after": 2.3
+        }
+      ]
+    },
+    {
+      "modelId": "5fb47ff6-a30e-4c2c-96f2-55e95a13390f",
+      "name": "Llama 3.2 Instruct 11B (Vision)",
+      "creator": "Meta",
+      "kind": "updated",
+      "observedAt": "2026-11-20T08:17:23.146Z",
+      "changes": [
+        {
+          "field": "inputPrice",
+          "before": 0.345,
+          "after": null
+        },
+        {
+          "field": "outputPrice",
+          "before": 0.345,
+          "after": null
+        }
+      ]
+    },
+    {
+      "modelId": "651ef7ae-9a8f-477e-9c8e-460aa156ba02",
+      "name": "Qwen3.5 4B (Reasoning)",
+      "creator": "Alibaba",
+      "kind": "updated",
+      "observedAt": "2026-11-20T08:17:23.146Z",
+      "changes": [
+        {
+          "field": "inputPrice",
+          "before": 0.03,
+          "after": null
+        },
+        {
+          "field": "outputPrice",
+          "before": 0.15,
+          "after": null
+        }
+      ]
+    },
+    {
+      "modelId": "739684ba-0f63-4e2a-b4ee-30741c9e9320",
+      "name": "Llama 3.1 Instruct 8B",
+      "creator": "Meta",
+      "kind": "updated",
+      "observedAt": "2026-11-20T08:17:23.146Z",
+      "changes": [
+        {
+          "field": "inputPrice",
+          "before": 0.035,
+          "after": 0.05
+        },
+        {
+          "field": "outputPrice",
+          "before": 0.065,
+          "after": 0.08
+        }
+      ]
+    },
+    {
+      "modelId": "75e1c197-f239-4361-a9d6-66dccfead236",
+      "name": "DeepSeek V3 0324",
+      "creator": "DeepSeek",
+      "kind": "updated",
+      "observedAt": "2026-11-20T08:17:23.146Z",
+      "changes": [
+        {
+          "field": "inputPrice",
+          "before": 0.24,
+          "after": null
+        },
+        {
+          "field": "outputPrice",
+          "before": 0.9,
+          "after": null
+        }
+      ]
+    },
+    {
+      "modelId": "82879bb8-89fb-4adc-b519-315b8ef30b77",
+      "name": "Llama 3 Instruct 8B",
+      "creator": "Meta",
+      "kind": "updated",
+      "observedAt": "2026-11-20T08:17:23.146Z",
+      "changes": [
+        {
+          "field": "inputPrice",
+          "before": 0.045,
+          "after": 0.05
+        },
+        {
+          "field": "outputPrice",
+          "before": 0.145,
+          "after": 0.25
+        }
+      ]
+    },
+    {
+      "modelId": "909ed0ba-bcc5-4f38-8162-08a4e187a772",
+      "name": "Gemini 4 Carbon (High)",
+      "creator": "Google",
+      "kind": "updated",
+      "observedAt": "2026-11-20T08:17:23.146Z",
+      "changes": [
+        {
+          "field": "costPerTask",
+          "before": 4.8973,
+          "after": 7.7555
+        },
+        {
+          "field": "inputPrice",
+          "before": 2,
+          "after": 4
+        },
+        {
+          "field": "outputPrice",
+          "before": 10,
+          "after": 20
+        }
+      ]
+    },
+    {
+      "modelId": "922c69c7-9037-43c6-8bcf-a1c555e7f3eb",
+      "name": "Llama 4 Maverick",
+      "creator": "Meta",
+      "kind": "updated",
+      "observedAt": "2026-11-20T08:17:23.146Z",
+      "changes": [
+        {
+          "field": "inputPrice",
+          "before": 0.25,
+          "after": 0.26
+        },
+        {
+          "field": "outputPrice",
+          "before": 0.97,
+          "after": 0.985
+        }
+      ]
+    },
+    {
+      "modelId": "92f245a7-43b4-4ffd-8bfb-866746bf824d",
+      "name": "GLM-5.1 (Non-reasoning)",
+      "creator": "Z AI",
+      "kind": "updated",
+      "observedAt": "2026-11-20T08:17:23.146Z",
+      "changes": [
+        {
+          "field": "inputPrice",
+          "before": 1.285,
+          "after": 1.38
+        },
+        {
+          "field": "outputPrice",
+          "before": 4.07,
+          "after": 4.4
+        }
+      ]
+    },
+    {
+      "modelId": "b23e6c69-96e5-44c9-8f58-4b42e0c399d5",
+      "name": "Hy3",
+      "creator": "Tencent",
+      "kind": "updated",
+      "observedAt": "2026-11-20T08:17:23.146Z",
+      "changes": [
+        {
+          "field": "inputPrice",
+          "before": 0.136,
+          "after": 0.14
+        },
+        {
+          "field": "outputPrice",
+          "before": 0.555,
+          "after": 0.58
+        }
+      ]
+    },
+    {
+      "modelId": "b3866703-a9f7-4ea2-8f3f-b361c90aaf0e",
+      "name": "Gemini 4 Carbon (Low)",
+      "creator": "Google",
+      "kind": "updated",
+      "observedAt": "2026-11-20T08:17:23.146Z",
+      "changes": [
+        {
+          "field": "costPerTask",
+          "before": 4.6827,
+          "after": 7.1866
+        },
+        {
+          "field": "inputPrice",
+          "before": 2,
+          "after": 4
+        },
+        {
+          "field": "outputPrice",
+          "before": 10,
+          "after": 20
+        }
+      ]
+    },
+    {
+      "modelId": "d80eb0f1-f62e-4d31-99d2-7a925eb126b0",
+      "name": "Gemma 4 E4B (Reasoning)",
+      "creator": "Google",
+      "kind": "updated",
+      "observedAt": "2026-11-20T08:17:23.146Z",
+      "changes": [
+        {
+          "field": "costPerTask",
+          "before": 0.0083,
+          "after": null
+        },
+        {
+          "field": "inputPrice",
+          "before": 0.02,
+          "after": null
+        },
+        {
+          "field": "outputPrice",
+          "before": 0.1,
+          "after": null
+        }
+      ]
+    },
+    {
+      "modelId": "dfb9292d-bc7c-4425-a260-4256217e709f",
+      "name": "DeepSeek V3.1 Terminus (Non-reasoning)",
+      "creator": "DeepSeek",
+      "kind": "updated",
+      "observedAt": "2026-11-20T08:17:23.146Z",
+      "changes": [
+        {
+          "field": "inputPrice",
+          "before": 0.27,
+          "after": 1.635
+        },
+        {
+          "field": "outputPrice",
+          "before": 1,
+          "after": 2.75
+        }
+      ]
+    },
+    {
+      "modelId": "f1d52583-9d20-4099-99ac-b5df9430c3b6",
+      "name": "NVIDIA Nemotron Nano 9B V2 (Reasoning)",
+      "creator": "NVIDIA",
+      "kind": "updated",
+      "observedAt": "2026-11-20T08:17:23.146Z",
+      "changes": [
+        {
+          "field": "inputPrice",
+          "before": 0.04,
+          "after": null
+        },
+        {
+          "field": "outputPrice",
+          "before": 0.16,
+          "after": null
+        }
+      ]
+    },
+    {
+      "modelId": "f6ccbe1d-bd7e-484b-9795-18cc9f91552d",
+      "name": "Qwen3 235B A22B 2507 (Reasoning)",
+      "creator": "Alibaba",
+      "kind": "updated",
+      "observedAt": "2026-11-20T08:17:23.146Z",
+      "changes": [
+        {
+          "field": "inputPrice",
+          "before": 0.23,
+          "after": null
+        },
+        {
+          "field": "outputPrice",
+          "before": 2.3,
+          "after": null
+        }
+      ]
+    },
+    {
       "modelId": "09fea5f5-7217-452d-b693-fcca01e07bdf",
       "name": "Gemini 4 Neon (Low)",
       "creator": "Google",
