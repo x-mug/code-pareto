@@ -1,6 +1,25 @@
 {
   "events": [
     {
+      "modelId": "313e14b6-909f-43d2-b795-49c825dc1e21",
+      "name": "LingSante-3.1-flash",
+      "creator": "InclusionAI",
+      "kind": "added",
+      "observedAt": "2026-11-23T08:48:39.688Z",
+      "changes": [
+        {
+          "field": "inputPrice",
+          "before": null,
+          "after": 0
+        },
+        {
+          "field": "outputPrice",
+          "before": null,
+          "after": 0
+        }
+      ]
+    },
+    {
       "modelId": "48e6f735-f2bc-418f-b99f-3dc5a0ddda77",
       "name": "Gemini 4 Argon (Medium)",
       "creator": "Google",
