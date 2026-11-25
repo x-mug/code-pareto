@@ -1,6 +1,903 @@
 {
   "events": [
     {
+      "modelId": "042e8a37-fcd0-40f4-8f41-99215fb68eda",
+      "name": "Claude Sonnet 5.5 (Medium, Default Fallback)",
+      "creator": "Anthropic",
+      "kind": "updated",
+      "observedAt": "2026-11-25T09:43:13.900Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": 30.8,
+          "after": 30.9
+        }
+      ]
+    },
+    {
+      "modelId": "092a3b0e-c5c8-45dc-bf1b-53673c8ff352",
+      "name": "GPT-6.1 Sol (Xhigh)",
+      "creator": "OpenAI",
+      "kind": "updated",
+      "observedAt": "2026-11-25T09:43:13.900Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": 52.5,
+          "after": 52.4
+        }
+      ]
+    },
+    {
+      "modelId": "0c64b008-20c3-408d-bd68-15136df8cd2c",
+      "name": "Granite 4.2 3B",
+      "creator": "IBM",
+      "kind": "updated",
+      "observedAt": "2026-11-25T09:43:13.900Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": 4.7,
+          "after": null
+        }
+      ]
+    },
+    {
+      "modelId": "0c9b4e05-9259-42cc-b40e-d6acbbeaa7e8",
+      "name": "Claude Fable 5.2 (Medium, Default Fallback)",
+      "creator": "Anthropic",
+      "kind": "updated",
+      "observedAt": "2026-11-25T09:43:13.900Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": 56.4,
+          "after": 56.3
+        }
+      ]
+    },
+    {
+      "modelId": "0d3eaafd-54ed-4f78-bdd7-05a2db883986",
+      "name": "Gemini 4 Carbon (Medium)",
+      "creator": "Google",
+      "kind": "updated",
+      "observedAt": "2026-11-25T09:43:13.900Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": 58.3,
+          "after": 58.4
+        }
+      ]
+    },
+    {
+      "modelId": "1071dea1-43e7-4fe9-b936-3034bb622b2e",
+      "name": "Granite 4.2 30B",
+      "creator": "IBM",
+      "kind": "updated",
+      "observedAt": "2026-11-25T09:43:13.900Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": 5.5,
+          "after": null
+        }
+      ]
+    },
+    {
+      "modelId": "127de816-57d3-4037-8484-480a613cd413",
+      "name": "MiMo-V2.6-Flash",
+      "creator": "Xiaomi",
+      "kind": "updated",
+      "observedAt": "2026-11-25T09:43:13.900Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": 26.7,
+          "after": 26.8
+        }
+      ]
+    },
+    {
+      "modelId": "19496b81-9f41-4214-a77a-1df803b3c5ae",
+      "name": "GLM-5.3-Flash (Max)",
+      "creator": "Z AI",
+      "kind": "updated",
+      "observedAt": "2026-11-25T09:43:13.900Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": 27.8,
+          "after": 27.7
+        }
+      ]
+    },
+    {
+      "modelId": "1f541ef3-913f-4eb2-9d07-0e93c7a9a5e3",
+      "name": "GPT-6 Astra (Xhigh)",
+      "creator": "OpenAI",
+      "kind": "updated",
+      "observedAt": "2026-11-25T09:43:13.900Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": 55.3,
+          "after": 55.4
+        }
+      ]
+    },
+    {
+      "modelId": "20829974-af06-497e-9f42-77fb958d43b9",
+      "name": "Claude Haiku 5.5 (High)",
+      "creator": "Anthropic",
+      "kind": "updated",
+      "observedAt": "2026-11-25T09:43:13.900Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": 29.9,
+          "after": 30
+        }
+      ]
+    },
+    {
+      "modelId": "277f939a-985b-4b37-859d-b3eabc7c0b26",
+      "name": "MiniMax-M3",
+      "creator": "MiniMax",
+      "kind": "updated",
+      "observedAt": "2026-11-25T09:43:13.900Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": 18.9,
+          "after": 19
+        }
+      ]
+    },
+    {
+      "modelId": "27c326a6-ec9b-415f-a29e-b1f4927484dc",
+      "name": "GPT-6.2 Sol (Xhigh)",
+      "creator": "OpenAI",
+      "kind": "updated",
+      "observedAt": "2026-11-25T09:43:13.900Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": 55.7,
+          "after": 55.6
+        }
+      ]
+    },
+    {
+      "modelId": "29976311-665a-4b2f-ac72-557c33e0758e",
+      "name": "Nemotron 3.5 Lightning",
+      "creator": "NVIDIA",
+      "kind": "updated",
+      "observedAt": "2026-11-25T09:43:13.900Z",
+      "changes": [
+        {
+          "field": "costPerTask",
+          "before": 0.3145,
+          "after": 0.2898
+        }
+      ]
+    },
+    {
+      "modelId": "34fc646a-0174-470e-9e62-d8df452210b3",
+      "name": "Mistral Large 4 Preview",
+      "creator": "Mistral",
+      "kind": "updated",
+      "observedAt": "2026-11-25T09:43:13.900Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": 25.3,
+          "after": 25.2
+        }
+      ]
+    },
+    {
+      "modelId": "3e87c73e-a257-495e-9730-367a66229811",
+      "name": "Claude Fable 5.1 (Max, Default Fallback)",
+      "creator": "Anthropic",
+      "kind": "updated",
+      "observedAt": "2026-11-25T09:43:13.900Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": 49.2,
+          "after": 49.3
+        }
+      ]
+    },
+    {
+      "modelId": "48e6f735-f2bc-418f-b99f-3dc5a0ddda77",
+      "name": "Gemini 4 Argon (Medium)",
+      "creator": "Google",
+      "kind": "updated",
+      "observedAt": "2026-11-25T09:43:13.900Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": 47.6,
+          "after": 47.7
+        }
+      ]
+    },
+    {
+      "modelId": "539ed227-38f4-4bea-a015-117057c14b18",
+      "name": "Ling 3.1 Flash 1019",
+      "creator": "InclusionAI",
+      "kind": "updated",
+      "observedAt": "2026-11-25T09:43:13.900Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": 29.6,
+          "after": 29.7
+        }
+      ]
+    },
+    {
+      "modelId": "583f98fb-c4b8-4df3-8d40-60ac0ed69882",
+      "name": "Muse Glimmer (High)",
+      "creator": "Meta",
+      "kind": "updated",
+      "observedAt": "2026-11-25T09:43:13.900Z",
+      "changes": [
+        {
+          "field": "costPerTask",
+          "before": 0.1782,
+          "after": 0.2061
+        },
+        {
+          "field": "inputPrice",
+          "before": 0.325,
+          "after": 0.3
+        },
+        {
+          "field": "outputPrice",
+          "before": 1.35,
+          "after": 1.2
+        }
+      ]
+    },
+    {
+      "modelId": "592572d5-f789-4106-abbc-fadf2206d10b",
+      "name": "GPT-6.2 Astra (Xhigh)",
+      "creator": "OpenAI",
+      "kind": "updated",
+      "observedAt": "2026-11-25T09:43:13.900Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": 61.6,
+          "after": 61.8
+        }
+      ]
+    },
+    {
+      "modelId": "593f2d23-247b-41c9-a679-cebd225f0a9a",
+      "name": "Claude Fable 5.2 (Max, Default Fallback)",
+      "creator": "Anthropic",
+      "kind": "updated",
+      "observedAt": "2026-11-25T09:43:13.900Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": 64.6,
+          "after": 64.8
+        }
+      ]
+    },
+    {
+      "modelId": "59627802-1546-422c-9a65-65b61c022d36",
+      "name": "Grok 4.7 (Xhigh)",
+      "creator": "SpaceXAI",
+      "kind": "updated",
+      "observedAt": "2026-11-25T09:43:13.900Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": 35.5,
+          "after": 35.4
+        }
+      ]
+    },
+    {
+      "modelId": "5ca91b0e-0e47-4793-ace9-2ca763106e62",
+      "name": "JoyAI-VL-Preview",
+      "creator": "Joy Future Academy",
+      "kind": "updated",
+      "observedAt": "2026-11-25T09:43:13.900Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": 28,
+          "after": 27.9
+        }
+      ]
+    },
+    {
+      "modelId": "6657d7de-a2a9-40bc-a32f-86e80ad63698",
+      "name": "Qwen3.8 27B (Medium)",
+      "creator": "Alibaba",
+      "kind": "updated",
+      "observedAt": "2026-11-25T09:43:13.900Z",
+      "changes": [
+        {
+          "field": "costPerTask",
+          "before": 2.16,
+          "after": 2.2709
+        }
+      ]
+    },
+    {
+      "modelId": "665c67ca-09eb-48f0-a7a3-0096e1d5de51",
+      "name": "Kimi K3.1 Pro",
+      "creator": "Kimi",
+      "kind": "updated",
+      "observedAt": "2026-11-25T09:43:13.900Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": 46.5,
+          "after": 46.6
+        }
+      ]
+    },
+    {
+      "modelId": "75c1b0b8-9db3-4c7e-95be-d74e59defee4",
+      "name": "GPT-6.2 Astra (Max)",
+      "creator": "OpenAI",
+      "kind": "updated",
+      "observedAt": "2026-11-25T09:43:13.900Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": 62.1,
+          "after": 62.2
+        }
+      ]
+    },
+    {
+      "modelId": "7a64ffc4-36c3-4369-981e-73abdd6ff5e2",
+      "name": "Muse Ember (Xhigh)",
+      "creator": "Meta",
+      "kind": "updated",
+      "observedAt": "2026-11-25T09:43:13.900Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": 34.1,
+          "after": 34.2
+        }
+      ]
+    },
+    {
+      "modelId": "7c667f2d-0149-4eb1-864c-7e66c166ad88",
+      "name": "Gemini 4 Neon (Xhigh)",
+      "creator": "Google",
+      "kind": "updated",
+      "observedAt": "2026-11-25T09:43:13.900Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": 61.4,
+          "after": 61.5
+        }
+      ]
+    },
+    {
+      "modelId": "7d1229bc-deea-4717-ba5b-f59a35d991e3",
+      "name": "GPT-6 Luna (High)",
+      "creator": "OpenAI",
+      "kind": "updated",
+      "observedAt": "2026-11-25T09:43:13.900Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": 21.4,
+          "after": 21.5
+        }
+      ]
+    },
+    {
+      "modelId": "82b37079-56d9-4451-8a1a-22b0a921f4f8",
+      "name": "GPT-6.2 Sol (Medium)",
+      "creator": "OpenAI",
+      "kind": "updated",
+      "observedAt": "2026-11-25T09:43:13.900Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": 52.7,
+          "after": 52.4
+        }
+      ]
+    },
+    {
+      "modelId": "8a999846-4c1d-4ce7-a8b7-1310a7166fd7",
+      "name": "Gemini 3.8 Flash (High)",
+      "creator": "Google",
+      "kind": "updated",
+      "observedAt": "2026-11-25T09:43:13.900Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": 30.8,
+          "after": 30.7
+        }
+      ]
+    },
+    {
+      "modelId": "909ed0ba-bcc5-4f38-8162-08a4e187a772",
+      "name": "Gemini 4 Carbon (High)",
+      "creator": "Google",
+      "kind": "updated",
+      "observedAt": "2026-11-25T09:43:13.900Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": 60,
+          "after": 60.1
+        }
+      ]
+    },
+    {
+      "modelId": "9ac3908c-9eb2-44db-8c01-3ec7da6fc2ae",
+      "name": "Qwen3.8-Flash-Next",
+      "creator": "Alibaba",
+      "kind": "updated",
+      "observedAt": "2026-11-25T09:43:13.900Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": 28.6,
+          "after": 28.5
+        }
+      ]
+    },
+    {
+      "modelId": "9b696f5b-b5d2-4b1f-9ed5-7c1446ec8421",
+      "name": "Gemini 4 Neon (High)",
+      "creator": "Google",
+      "kind": "updated",
+      "observedAt": "2026-11-25T09:43:13.900Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": 59.6,
+          "after": 59.8
+        }
+      ]
+    },
+    {
+      "modelId": "a3f8100d-e38f-408b-b0fa-0085dae18dc1",
+      "name": "GPT-6 Astra (Low)",
+      "creator": "OpenAI",
+      "kind": "updated",
+      "observedAt": "2026-11-25T09:43:13.900Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": 43.3,
+          "after": 43.5
+        }
+      ]
+    },
+    {
+      "modelId": "adfae555-f489-4f3e-9064-c6b7fcdd0783",
+      "name": "Granite 4.2 8B",
+      "creator": "IBM",
+      "kind": "updated",
+      "observedAt": "2026-11-25T09:43:13.900Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": 5.1,
+          "after": null
+        },
+        {
+          "field": "costPerTask",
+          "before": 0.0405,
+          "after": null
+        }
+      ]
+    },
+    {
+      "modelId": "b0c462cf-f2d0-4126-9434-28db9502219f",
+      "name": "GPT-6.1 Terra (Max)",
+      "creator": "OpenAI",
+      "kind": "updated",
+      "observedAt": "2026-11-25T09:43:13.900Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": 51.3,
+          "after": 51.4
+        }
+      ]
+    },
+    {
+      "modelId": "b112af07-3bd5-4647-b09f-b23204361bb2",
+      "name": "Qwen3.8 Max (0902)",
+      "creator": "Alibaba",
+      "kind": "updated",
+      "observedAt": "2026-11-25T09:43:13.900Z",
+      "changes": [
+        {
+          "field": "costPerTask",
+          "before": 10.0239,
+          "after": 10.0285
+        }
+      ]
+    },
+    {
+      "modelId": "b171d979-5ec1-45de-b8b9-db1ee65e77ec",
+      "name": "Claude Sonnet 5.5 (Max, Default Fallback)",
+      "creator": "Anthropic",
+      "kind": "updated",
+      "observedAt": "2026-11-25T09:43:13.900Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": 54.5,
+          "after": 54.7
+        }
+      ]
+    },
+    {
+      "modelId": "b25ac058-1e33-4c31-bbc9-a20c3ad0717a",
+      "name": "GPT-6.1 Sol (Max)",
+      "creator": "OpenAI",
+      "kind": "updated",
+      "observedAt": "2026-11-25T09:43:13.900Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": 54.6,
+          "after": 54.7
+        }
+      ]
+    },
+    {
+      "modelId": "bcf8db0a-3bb6-4d82-9516-0f57370c85a6",
+      "name": "GPT-5.6 Terra (Max)",
+      "creator": "OpenAI",
+      "kind": "updated",
+      "observedAt": "2026-11-25T09:43:13.900Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": 32.3,
+          "after": 32.2
+        }
+      ]
+    },
+    {
+      "modelId": "c3b66080-fdcb-48e4-8ade-6baf77921c7c",
+      "name": "DeepSeek V4.1 Flash 1017 (High)",
+      "creator": "DeepSeek",
+      "kind": "updated",
+      "observedAt": "2026-11-25T09:43:13.900Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": 28.6,
+          "after": 28.7
+        }
+      ]
+    },
+    {
+      "modelId": "c441e158-a87d-4116-911b-93325e4b4f1c",
+      "name": "GPT-6.1 Terra (Medium)",
+      "creator": "OpenAI",
+      "kind": "updated",
+      "observedAt": "2026-11-25T09:43:13.900Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": 38.2,
+          "after": 38.1
+        }
+      ]
+    },
+    {
+      "modelId": "c50ea08c-88c0-4eb7-85b8-27f2bbf6d527",
+      "name": "GPT-6 Sol (Max)",
+      "creator": "OpenAI",
+      "kind": "updated",
+      "observedAt": "2026-11-25T09:43:13.900Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": 44.2,
+          "after": 44.1
+        }
+      ]
+    },
+    {
+      "modelId": "cd684ea4-b475-4269-b001-d469d06d8a7a",
+      "name": "GLM-5.3 (Max)",
+      "creator": "Z AI",
+      "kind": "updated",
+      "observedAt": "2026-11-25T09:43:13.900Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": 31.7,
+          "after": 31.6
+        }
+      ]
+    },
+    {
+      "modelId": "cd85e412-c43f-4535-bf8e-5ba113d97ca3",
+      "name": "GPT-6.2 Sol (High)",
+      "creator": "OpenAI",
+      "kind": "updated",
+      "observedAt": "2026-11-25T09:43:13.900Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": 54.9,
+          "after": 54.8
+        }
+      ]
+    },
+    {
+      "modelId": "d366dfa1-d940-4788-aa73-d298c45699b3",
+      "name": "Gemini 4 Argon (High)",
+      "creator": "Google",
+      "kind": "updated",
+      "observedAt": "2026-11-25T09:43:13.900Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": 50.4,
+          "after": 50.5
+        }
+      ]
+    },
+    {
+      "modelId": "d4dd600d-0d8e-4d6e-ad18-0cb8f7d6c4d0",
+      "name": "Agnes 2.5 Pro Theta",
+      "creator": "Sapiens AI",
+      "kind": "updated",
+      "observedAt": "2026-11-25T09:43:13.900Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": 24,
+          "after": 24.1
+        }
+      ]
+    },
+    {
+      "modelId": "dad0e3b1-e3e7-477a-99f9-c14457a91114",
+      "name": "Gemini 4 Hydrogen (Xhigh)",
+      "creator": "Google",
+      "kind": "updated",
+      "observedAt": "2026-11-25T09:43:13.900Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": 53.9,
+          "after": 54.1
+        }
+      ]
+    },
+    {
+      "modelId": "dae0262d-26a4-44d1-925a-6f2731cbda6a",
+      "name": "Gemini 4 Hydrogen (High)",
+      "creator": "Google",
+      "kind": "updated",
+      "observedAt": "2026-11-25T09:43:13.900Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": 50.8,
+          "after": 51
+        }
+      ]
+    },
+    {
+      "modelId": "dbf63365-127f-41ee-9e51-81173adb3502",
+      "name": "Muse Ember (Max)",
+      "creator": "Meta",
+      "kind": "updated",
+      "observedAt": "2026-11-25T09:43:13.900Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": 36,
+          "after": 36.1
+        }
+      ]
+    },
+    {
+      "modelId": "df5bf99d-d228-4715-b41b-19ca86118777",
+      "name": "Claude Opus 5.5 (Xhigh, Default Fallback)",
+      "creator": "Anthropic",
+      "kind": "updated",
+      "observedAt": "2026-11-25T09:43:13.900Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": 57.4,
+          "after": 57.5
+        }
+      ]
+    },
+    {
+      "modelId": "e05a4828-0536-4876-870d-a235023f992b",
+      "name": "GPT-6 Astra (High)",
+      "creator": "OpenAI",
+      "kind": "updated",
+      "observedAt": "2026-11-25T09:43:13.900Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": 54.8,
+          "after": 54.9
+        }
+      ]
+    },
+    {
+      "modelId": "e2ed7885-d46b-4da7-a873-f12f88af0081",
+      "name": "Inkling 2 Small",
+      "creator": "Thinking Machines",
+      "kind": "updated",
+      "observedAt": "2026-11-25T09:43:13.900Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": 30.6,
+          "after": 30.7
+        }
+      ]
+    },
+    {
+      "modelId": "e97a4ef5-e817-480e-9595-12f81dc4974f",
+      "name": "GPT-6 Astra (Medium)",
+      "creator": "OpenAI",
+      "kind": "updated",
+      "observedAt": "2026-11-25T09:43:13.900Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": 51.6,
+          "after": 51.7
+        }
+      ]
+    },
+    {
+      "modelId": "e994a6e0-d36b-4dab-8ae1-c1b469e4d9e2",
+      "name": "Muse Wonder Full (Max)",
+      "creator": "Meta",
+      "kind": "updated",
+      "observedAt": "2026-11-25T09:43:13.900Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": 50.1,
+          "after": 49.9
+        }
+      ]
+    },
+    {
+      "modelId": "ea3e1f50-f62d-41d2-849a-9af0413e4d37",
+      "name": "GPT-6.1 Terra (High)",
+      "creator": "OpenAI",
+      "kind": "updated",
+      "observedAt": "2026-11-25T09:43:13.900Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": 42.4,
+          "after": 42.5
+        }
+      ]
+    },
+    {
+      "modelId": "ea9e0da6-169f-43c6-92f5-730a10d6ff8d",
+      "name": "Claude Opus 5.5 (Medium, Default Fallback)",
+      "creator": "Anthropic",
+      "kind": "updated",
+      "observedAt": "2026-11-25T09:43:13.900Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": 48.2,
+          "after": 48.3
+        }
+      ]
+    },
+    {
+      "modelId": "f0537484-af30-4a8a-bf34-368c552e5cfd",
+      "name": "Gemini 4 Hydrogen (Medium)",
+      "creator": "Google",
+      "kind": "updated",
+      "observedAt": "2026-11-25T09:43:13.900Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": 41.2,
+          "after": 41.1
+        }
+      ]
+    },
+    {
+      "modelId": "f151fd0b-2139-40cf-a3ec-995e8cedc592",
+      "name": "DeepSeek V4.1 Flash 1017 (Max)",
+      "creator": "DeepSeek",
+      "kind": "updated",
+      "observedAt": "2026-11-25T09:43:13.900Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": 32.6,
+          "after": 32.4
+        }
+      ]
+    },
+    {
+      "modelId": "fdc1913b-9497-45ef-83f7-17dae756f37e",
+      "name": "Claude Fable 5.2 (High, Default Fallback)",
+      "creator": "Anthropic",
+      "kind": "updated",
+      "observedAt": "2026-11-25T09:43:13.900Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": 61.8,
+          "after": 61.9
+        }
+      ]
+    },
+    {
+      "modelId": "fe959a7a-944c-4ba8-8e41-349712599b39",
+      "name": "GPT-6.2 Astra (High)",
+      "creator": "OpenAI",
+      "kind": "updated",
+      "observedAt": "2026-11-25T09:43:13.900Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": 60.1,
+          "after": 60.3
+        }
+      ]
+    },
+    {
+      "modelId": "fef6625d-9097-45f6-95c0-bcaa06e3d8e1",
+      "name": "Qwen4 Max",
+      "creator": "Alibaba",
+      "kind": "updated",
+      "observedAt": "2026-11-25T09:43:13.900Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": 42.9,
+          "after": 42.8
+        }
+      ]
+    },
+    {
+      "modelId": "ff2f3f3d-783f-4e27-8a39-47237501a313",
+      "name": "Muse Wonder (Max)",
+      "creator": "Meta",
+      "kind": "updated",
+      "observedAt": "2026-11-25T09:43:13.900Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": 43.6,
+          "after": 43.7
+        }
+      ]
+    },
+    {
       "modelId": "0b7efa66-2115-49e0-a1b7-a2ba225fe9f6",
       "name": "Grok Build 0.1 0616",
       "creator": "SpaceXAI",
