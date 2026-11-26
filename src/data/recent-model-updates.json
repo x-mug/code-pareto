@@ -1,6 +1,25 @@
 {
   "events": [
     {
+      "modelId": "f1d52583-9d20-4099-99ac-b5df9430c3b6",
+      "name": "NVIDIA Nemotron Nano 9B V2 (Reasoning)",
+      "creator": "NVIDIA",
+      "kind": "updated",
+      "observedAt": "2026-11-26T09:18:57.299Z",
+      "changes": [
+        {
+          "field": "inputPrice",
+          "before": null,
+          "after": 0.06
+        },
+        {
+          "field": "outputPrice",
+          "before": null,
+          "after": 0.23
+        }
+      ]
+    },
+    {
       "modelId": "042e8a37-fcd0-40f4-8f41-99215fb68eda",
       "name": "Claude Sonnet 5.5 (Medium, Default Fallback)",
       "creator": "Anthropic",
