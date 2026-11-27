@@ -1,6 +1,278 @@
 {
   "events": [
     {
+      "modelId": "094ea3e3-ce41-419e-8bd1-723389663158",
+      "name": "Step 5 Preview",
+      "creator": "StepFun",
+      "kind": "updated",
+      "observedAt": "2026-11-27T09:34:33.531Z",
+      "changes": [
+        {
+          "field": "costPerTask",
+          "before": 2.3453,
+          "after": 3.9376
+        }
+      ]
+    },
+    {
+      "modelId": "09fea5f5-7217-452d-b693-fcca01e07bdf",
+      "name": "Gemini 4 Neon (Low)",
+      "creator": "Google",
+      "kind": "updated",
+      "observedAt": "2026-11-27T09:34:33.531Z",
+      "changes": [
+        {
+          "field": "costPerTask",
+          "before": 0.7452,
+          "after": 0.8819
+        }
+      ]
+    },
+    {
+      "modelId": "0cb139e2-02de-4c49-b7b4-b174937a83fc",
+      "name": "ERNIE 5.5 Flash Preview",
+      "creator": "Baidu",
+      "kind": "added",
+      "observedAt": "2026-11-27T09:34:33.531Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": null,
+          "after": 31.3
+        },
+        {
+          "field": "costPerTask",
+          "before": null,
+          "after": 1.1432
+        },
+        {
+          "field": "inputPrice",
+          "before": null,
+          "after": 0.28
+        },
+        {
+          "field": "outputPrice",
+          "before": null,
+          "after": 1.13
+        }
+      ]
+    },
+    {
+      "modelId": "15c4cbd7-b9aa-42c8-9ce5-5abbde0e6963",
+      "name": "Solar Pro 4",
+      "creator": "Upstage",
+      "kind": "updated",
+      "observedAt": "2026-11-27T09:34:33.531Z",
+      "changes": [
+        {
+          "field": "costPerTask",
+          "before": 0.9557,
+          "after": 1.3347
+        }
+      ]
+    },
+    {
+      "modelId": "29976311-665a-4b2f-ac72-557c33e0758e",
+      "name": "Nemotron 3.5 Lightning",
+      "creator": "NVIDIA",
+      "kind": "updated",
+      "observedAt": "2026-11-27T09:34:33.531Z",
+      "changes": [
+        {
+          "field": "costPerTask",
+          "before": 0.2898,
+          "after": 0.2377
+        }
+      ]
+    },
+    {
+      "modelId": "353c92f3-2148-4c2d-9231-aa7e1322a1fd",
+      "name": "Qwen3.8 27B (Non-reasoning)",
+      "creator": "Alibaba",
+      "kind": "updated",
+      "observedAt": "2026-11-27T09:34:33.531Z",
+      "changes": [
+        {
+          "field": "costPerTask",
+          "before": 3.7729,
+          "after": 4.6287
+        }
+      ]
+    },
+    {
+      "modelId": "3661c8fb-caf7-4118-aa18-65b84fea8e44",
+      "name": "Muse Spark Open (Xhigh)",
+      "creator": "Meta",
+      "kind": "updated",
+      "observedAt": "2026-11-27T09:34:33.531Z",
+      "changes": [
+        {
+          "field": "costPerTask",
+          "before": 2.0177,
+          "after": 1.7657
+        }
+      ]
+    },
+    {
+      "modelId": "583f98fb-c4b8-4df3-8d40-60ac0ed69882",
+      "name": "Muse Glimmer (High)",
+      "creator": "Meta",
+      "kind": "updated",
+      "observedAt": "2026-11-27T09:34:33.531Z",
+      "changes": [
+        {
+          "field": "costPerTask",
+          "before": 0.2061,
+          "after": 0.1494
+        }
+      ]
+    },
+    {
+      "modelId": "598190f8-dc9c-4fea-a7ea-4b81c402ab18",
+      "name": "Gemini 3.1 Flash-Lite",
+      "creator": "Google",
+      "kind": "updated",
+      "observedAt": "2026-11-27T09:34:33.531Z",
+      "changes": [
+        {
+          "field": "costPerTask",
+          "before": 0.1945,
+          "after": 0.2065
+        }
+      ]
+    },
+    {
+      "modelId": "5b52def2-ac9b-4465-ad80-91ea8079e253",
+      "name": "Nemotron 3 Ultra 550B A55B (Reasoning)",
+      "creator": "NVIDIA",
+      "kind": "updated",
+      "observedAt": "2026-11-27T09:34:33.531Z",
+      "changes": [
+        {
+          "field": "costPerTask",
+          "before": 2.1897,
+          "after": 2.5044
+        }
+      ]
+    },
+    {
+      "modelId": "6657d7de-a2a9-40bc-a32f-86e80ad63698",
+      "name": "Qwen3.8 27B (Medium)",
+      "creator": "Alibaba",
+      "kind": "updated",
+      "observedAt": "2026-11-27T09:34:33.531Z",
+      "changes": [
+        {
+          "field": "costPerTask",
+          "before": 2.2709,
+          "after": 2.5081
+        }
+      ]
+    },
+    {
+      "modelId": "6e1b44ff-c227-496b-aef4-19b70cd18c76",
+      "name": "Gemma 4 26B A4B (Reasoning)",
+      "creator": "Google",
+      "kind": "updated",
+      "observedAt": "2026-11-27T09:34:33.531Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": null,
+          "after": 4
+        },
+        {
+          "field": "costPerTask",
+          "before": null,
+          "after": 0.1927
+        }
+      ]
+    },
+    {
+      "modelId": "744fa3c1-42a7-4995-b138-fb6be11f463c",
+      "name": "Gemini 3.8 Flash (Medium)",
+      "creator": "Google",
+      "kind": "updated",
+      "observedAt": "2026-11-27T09:34:33.531Z",
+      "changes": [
+        {
+          "field": "costPerTask",
+          "before": 6.2586,
+          "after": 2.6064
+        }
+      ]
+    },
+    {
+      "modelId": "88c68c50-03c1-458a-9292-bd398c27adc5",
+      "name": "Gemini 4 Hydrogen (Low)",
+      "creator": "Google",
+      "kind": "updated",
+      "observedAt": "2026-11-27T09:34:33.531Z",
+      "changes": [
+        {
+          "field": "costPerTask",
+          "before": 0.2922,
+          "after": 0.3674
+        }
+      ]
+    },
+    {
+      "modelId": "8a999846-4c1d-4ce7-a8b7-1310a7166fd7",
+      "name": "Gemini 3.8 Flash (High)",
+      "creator": "Google",
+      "kind": "updated",
+      "observedAt": "2026-11-27T09:34:33.531Z",
+      "changes": [
+        {
+          "field": "costPerTask",
+          "before": 7.766,
+          "after": 3.0217
+        }
+      ]
+    },
+    {
+      "modelId": "d366dfa1-d940-4788-aa73-d298c45699b3",
+      "name": "Gemini 4 Argon (High)",
+      "creator": "Google",
+      "kind": "updated",
+      "observedAt": "2026-11-27T09:34:33.531Z",
+      "changes": [
+        {
+          "field": "costPerTask",
+          "before": 9.9466,
+          "after": 7.0616
+        }
+      ]
+    },
+    {
+      "modelId": "d4dd600d-0d8e-4d6e-ad18-0cb8f7d6c4d0",
+      "name": "Agnes 2.5 Pro Theta",
+      "creator": "Sapiens AI",
+      "kind": "updated",
+      "observedAt": "2026-11-27T09:34:33.531Z",
+      "changes": [
+        {
+          "field": "costPerTask",
+          "before": 0.5747,
+          "after": 0.4515
+        }
+      ]
+    },
+    {
+      "modelId": "e2c0623e-c855-4a61-bb66-be1f1ed43234",
+      "name": "Nemotron 3.5 Super VL",
+      "creator": "NVIDIA",
+      "kind": "updated",
+      "observedAt": "2026-11-27T09:34:33.531Z",
+      "changes": [
+        {
+          "field": "costPerTask",
+          "before": 0.4818,
+          "after": 0.5453
+        }
+      ]
+    },
+    {
       "modelId": "f1d52583-9d20-4099-99ac-b5df9430c3b6",
       "name": "NVIDIA Nemotron Nano 9B V2 (Reasoning)",
       "creator": "NVIDIA",
