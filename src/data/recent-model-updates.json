@@ -1,6 +1,54 @@
 {
   "events": [
     {
+      "modelId": "178d9aca-b55a-441d-89f7-aec7f9ad3fda",
+      "name": "Quasar 1.2 358B (Max, Based on GLM-5.3)",
+      "creator": "Multiverse Computing",
+      "kind": "added",
+      "observedAt": "2026-11-28T08:47:31.116Z",
+      "changes": [
+        {
+          "field": "intelligence",
+          "before": null,
+          "after": 23.1
+        },
+        {
+          "field": "costPerTask",
+          "before": null,
+          "after": 0.131
+        },
+        {
+          "field": "inputPrice",
+          "before": null,
+          "after": 0.11
+        },
+        {
+          "field": "outputPrice",
+          "before": null,
+          "after": 0.33
+        }
+      ]
+    },
+    {
+      "modelId": "43fc5506-c5ed-4dee-9b85-962bf7ae3986",
+      "name": "DeepSeek V3 (Dec '24)",
+      "creator": "DeepSeek",
+      "kind": "updated",
+      "observedAt": "2026-11-28T08:47:31.116Z",
+      "changes": [
+        {
+          "field": "inputPrice",
+          "before": 0.32,
+          "after": 0.285
+        },
+        {
+          "field": "outputPrice",
+          "before": 0.89,
+          "after": 0.57
+        }
+      ]
+    },
+    {
       "modelId": "094ea3e3-ce41-419e-8bd1-723389663158",
       "name": "Step 5 Preview",
       "creator": "StepFun",
